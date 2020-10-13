@@ -4,8 +4,8 @@
   "configurations": {
     "ios": {
       "type": "ios.simulator",
-      "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/Podible.app",
-      "build": "xcodebuild -workspace ios/Podible.xcworkspace -scheme Podible -configuration Release -sdk iphonesimulator -derivedDataPath ios/build -verbose",
+      "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/Podible.app",
+      "build": "ENVFILE=.env.detox xcodebuild -workspace ios/Podible.xcworkspace -scheme Podible -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build -verbose",
       "device": {
         "type": "iPhone 11"
       }

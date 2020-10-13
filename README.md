@@ -30,3 +30,9 @@ Run unit tests:
 ```bash
 yarn test
 ```
+
+# View Coverage Report
+
+```bash
+open coverage/lcov-report/index.html
+```

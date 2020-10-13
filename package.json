@@ -18,12 +18,14 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "0.63.3",
+    "react-native-config": "^1.3.3",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-reanimated": "^1.13.1",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "^2.11.0",
     "react-native-unimodules": "~0.11.0",
-    "react-native-web": "~0.13.7"
+    "react-native-web": "~0.13.7",
+    "react-native-xml2js": "^1.0.3"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
@@ -49,11 +51,18 @@
   "version": "1.0.0",
   "jest": {
     "preset": "jest-expo",
-    "testPathIgnorePatterns": [
-      "<rootDir>/__tests__/helpers"
+    "collectCoverage": true,
+    "collectCoverageFrom": ["src/**/*.{ts,tsx}"],
+    "coverageThreshold": {
+      "global": {
+        "statements": 100
+      }
+    },
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/types",
+      "<rootDir>/src/App.tsx"
     ],
-    "setupFilesAfterEnv": [
-      "@testing-library/jest-native/extend-expect"
-    ]
+    "testPathIgnorePatterns": ["<rootDir>/__tests__/helpers"],
+    "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"]
   }
 }

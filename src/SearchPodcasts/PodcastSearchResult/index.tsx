@@ -1,20 +1,22 @@
 import React from "react"
-import { Image, View, Text } from "react-native"
+import { Image, View, TouchableOpacity, Text } from "react-native"
 import styles from "./styles"
 
 interface PodcastSearchResultProps {
   podcastSearchResult: PodcastSearchResult
+  onPress: () => void
 }
 
 const PodcastSearchResult = ({
   podcastSearchResult,
+  onPress: showPodcastEpisodes,
 }: PodcastSearchResultProps) => (
-  <View style={styles.container}>
+  <TouchableOpacity style={styles.container} onPress={showPodcastEpisodes}>
     <View style={styles.background}>
       <Image
-        testID="image"
+        testID="Podcast Artwork"
         style={styles.image}
-        source={{ uri: podcastSearchResult.imageUrl }}
+        source={{ uri: podcastSearchResult.artworkUrl }}
       />
       <View style={styles.podcastInformation}>
         <Text style={styles.podcastTitle} numberOfLines={2}>
@@ -25,7 +27,7 @@ const PodcastSearchResult = ({
         </Text>
       </View>
     </View>
-  </View>
+  </TouchableOpacity>
 )
 
 export default PodcastSearchResult

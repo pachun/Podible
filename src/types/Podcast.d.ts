@@ -1,6 +1,6 @@
-interface PodcastSearchResult {
+interface Podcast {
   title: string
   publisher: string
+  description: string
   artworkUrl: string
-  rssFeedUrl: string
 }

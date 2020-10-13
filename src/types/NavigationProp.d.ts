@@ -1,0 +1,1 @@
+type NavigationProp = StackNavigationProp<ScreenParameters, "">
