@@ -3,9 +3,9 @@ import { waitFor, render } from "@testing-library/react-native"
 import { PodcastSearchResultFactory } from "./helpers/factories"
 import { mockFetch } from "./helpers/mocks"
 
-import PodcastEpisodes from "../src/PodcastEpisodes"
+import Episodes from "../src/Episodes"
 
-describe("The Podcast Episodes Screen", () => {
+describe("The Episodes Screen", () => {
   it("describes podcast A", async () => {
     const podcastSearchResult = PodcastSearchResultFactory({
       rssFeedUrl: "some.feed.url.A",
@@ -27,22 +27,21 @@ describe("The Podcast Episodes Screen", () => {
       `,
     )
 
-    const { getByTestId } = render(
-      <PodcastEpisodes
+    const { getByText, getByTestId } = render(
+      <Episodes
         route={{
           key: "",
-          name: "Podcast Episodes",
+          name: "Episodes",
           params: { podcastSearchResult },
         }}
       />,
     )
 
-    await waitFor(() => getByTestId("Podcast Publisher"))
+    await waitFor(() => getByTestId("Podcast Artwork"))
 
-    expect(getByTestId("Podcast Description").children[0]).toEqual(
-      "description A",
-    )
-    expect(getByTestId("Podcast Publisher").children[0]).toEqual("PUBLISHER A")
+    expect(getByText("title A"))
+    expect(getByText("description A"))
+    expect(getByText("PUBLISHER A"))
     expect(getByTestId("Podcast Artwork").props.source.uri).toEqual(
       "artworkUrlA",
     )
@@ -69,22 +68,21 @@ describe("The Podcast Episodes Screen", () => {
       `,
     )
 
-    const { getByTestId } = render(
-      <PodcastEpisodes
+    const { getByText, getByTestId } = render(
+      <Episodes
         route={{
           key: "",
-          name: "Podcast Episodes",
+          name: "Episodes",
           params: { podcastSearchResult },
         }}
       />,
     )
 
-    await waitFor(() => getByTestId("Podcast Publisher"))
+    await waitFor(() => getByTestId("Podcast Artwork"))
 
-    expect(getByTestId("Podcast Description").children[0]).toEqual(
-      "description B",
-    )
-    expect(getByTestId("Podcast Publisher").children[0]).toEqual("PUBLISHER B")
+    expect(getByText("title B"))
+    expect(getByText("description B"))
+    expect(getByText("PUBLISHER B"))
     expect(getByTestId("Podcast Artwork").props.source.uri).toEqual(
       "artworkUrlB",
     )

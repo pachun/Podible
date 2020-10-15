@@ -13,12 +13,17 @@ const styles = StyleSheet.create({
     width: "90%",
     flexDirection: "row",
   },
+  titleLabel: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
   publisherLabel: {
     color: "#7f7f7e",
     fontSize: 12,
   },
   podcastDetails: {
     marginLeft: 10,
+    flex: 1,
   },
   podcastDescriptionContainer: {
     alignItems: "center",

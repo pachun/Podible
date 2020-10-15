@@ -2,9 +2,9 @@ import React from "react"
 import { fireEvent, waitFor, render } from "@testing-library/react-native"
 import { mockFetch } from "./helpers/mocks"
 
-import SearchPodcasts from "../src/SearchPodcasts"
+import Search from "../src/Search"
 
-describe("The Search Podcasts Screen", () => {
+describe("The Search Screen", () => {
   it("searches for political podcasts", async () => {
     const searchText = "Politics"
 
@@ -27,7 +27,7 @@ describe("The Search Podcasts Screen", () => {
     )
 
     const { queryAllByTestId, getByText, getByPlaceholderText } = render(
-      <SearchPodcasts navigation={{}} />,
+      <Search navigation={{}} />,
     )
 
     const searchField = getByPlaceholderText("Search")
@@ -70,7 +70,7 @@ describe("The Search Podcasts Screen", () => {
     )
 
     const { getByPlaceholderText, queryAllByTestId, getByText } = render(
-      <SearchPodcasts navigation={{}} />,
+      <Search navigation={{}} />,
     )
 
     const searchField = getByPlaceholderText("Search")
@@ -114,7 +114,7 @@ describe("The Search Podcasts Screen", () => {
       }
 
       const { getByPlaceholderText, getByText } = render(
-        <SearchPodcasts navigation={navigationMock} />,
+        <Search navigation={navigationMock} />,
       )
 
       const searchField = getByPlaceholderText("Search")
@@ -125,7 +125,7 @@ describe("The Search Podcasts Screen", () => {
 
       fireEvent(getByText("Political Podcast 1"), "press")
 
-      expect(navigationMock.navigate).toBeCalledWith("Podcast Episodes", {
+      expect(navigationMock.navigate).toBeCalledWith("Episodes", {
         podcastSearchResult: {
           title: "Political Podcast 1",
           publisher: "Political Publisher 1",

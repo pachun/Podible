@@ -19,10 +19,10 @@ const SearchPodcasts = ({ navigation }: SearchPodcastProps) => {
 
   const showPodcastEpisodes = (
     podcastSearchResult: PodcastSearchResult,
-  ) => () => navigation.navigate("Podcast Episodes", { podcastSearchResult })
+  ) => () => navigation.navigate("Episodes", { podcastSearchResult })
 
   return (
-    <View style={styles.container} testID="Search Podcasts Screen">
+    <View style={styles.container} testID="Search">
       <View style={{ height: 20 }} />
       <View style={styles.searchFieldContainer}>
         <TextInput

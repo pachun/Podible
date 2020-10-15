@@ -1,7 +1,7 @@
 import { by, expect, element } from "detox"
 
 const showPodcastEpisodes = async () => {
-  await expect(element(by.id("Search Podcasts Screen"))).toBeVisible()
+  await expect(element(by.id("Search"))).toBeVisible()
 
   const searchField = await element(by.id("Search Field"))
 
@@ -10,8 +10,8 @@ const showPodcastEpisodes = async () => {
 
   await element(by.label("The Ben Shapiro Show")).tap()
 
-  await expect(element(by.id("Search Podcasts Screen"))).not.toBeVisible()
-  await expect(element(by.id("Podcast Episodes Screen"))).toBeVisible()
+  await expect(element(by.id("Search"))).not.toBeVisible()
+  await expect(element(by.id("Episodes"))).toBeVisible()
   await expect(
     element(by.label("The Ben Shapiro Show")).atIndex(0),
   ).toBeVisible()
@@ -24,7 +24,9 @@ const showPodcastEpisodes = async () => {
     ),
   ).toBeVisible()
 
-  await element(by.label("Back")).tap()
+  await element(by.traits(["button"]))
+    .atIndex(0)
+    .tap()
 
   await element(by.label("The Laura Ingraham Podcast")).tap()
   await element(by.label("PODCASTONE"))

@@ -5,7 +5,7 @@ import usePodcastFromRssFeed from "../hooks/usePodcastFromRssFeed"
 import styles from "./styles"
 
 type PodcastEpisodesProps = {
-  route: RouteProp<RouteParams, "Podcast Episodes">
+  route: RouteProp<RouteParams, "Episodes">
 }
 
 const PodcastEpisodes = ({ route }: PodcastEpisodesProps) => {
@@ -14,7 +14,7 @@ const PodcastEpisodes = ({ route }: PodcastEpisodesProps) => {
   })
 
   return podcast ? (
-    <View testID="Podcast Episodes Screen">
+    <View testID="Episodes">
       <View style={{ height: 20 }} />
       <View style={styles.podcastDetailsContainer}>
         <View style={styles.podcastDetailsBackground}>
@@ -24,7 +24,11 @@ const PodcastEpisodes = ({ route }: PodcastEpisodesProps) => {
             source={{ uri: podcast.artworkUrl }}
           />
           <View style={styles.podcastDetails}>
-            <Text testID="Podcast Publisher" style={styles.publisherLabel}>
+            <Text style={styles.titleLabel} numberOfLines={2}>
+              {podcast.title}
+            </Text>
+            <View style={{ height: 5 }} />
+            <Text style={styles.publisherLabel} numberOfLines={2}>
               {podcast.publisher.toUpperCase()}
             </Text>
           </View>
@@ -33,10 +37,7 @@ const PodcastEpisodes = ({ route }: PodcastEpisodesProps) => {
       <View style={{ height: 10 }} />
       <View style={styles.podcastDescriptionContainer}>
         <View style={styles.podcastDescriptionBackground}>
-          <Text
-            testID="Podcast Description"
-            style={styles.podcastDescriptionLabel}
-          >
+          <Text style={styles.podcastDescriptionLabel}>
             {podcast.description}
           </Text>
         </View>
