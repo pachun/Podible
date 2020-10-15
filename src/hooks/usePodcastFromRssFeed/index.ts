@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { parseString } from "react-native-xml2js"
-import { fakedPodcastFromRssFeed } from "../../e2e/fakedResponses"
+import podcastFromRss from "./podcastFromRss"
+import { fakedPodcastFromRssFeed } from "../../../e2e/fakedResponses"
 import env from "react-native-config"
 
 interface UsePodcastFromRssFeedProps {
@@ -19,14 +20,9 @@ const usePodcastFromRssFeed = ({ rssFeedUrl }: UsePodcastFromRssFeedProps) => {
 
     const response = await fetch(rssFeedUrl)
     const responseData = await response.text()
-    parseString(responseData, (_: any, rss: any) => {
-      setPodcast({
-        title: rss["rss"]["channel"][0]["title"][0],
-        publisher: rss["rss"]["channel"][0]["itunes:author"][0],
-        description: rss["rss"]["channel"][0]["description"][0],
-        artworkUrl: rss["rss"]["channel"][0]["image"][0]["url"][0],
-      })
-    })
+    parseString(responseData, (_: any, rss: any) =>
+      setPodcast(podcastFromRss(rss)),
+    )
   }
 
   useEffect(() => {

@@ -3,4 +3,5 @@ interface Podcast {
   publisher: string
   description: string
   artworkUrl: string
+  episodes: Episode[]
 }

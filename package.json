@@ -11,6 +11,7 @@
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.7.6",
     "@react-navigation/stack": "^5.9.3",
+    "date-fns": "^2.16.1",
     "expo": "~39.0.2",
     "expo-splash-screen": "~0.6.1",
     "expo-status-bar": "~1.0.2",
@@ -55,7 +56,10 @@
     "collectCoverageFrom": ["src/**/*.{ts,tsx}"],
     "coverageThreshold": {
       "global": {
-        "statements": 100
+        "statements": 100,
+        "branches": 100,
+        "functions": 100,
+        "lines": 100
       }
     },
     "coveragePathIgnorePatterns": [

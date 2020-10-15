@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
   },
   podcastPublisher: {
     fontSize: 12,
+    fontWeight: "bold",
     color: "#7f7f7e",
     maxWidth: 250,
   },

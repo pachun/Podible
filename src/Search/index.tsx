@@ -4,11 +4,11 @@ import PodcastSearchResult from "./PodcastSearchResult"
 import usePodcastSearchResults from "../hooks/usePodcastSearchResults"
 import styles from "./styles"
 
-interface SearchPodcastProps {
+interface SearchProps {
   navigation: NavigationProp
 }
 
-const SearchPodcasts = ({ navigation }: SearchPodcastProps) => {
+const Search = ({ navigation }: SearchProps) => {
   const [searchFieldText, setSearchFieldText] = useState<string>("")
 
   const { podcastSearchResults } = usePodcastSearchResults({
@@ -48,4 +48,4 @@ const SearchPodcasts = ({ navigation }: SearchPodcastProps) => {
   )
 }
 
-export default SearchPodcasts
+export default Search

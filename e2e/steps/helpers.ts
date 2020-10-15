@@ -20,3 +20,5 @@ export const expectLabelsToBeVisible = async (labels: string[]) =>
     labels,
     async label => await expect(element(by.label(label))).toBeVisible(),
   )
+
+export const backButton = element(by.traits(["button"])).atIndex(0)

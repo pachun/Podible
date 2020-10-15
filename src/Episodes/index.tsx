@@ -1,49 +1,31 @@
 import React from "react"
-import { Image, Text, View } from "react-native"
+import { FlatList, View } from "react-native"
 import { RouteProp } from "@react-navigation/native"
+import PodcastDescription from "./PodcastDescription"
+import Episode from "./Episode"
 import usePodcastFromRssFeed from "../hooks/usePodcastFromRssFeed"
-import styles from "./styles"
 
-type PodcastEpisodesProps = {
+type EpisodesProps = {
   route: RouteProp<RouteParams, "Episodes">
 }
 
-const PodcastEpisodes = ({ route }: PodcastEpisodesProps) => {
+const Episodes = ({ route }: EpisodesProps) => {
   const { podcast } = usePodcastFromRssFeed({
     rssFeedUrl: route.params.podcastSearchResult.rssFeedUrl,
   })
 
+  const keyExtractor = <T,>(_: T, position: number) => position.toString()
+
   return podcast ? (
     <View testID="Episodes">
-      <View style={{ height: 20 }} />
-      <View style={styles.podcastDetailsContainer}>
-        <View style={styles.podcastDetailsBackground}>
-          <Image
-            style={styles.podcastArtwork}
-            testID="Podcast Artwork"
-            source={{ uri: podcast.artworkUrl }}
-          />
-          <View style={styles.podcastDetails}>
-            <Text style={styles.titleLabel} numberOfLines={2}>
-              {podcast.title}
-            </Text>
-            <View style={{ height: 5 }} />
-            <Text style={styles.publisherLabel} numberOfLines={2}>
-              {podcast.publisher.toUpperCase()}
-            </Text>
-          </View>
-        </View>
-      </View>
-      <View style={{ height: 10 }} />
-      <View style={styles.podcastDescriptionContainer}>
-        <View style={styles.podcastDescriptionBackground}>
-          <Text style={styles.podcastDescriptionLabel}>
-            {podcast.description}
-          </Text>
-        </View>
-      </View>
+      <FlatList
+        ListHeaderComponent={<PodcastDescription podcast={podcast} />}
+        data={podcast.episodes}
+        keyExtractor={keyExtractor}
+        renderItem={({ item: episode }) => <Episode episode={episode} />}
+      />
     </View>
   ) : null
 }
 
-export default PodcastEpisodes
+export default Episodes
