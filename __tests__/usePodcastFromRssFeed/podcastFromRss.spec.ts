@@ -18,7 +18,7 @@ describe("podcastFromRss(rss: any)", () => {
               },
               {
                 title: "episode without audio",
-                pubDate: new Date().toString(),
+                pubDate: [new Date().toString()],
               },
             ],
           },

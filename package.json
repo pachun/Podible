@@ -24,6 +24,8 @@
     "react-native-reanimated": "^1.13.1",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "^2.11.0",
+    "react-native-swift": "^1.2.3",
+    "react-native-track-player": "^1.2.3",
     "react-native-unimodules": "~0.11.0",
     "react-native-web": "~0.13.7",
     "react-native-xml2js": "^1.0.3"
@@ -53,7 +55,9 @@
   "jest": {
     "preset": "jest-expo",
     "collectCoverage": true,
-    "collectCoverageFrom": ["src/**/*.{ts,tsx}"],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}"
+    ],
     "coverageThreshold": {
       "global": {
         "statements": 100,
@@ -66,7 +70,11 @@
       "<rootDir>/src/types",
       "<rootDir>/src/App.tsx"
     ],
-    "testPathIgnorePatterns": ["<rootDir>/__tests__/helpers"],
-    "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"]
+    "testPathIgnorePatterns": [
+      "<rootDir>/__tests__/helpers"
+    ],
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
+    ]
   }
 }

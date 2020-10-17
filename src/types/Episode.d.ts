@@ -4,4 +4,6 @@ interface Episode {
   publishedOn: Date
   duration: number
   audioUrl: string
+  artworkUrl: string
+  publisher: string
 }

@@ -13,6 +13,8 @@ const podcastsKeyedByRssFeedUrl: { [key: string]: Podcast } = {
         description: "description",
         duration: 600,
         audioUrl: "",
+        artworkUrl: "",
+        publisher: "",
       },
       {
         title: "Matthew Yglesias | The Ben Shapiro Show Sunday Special Ep. 99",
@@ -20,6 +22,8 @@ const podcastsKeyedByRssFeedUrl: { [key: string]: Podcast } = {
         description: "description",
         duration: 600,
         audioUrl: "",
+        artworkUrl: "",
+        publisher: "",
       },
     ],
   },
@@ -38,6 +42,8 @@ const podcastsKeyedByRssFeedUrl: { [key: string]: Podcast } = {
         description: "description",
         duration: 600,
         audioUrl: "",
+        artworkUrl: "",
+        publisher: "",
       },
       {
         title:
@@ -46,6 +52,8 @@ const podcastsKeyedByRssFeedUrl: { [key: string]: Podcast } = {
         description: "description",
         duration: 600,
         audioUrl: "",
+        artworkUrl: "",
+        publisher: "",
       },
     ],
   },

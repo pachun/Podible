@@ -1,11 +1,74 @@
 import React from "react"
-import { waitFor, render } from "@testing-library/react-native"
+import { fireEvent, waitFor, render } from "@testing-library/react-native"
 import { PodcastSearchResultFactory } from "./helpers/factories"
 import { mockFetch } from "./helpers/mocks"
 
 import Episodes from "../src/Episodes"
 
+const mockTrackPlayerStop = jest.fn()
+const mockTrackPlayerAdd = jest.fn()
+const mockTrackPlayerPlay = jest.fn()
+
+jest.mock("react-native-track-player", () => ({
+  stop: () => mockTrackPlayerStop(),
+  add: (arg: any) => mockTrackPlayerAdd(arg),
+  play: () => mockTrackPlayerPlay(),
+}))
+
 describe("The Episodes Screen", () => {
+  it("plays episodes when they're tapped", async () => {
+    const podcastSearchResult = PodcastSearchResultFactory({
+      rssFeedUrl: "some.feed.url.A",
+    })
+
+    mockFetch(
+      "some.feed.url.A",
+      `
+      <rss>
+        <channel>
+          <title>title A</title>
+          <itunes:author>publisher A</itunes:author>
+          <description>description A</description>
+          <image><url>artworkUrlA</url></image>
+          <item>
+            <itunes:title>podcast A episode 1 title</itunes:title>
+            <pubDate>Mon, 21 Sep 2019 16:45:00 -0000</pubDate>
+            <itunes:summary>podcast A episode 1 description</itunes:summary>
+            <itunes:duration>2474</itunes:duration>
+            <enclosure url="mp3.url"/>
+          </item>
+        </channel>
+      </rss>
+      `,
+    )
+
+    const { getByText, getByTestId } = render(
+      <Episodes
+        route={{
+          key: "",
+          name: "Episodes",
+          params: { podcastSearchResult },
+        }}
+      />,
+    )
+
+    await waitFor(() => getByTestId("Podcast Artwork"))
+
+    fireEvent(getByText("podcast A episode 1 title"), "press")
+
+    expect(mockTrackPlayerStop).toHaveBeenCalledTimes(1)
+    expect(mockTrackPlayerAdd).toHaveBeenCalledWith([
+      {
+        id: "mp3.url",
+        title: "podcast A episode 1 title",
+        artist: "publisher A",
+        artwork: "artworkUrlA",
+        url: "mp3.url",
+      },
+    ])
+    expect(mockTrackPlayerPlay).toHaveBeenCalledTimes(1)
+  })
+
   it("shows a loading spinner until the podcast episodes are loaded", async () => {
     const podcastSearchResult = PodcastSearchResultFactory({
       rssFeedUrl: "url",
@@ -126,21 +189,21 @@ describe("The Episodes Screen", () => {
           <image><url>artworkUrlB</url></image>
           <item>
             <itunes:title>podcast B episode 1 title</itunes:title>
-            <pubDate>Fri, 13 Dec 2019 17:52:00 -0000</pubDate>
+            <pubDate>Mon, 21 Dec 2018 16:45:00 -0000</pubDate>
             <itunes:summary>podcast B episode 1 description</itunes:summary>
-            <itunes:duration>2222</itunes:duration>
+            <itunes:duration>2473</itunes:duration>
             <enclosure url="mp3.url"/>
           </item>
           <item>
             <itunes:title>podcast B episode 2 title</itunes:title>
-            <pubDate>Thu, 12 Dec 2019 17:33:00 -0000</pubDate>
+            <pubDate>Sun, 22 Dec 2018 12:00:00 -0000</pubDate>
             <itunes:summary>podcast B episode 2 description</itunes:summary>
-            <itunes:duration>3333</itunes:duration>
+            <itunes:duration>1110</itunes:duration>
             <enclosure url="mp3.url"/>
           </item>
         </channel>
       </rss>
-    `,
+      `,
     )
 
     const { getByText, getByTestId } = render(
@@ -161,12 +224,13 @@ describe("The Episodes Screen", () => {
     expect(getByTestId("Podcast Artwork").props.source.uri).toEqual(
       "artworkUrlB",
     )
-    expect(getByText("podcast B episode 1 title"))
-    expect(getByText("podcast B episode 2 title"))
-    expect(getByText("DEC 13, 2019 · 37:02"))
-    expect(getByText("DEC 12, 2019 · 55:33"))
 
+    expect(getByText("podcast B episode 1 title"))
+    expect(getByText("DEC 21, 2018 · 41:13"))
     expect(getByText("podcast B episode 1 description"))
+
+    expect(getByText("podcast B episode 2 title"))
+    expect(getByText("DEC 22, 2018 · 18:30"))
     expect(getByText("podcast B episode 2 description"))
   })
 })
