@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { FlatList, TextInput, View } from "react-native"
+import { Ionicons } from "@expo/vector-icons"
 import PodcastSearchResult from "./PodcastSearchResult"
 import usePodcastSearchResults from "../hooks/usePodcastSearchResults"
 import styles from "./styles"
@@ -25,13 +26,18 @@ const Search = ({ navigation }: SearchProps) => {
     <View style={styles.container} testID="Search">
       <View style={{ height: 20 }} />
       <View style={styles.searchFieldContainer}>
-        <TextInput
-          testID="Search Field"
-          placeholder="Search"
-          style={styles.searchField}
-          value={searchFieldText}
-          onChangeText={setSearchFieldText}
-        />
+        <View style={styles.searchFieldBackground}>
+          <View style={styles.searchIconContainer}>
+            <Ionicons name="ios-search" size={24} color="#b6b4ba" />
+          </View>
+          <TextInput
+            testID="Search Field"
+            placeholder="Search"
+            style={styles.searchField}
+            value={searchFieldText}
+            onChangeText={setSearchFieldText}
+          />
+        </View>
       </View>
       <FlatList
         style={styles.podcastSearchResultsList}

@@ -10,15 +10,24 @@ const styles = StyleSheet.create({
   searchFieldContainer: {
     alignItems: "center",
   },
-  searchField: {
+  searchIconContainer: {
+    height: "100%",
+    justifyContent: "center",
+  },
+  searchFieldBackground: {
+    flexDirection: "row",
     backgroundColor: "#e9e9eb",
     borderRadius: 10,
     height: 40,
     width: "90%",
-    paddingLeft: 20,
-    paddingRight: 20,
-    fontSize: 20,
     marginBottom: 5,
+    paddingLeft: 10,
+    paddingRight: 20,
+  },
+  searchField: {
+    paddingLeft: 10,
+    fontSize: 20,
+    width: "100%",
   },
 })
 
