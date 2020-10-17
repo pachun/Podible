@@ -6,6 +6,49 @@ import { mockFetch } from "./helpers/mocks"
 import Episodes from "../src/Episodes"
 
 describe("The Episodes Screen", () => {
+  it("shows a loading spinner until the podcast episodes are loaded", async () => {
+    const podcastSearchResult = PodcastSearchResultFactory({
+      rssFeedUrl: "url",
+    })
+
+    mockFetch(
+      "url",
+      `
+      <rss>
+        <channel>
+          <title>title</title>
+          <itunes:author>publisher</itunes:author>
+          <description>description</description>
+          <image><url>artworkUrl</url></image>
+          <item>
+            <itunes:title></itunes:title>
+            <pubDate>Mon, 21 Sep 2019 16:45:00 -0000</pubDate>
+            <itunes:summary></itunes:summary>
+            <itunes:duration>0</itunes:duration>
+            <enclosure url="mp3.url"/>
+          </item>
+        </channel>
+      </rss>
+      `,
+    )
+
+    const { getByTestId, queryAllByTestId } = render(
+      <Episodes
+        route={{
+          key: "",
+          name: "Episodes",
+          params: { podcastSearchResult },
+        }}
+      />,
+    )
+
+    expect(getByTestId("Loading Spinner"))
+
+    await waitFor(() => getByTestId("Podcast Artwork"))
+
+    expect(queryAllByTestId("Loading Spinner")).toEqual([])
+  })
+
   it("describes podcast A", async () => {
     const podcastSearchResult = PodcastSearchResultFactory({
       rssFeedUrl: "some.feed.url.A",
