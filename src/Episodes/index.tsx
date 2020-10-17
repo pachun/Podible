@@ -20,6 +20,7 @@ const Episodes = ({ route }: EpisodesProps) => {
   return podcast ? (
     <View testID="Episodes">
       <FlatList
+        scrollIndicatorInsets={{ right: 1 }}
         ListHeaderComponent={<PodcastDescription podcast={podcast} />}
         data={podcast.episodes}
         keyExtractor={keyExtractor}
