@@ -5,6 +5,23 @@ import { mockFetch } from "./helpers/mocks"
 import Search from "../src/Search"
 
 describe("The Search Screen", () => {
+  it("shows a button to clear the search text", () => {
+    const { getByPlaceholderText, queryAllByTestId, getByTestId } = render(
+      <Search navigation={{}} />,
+    )
+
+    expect(queryAllByTestId("Clear Search Text Button")).toEqual([])
+
+    const searchField = getByPlaceholderText("Search")
+
+    fireEvent(searchField, "onChangeText", "ABC")
+
+    const clearSearchTextButton = getByTestId("Clear Search Text Button")
+    fireEvent(clearSearchTextButton, "press")
+
+    expect(searchField.props.value).toEqual("")
+  })
+
   it("searches for political podcasts", async () => {
     const searchText = "Politics"
 

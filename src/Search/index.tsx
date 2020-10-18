@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import { FlatList, TextInput, View } from "react-native"
-import { Ionicons } from "@expo/vector-icons"
+import { FlatList, TextInput, TouchableOpacity, View } from "react-native"
+import { Ionicons, MaterialIcons } from "@expo/vector-icons"
 import PodcastSearchResult from "./PodcastSearchResult"
 import usePodcastSearchResults from "../hooks/usePodcastSearchResults"
 import styles from "./styles"
@@ -22,6 +22,8 @@ const Search = ({ navigation }: SearchProps) => {
     podcastSearchResult: PodcastSearchResult,
   ) => () => navigation.navigate("Episodes", { podcastSearchResult })
 
+  const clearSearchFieldText = () => setSearchFieldText("")
+
   return (
     <View style={styles.container} testID="Search">
       <View style={{ height: 20 }} />
@@ -37,6 +39,15 @@ const Search = ({ navigation }: SearchProps) => {
             value={searchFieldText}
             onChangeText={setSearchFieldText}
           />
+          {searchFieldText !== "" && (
+            <TouchableOpacity
+              onPress={clearSearchFieldText}
+              testID="Clear Search Text Button"
+              style={styles.clearSearchFieldTextButton}
+            >
+              <MaterialIcons name="clear" size={26} color="#b6b4ba" />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
       <FlatList
