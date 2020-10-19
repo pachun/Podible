@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/bottom-tabs": "^5.9.2",
     "@react-navigation/native": "^5.7.6",
     "@react-navigation/stack": "^5.9.3",
     "date-fns": "^2.16.1",
@@ -55,9 +56,7 @@
   "jest": {
     "preset": "jest-expo",
     "collectCoverage": true,
-    "collectCoverageFrom": [
-      "src/**/*.{ts,tsx}"
-    ],
+    "collectCoverageFrom": ["src/**/*.{ts,tsx}"],
     "coverageThreshold": {
       "global": {
         "statements": 100,
@@ -66,15 +65,8 @@
         "lines": 100
       }
     },
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/src/types",
-      "<rootDir>/src/App.tsx"
-    ],
-    "testPathIgnorePatterns": [
-      "<rootDir>/__tests__/helpers"
-    ],
-    "setupFilesAfterEnv": [
-      "@testing-library/jest-native/extend-expect"
-    ]
+    "coveragePathIgnorePatterns": ["<rootDir>/src/types"],
+    "testPathIgnorePatterns": ["<rootDir>/__tests__/helpers"],
+    "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"]
   }
 }

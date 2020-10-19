@@ -54,6 +54,7 @@ const Search = ({ navigation }: SearchProps) => {
         style={styles.podcastSearchResultsList}
         data={podcastSearchResults}
         keyExtractor={keyExtractor}
+        ListFooterComponent={<View style={{ height: 30 }} />}
         renderItem={({ item: podcastSearchResult }) => (
           <PodcastSearchResult
             podcastSearchResult={podcastSearchResult}

@@ -96,6 +96,12 @@ const showPodcastEpisodes = async () => {
   await expectLabelsNotToBeVisible(
     theBenShapiroShow.episodes.map(episode => episode.title),
   )
+
+  await expect(element(by.id("Mini Player"))).not.toBeVisible()
+
+  await element(by.label(theLauraIngrahamPodcast.episodes[0].title)).tap()
+
+  await expect(element(by.id("Mini Player"))).toBeVisible()
 }
 
 export default showPodcastEpisodes

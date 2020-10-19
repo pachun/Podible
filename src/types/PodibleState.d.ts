@@ -1,0 +1,3 @@
+interface PodibleState {
+  track?: Track
+}

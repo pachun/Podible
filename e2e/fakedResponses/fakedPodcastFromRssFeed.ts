@@ -41,8 +41,10 @@ const podcastsKeyedByRssFeedUrl: { [key: string]: Podcast } = {
         publishedOn: new Date(),
         description: "description",
         duration: 600,
-        audioUrl: "",
-        artworkUrl: "",
+        audioUrl:
+          "https://pdst.fm/e/chtbl.com/track/E2G895/aw.noxsolutions.com/launchpod/adswizz/1826/Laura09-30-19FinalSegment1_v413_8fd57c7d.mp3?awCollectionId=1826&awEpisodeId=3696978a-be4c-467f-a050-bc168fd57c7d&introSegment=true",
+        artworkUrl:
+          "https://img.podcastone.com/images/1826/LauraIngrahamLogo-3000x3000.jpg",
         publisher: "",
       },
       {

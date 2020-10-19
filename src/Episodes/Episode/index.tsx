@@ -1,5 +1,6 @@
-import React, { useMemo } from "react"
+import React, { useContext, useMemo } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
+import { PodibleContext } from "../../Provider"
 import TrackPlayer from "react-native-track-player"
 import humanReadableDuration from "./humanReadableDuration"
 import shortDate from "./shortDate"
@@ -10,6 +11,7 @@ interface EpisodeProps {
 }
 
 const Episode = ({ episode }: EpisodeProps) => {
+  const { setTrack } = useContext(PodibleContext)
   const duration = useMemo(() => humanReadableDuration(episode.duration), [
     episode.duration,
   ])
@@ -23,6 +25,7 @@ const Episode = ({ episode }: EpisodeProps) => {
       artwork: episode.artworkUrl,
       url: episode.audioUrl,
     }
+    setTrack(track)
     TrackPlayer.add([track])
     TrackPlayer.play()
   }

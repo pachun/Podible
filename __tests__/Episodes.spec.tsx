@@ -3,6 +3,7 @@ import { fireEvent, waitFor, render } from "@testing-library/react-native"
 import { PodcastSearchResultFactory } from "./helpers/factories"
 import { mockFetch } from "./helpers/mocks"
 
+import Provider from "../src/Provider"
 import Episodes from "../src/Episodes"
 
 const mockTrackPlayerStop = jest.fn()
@@ -43,13 +44,15 @@ describe("The Episodes Screen", () => {
     )
 
     const { getByText, getByTestId } = render(
-      <Episodes
-        route={{
-          key: "",
-          name: "Episodes",
-          params: { podcastSearchResult },
-        }}
-      />,
+      <Provider>
+        <Episodes
+          route={{
+            key: "",
+            name: "Episodes",
+            params: { podcastSearchResult },
+          }}
+        />
+      </Provider>,
     )
 
     await waitFor(() => getByTestId("Podcast Artwork"))
