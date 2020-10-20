@@ -5,7 +5,7 @@
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest"
+    "test": "jest --testTimeout=10000"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
