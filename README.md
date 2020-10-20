@@ -2,21 +2,21 @@
 
 A React Native Podcast player.
 
-# Install
+## Install
 
 ```bash
 yarn
 npx pod-install
 ```
 
-# Run
+## Run
 
 ```bash
 yarn start # leave running
 yarn ios # run in separate terminal tab
 ```
 
-# Test
+## Test
 
 Run end to end (e2e) tests using [Detox](https://github.com/wix/Detox):
 
@@ -31,7 +31,7 @@ Run unit tests:
 yarn test
 ```
 
-# View Coverage Report
+## View Coverage Report
 
 ```bash
 open coverage/lcov-report/index.html
