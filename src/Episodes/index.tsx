@@ -18,8 +18,9 @@ const Episodes = ({ route }: EpisodesProps) => {
   const keyExtractor = <T,>(_: T, position: number) => position.toString()
 
   return podcast ? (
-    <View testID="Episodes">
+    <View testID="Episodes" style={styles.container}>
       <FlatList
+        style={styles.container}
         scrollIndicatorInsets={{ right: 1 }}
         ListHeaderComponent={<PodcastDescription podcast={podcast} />}
         ListFooterComponent={<View style={{ height: 30 }} />}

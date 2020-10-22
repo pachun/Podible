@@ -5,6 +5,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useTrackPlayerEvents } from "react-native-track-player/lib/hooks"
 import TrackPlayer from "react-native-track-player"
 import { PodibleContext } from "../Provider"
+import JumpForwardButton from "./JumpForwardButton"
+import JumpBackwardButton from "./JumpBackwardButton"
 import styles from "./styles"
 
 const MiniPlayer = () => {
@@ -34,6 +36,7 @@ const MiniPlayer = () => {
       ]}
     >
       <View style={{ width: 60 }} />
+      <JumpBackwardButton />
       {playerState === "playing" && (
         <TouchableOpacity testID="Pause Button" onPress={pause}>
           <Ionicons name="ios-pause" size={50} color="black" />
@@ -47,6 +50,7 @@ const MiniPlayer = () => {
       {(playerState === "buffering" || playerState === "loading") && (
         <ActivityIndicator testID="Loading Spinner" size="large" />
       )}
+      <JumpForwardButton />
       <Image
         testID="Currently Playing Artwork"
         source={{ uri: track.artwork }}

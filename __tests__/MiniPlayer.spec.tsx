@@ -1,7 +1,8 @@
 import React, { useEffect } from "react"
-import { fireEvent, render } from "@testing-library/react-native"
+import { fireEvent, render, waitFor } from "@testing-library/react-native"
 
 import Provider from "../src/Provider"
+import jumpInterval from "../src/setup-react-native-track-player/jump-interval"
 import MiniPlayer from "../src/MiniPlayer"
 
 jest.mock("react-native-safe-area-context", () => ({
@@ -10,12 +11,16 @@ jest.mock("react-native-safe-area-context", () => ({
 
 const mockPlay = jest.fn()
 const mockPause = jest.fn()
+const mockGetPosition = jest.fn()
+const mockSeekTo = jest.fn()
 jest.mock("react-native-track-player", () => ({
   TrackPlayerEvents: {
     PLAYBACK_STATE: "playback-state",
   },
   play: () => mockPlay(),
   pause: () => mockPause(),
+  getPosition: () => mockGetPosition(),
+  seekTo: (arg: number) => mockSeekTo(arg),
 }))
 
 const mockUseTrackPlayerEvents = jest.fn()
@@ -39,6 +44,60 @@ const mockPlaybackState = (playbackState: string) => {
 }
 
 describe("The Mini Player", () => {
+  it("shows a button to skip backward", async () => {
+    const position = 50
+    mockGetPosition.mockImplementation(() => position)
+
+    const { getByTestId } = render(
+      <Provider
+        initialState={{
+          track: {
+            id: "uniqueId",
+            title: "",
+            artist: "",
+            artwork: "artwork.url",
+            url: "url",
+          },
+        }}
+      >
+        <MiniPlayer />
+      </Provider>,
+    )
+
+    fireEvent(getByTestId("Skip Backward"), "press")
+
+    await waitFor(() =>
+      expect(mockSeekTo).toHaveBeenCalledWith(position - jumpInterval),
+    )
+  })
+
+  it("shows a button to skip forward", async () => {
+    const position = 20
+    mockGetPosition.mockImplementation(() => position)
+
+    const { getByTestId } = render(
+      <Provider
+        initialState={{
+          track: {
+            id: "uniqueId",
+            title: "",
+            artist: "",
+            artwork: "artwork.url",
+            url: "url",
+          },
+        }}
+      >
+        <MiniPlayer />
+      </Provider>,
+    )
+
+    fireEvent(getByTestId("Skip Forward"), "press")
+
+    await waitFor(() =>
+      expect(mockSeekTo).toHaveBeenCalledWith(position + jumpInterval),
+    )
+  })
+
   it("shows a pause button when audio is playing", () => {
     mockPlaybackState("paused")
 

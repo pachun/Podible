@@ -11,6 +11,9 @@ jest.mock("react-native-track-player", () => ({
   updateOptions: (arg: any) => mockUpdateOptions(arg),
   CAPABILITY_PLAY: "CAPABILITY_PLAY",
   CAPABILITY_PAUSE: "CAPABILITY_PAUSE",
+  CAPABILITY_STOP: "CAPABILITY_STOP",
+  CAPABILITY_JUMP_FORWARD: "CAPABILITY_JUMP_FORWARD",
+  CAPABILITY_JUMP_BACKWARD: "CAPABILITY_JUMP_BACKWARD",
 }))
 
 describe("SetupReactNativeTrackPlayer()", () => {
@@ -28,9 +31,16 @@ describe("SetupReactNativeTrackPlayer()", () => {
     )
   })
 
-  it("enables playing and pausing audio", () => {
+  it("enables playing, pausing, jumping, and stopping audio audio", () => {
     expect(mockUpdateOptions).toHaveBeenCalledWith({
-      capabilities: ["CAPABILITY_PLAY", "CAPABILITY_PAUSE"],
+      capabilities: [
+        "CAPABILITY_PLAY",
+        "CAPABILITY_PAUSE",
+        "CAPABILITY_STOP",
+        "CAPABILITY_JUMP_FORWARD",
+        "CAPABILITY_JUMP_BACKWARD",
+      ],
+      jumpInterval: 30,
     })
   })
 })

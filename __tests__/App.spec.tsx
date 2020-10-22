@@ -3,6 +3,7 @@ import { waitFor, render } from "@testing-library/react-native"
 
 import App from "../src/App"
 
+jest.mock("react-native/Libraries/Animated/src/NativeAnimatedHelper")
 jest.mock("../src/setup-react-native-track-player", () => async () => {})
 jest.mock("react-native-track-player", () => ({
   TrackPlayerEvents: {
