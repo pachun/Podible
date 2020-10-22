@@ -1,4 +1,5 @@
 interface PodibleContextType {
-  track?: Track
-  setTrack: (track: Track) => void
+  episode?: Episode
+  setEpisode: (episode: Episode) => void
+  playbackState: string
 }

@@ -1,3 +1,4 @@
 interface PodibleState {
-  track?: Track
+  episode?: Episode
+  playbackState: string
 }

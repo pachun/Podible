@@ -4,25 +4,29 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "eject": "expo eject",
-    "test": "jest --testTimeout=10000"
+    "eject": "expo eject"
   },
   "dependencies": {
+    "@bugsnag/react-native": "^7.5.1",
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-community/slider": "^3.0.3",
     "@react-navigation/bottom-tabs": "^5.9.2",
     "@react-navigation/native": "^5.7.6",
     "@react-navigation/stack": "^5.9.3",
     "date-fns": "^2.16.1",
     "expo": "~39.0.2",
+    "expo-analytics-amplitude": "~8.3.1",
+    "expo-haptics": "^8.3.0",
     "expo-splash-screen": "~0.6.1",
     "expo-status-bar": "~1.0.2",
-    "expo-updates": "~0.3.3",
+    "expo-updates": "^0.3.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "0.63.3",
-    "react-native-config": "^1.3.3",
+    "react-native-device-info": "^7.0.2",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-reanimated": "^1.13.1",
+    "react-native-render-html": "^4.2.4",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "^2.11.0",
     "react-native-swift": "^1.2.3",
@@ -33,40 +37,14 @@
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
-    "@testing-library/jest-native": "^3.4.3",
-    "@testing-library/react-native": "^7.0.2",
-    "@types/detox": "^16.4.1",
-    "@types/jest": "^26.0.14",
     "@types/react": "~16.9.35",
     "@types/react-dom": "~16.9.8",
     "@types/react-native": "~0.63.2",
-    "babel-jest": "~25.2.6",
-    "detox": "^17.8.3",
-    "jest": "^26.5.2",
-    "jest-circus": "^26.5.2",
-    "jest-expo": "^39.0.0",
     "prettier": "^2.1.2",
     "react-native-web": "~0.13.7",
-    "react-test-renderer": "~16.13.1",
     "typescript": "~3.9.2"
   },
   "private": true,
   "name": "Podible",
-  "version": "1.0.0",
-  "jest": {
-    "preset": "jest-expo",
-    "collectCoverage": true,
-    "collectCoverageFrom": ["src/**/*.{ts,tsx}"],
-    "coverageThreshold": {
-      "global": {
-        "statements": 100,
-        "branches": 100,
-        "functions": 100,
-        "lines": 100
-      }
-    },
-    "coveragePathIgnorePatterns": ["<rootDir>/src/types"],
-    "testPathIgnorePatterns": ["<rootDir>/__tests__/helpers"],
-    "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"]
-  }
+  "version": "1.0.0"
 }

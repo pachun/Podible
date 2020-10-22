@@ -1,15 +1,15 @@
 import React, { useState } from "react"
 import { FlatList, TextInput, TouchableOpacity, View } from "react-native"
 import { Ionicons, MaterialIcons } from "@expo/vector-icons"
+import * as Amplitude from "expo-analytics-amplitude"
+import { useNavigation } from "@react-navigation/native"
 import PodcastSearchResult from "./PodcastSearchResult"
 import usePodcastSearchResults from "../hooks/usePodcastSearchResults"
 import styles from "./styles"
 
-interface SearchProps {
-  navigation: NavigationProp
-}
+const Search = () => {
+  const navigation = useNavigation()
 
-const Search = ({ navigation }: SearchProps) => {
   const [searchFieldText, setSearchFieldText] = useState<string>("")
 
   const { podcastSearchResults } = usePodcastSearchResults({
@@ -20,7 +20,11 @@ const Search = ({ navigation }: SearchProps) => {
 
   const showPodcastEpisodes = (
     podcastSearchResult: PodcastSearchResult,
-  ) => () => navigation.navigate("Episodes", { podcastSearchResult })
+  ) => () => {
+    !__DEV__ &&
+      Amplitude.logEventWithProperties("Viewed Episodes", podcastSearchResult)
+    navigation.navigate("Episodes", { podcastSearchResult })
+  }
 
   const clearSearchFieldText = () => setSearchFieldText("")
 
@@ -45,7 +49,7 @@ const Search = ({ navigation }: SearchProps) => {
               testID="Clear Search Text Button"
               style={styles.clearSearchFieldTextButton}
             >
-              <MaterialIcons name="clear" size={26} color="#b6b4ba" />
+              <MaterialIcons name="cancel" size={26} color="#b6b4ba" />
             </TouchableOpacity>
           )}
         </View>

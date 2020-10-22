@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchFieldContainer: {
+    width: "100%",
     alignItems: "center",
   },
   searchIconContainer: {

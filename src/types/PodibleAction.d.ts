@@ -1,4 +1,4 @@
 interface PodibleAction {
-  type: "SET_TRACK"
+  type: "SET_EPISODE"
   value: any
 }

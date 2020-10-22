@@ -1,7 +1,9 @@
 import React, { useContext, useMemo } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
-import { PodibleContext } from "../../Provider"
+import * as Amplitude from "expo-analytics-amplitude"
 import TrackPlayer from "react-native-track-player"
+import { PodibleContext } from "../../Provider"
+import trackPlayerTrackFromEpisode from "../../shared/trackPlayerTrackFromEpisode"
 import humanReadableDuration from "./humanReadableDuration"
 import shortDate from "./shortDate"
 import styles from "./styles"
@@ -11,22 +13,16 @@ interface EpisodeProps {
 }
 
 const Episode = ({ episode }: EpisodeProps) => {
-  const { setTrack } = useContext(PodibleContext)
+  const { setEpisode } = useContext(PodibleContext)
   const duration = useMemo(() => humanReadableDuration(episode.duration), [
     episode.duration,
   ])
 
   const play = () => {
+    Amplitude.logEventWithProperties("Began Listening To Episode", { episode })
     TrackPlayer.stop()
-    const track = {
-      id: episode.audioUrl,
-      title: episode.title,
-      artist: episode.publisher,
-      artwork: episode.artworkUrl,
-      url: episode.audioUrl,
-    }
-    setTrack(track)
-    TrackPlayer.add([track])
+    setEpisode(episode)
+    TrackPlayer.add([trackPlayerTrackFromEpisode(episode)])
     TrackPlayer.play()
   }
 

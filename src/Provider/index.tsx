@@ -1,8 +1,13 @@
-import React from "react"
+import React, { useState } from "react"
 import { useReducer, createContext } from "react"
 import reducer from "./reducer"
 
-const defaultInitialState: PodibleState = {}
+import TrackPlayer from "react-native-track-player"
+import { useTrackPlayerEvents } from "react-native-track-player/lib/hooks"
+
+const defaultInitialState: PodibleState = {
+  playbackState: "unknown",
+}
 
 export const PodibleContext = createContext<Partial<PodibleContextType>>({})
 
@@ -17,10 +22,25 @@ const Provider = ({
     reducer,
     initialState || defaultInitialState,
   )
+
+  const [playbackState, setPlaybackState] = useState<string>("unknown")
+  useTrackPlayerEvents(
+    // @ts-ignore
+    [TrackPlayer.TrackPlayerEvents.PLAYBACK_STATE],
+    // @ts-ignore
+    event => {
+      setPlaybackState(event.state)
+      console.log(event)
+    },
+  )
+
   const value: PodibleContextType = {
-    track: state.track,
-    setTrack: (track: Track) => dispatch({ type: "SET_TRACK", value: track }),
+    episode: state.episode,
+    setEpisode: (episode: Episode) =>
+      dispatch({ type: "SET_EPISODE", value: episode }),
+    playbackState,
   }
+
   return (
     <PodibleContext.Provider value={value}>{children}</PodibleContext.Provider>
   )

@@ -1,29 +1,22 @@
-import React, { useContext, useState } from "react"
-import { ActivityIndicator, Image, TouchableOpacity, View } from "react-native"
-import { Ionicons } from "@expo/vector-icons"
+import React, { useContext } from "react"
+import { Image, TouchableOpacity, View } from "react-native"
+import * as Haptics from "expo-haptics"
+import { Entypo } from "@expo/vector-icons"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { useTrackPlayerEvents } from "react-native-track-player/lib/hooks"
-import TrackPlayer from "react-native-track-player"
+import { useNavigation } from "@react-navigation/native"
 import { PodibleContext } from "../Provider"
 import JumpForwardButton from "./JumpForwardButton"
 import JumpBackwardButton from "./JumpBackwardButton"
+import trackPlayerTrackFromEpisode from "../shared/trackPlayerTrackFromEpisode"
+import PlayPauseButton from "./PlayPauseButton"
 import styles from "./styles"
 
 const MiniPlayer = () => {
+  const navigation = useNavigation()
   const insets = useSafeAreaInsets()
 
-  const { track } = useContext(PodibleContext)
-  const [playerState, setPlayerState] = useState<string>("")
-
-  const pause = () => TrackPlayer.pause()
-  const play = () => TrackPlayer.play()
-
-  useTrackPlayerEvents(
-    // @ts-ignore
-    [TrackPlayer.TrackPlayerEvents.PLAYBACK_STATE],
-    // @ts-ignore
-    event => setPlayerState(event.state),
-  )
+  const { episode } = useContext(PodibleContext)
+  const track = episode && trackPlayerTrackFromEpisode(episode)
 
   return Boolean(track) ? (
     <View
@@ -35,21 +28,18 @@ const MiniPlayer = () => {
         },
       ]}
     >
-      <View style={{ width: 60 }} />
+      <TouchableOpacity
+        style={{ width: 60, justifyContent: "center", alignItems: "center" }}
+        testID="Show Episode Details"
+        onPress={() => {
+          Haptics.impactAsync()
+          navigation.navigate("Details")
+        }}
+      >
+        <Entypo name="chevron-small-up" size={60} color="black" />
+      </TouchableOpacity>
       <JumpBackwardButton />
-      {playerState === "playing" && (
-        <TouchableOpacity testID="Pause Button" onPress={pause}>
-          <Ionicons name="ios-pause" size={50} color="black" />
-        </TouchableOpacity>
-      )}
-      {playerState === "paused" && (
-        <TouchableOpacity testID="Play Button" onPress={play}>
-          <Ionicons name="ios-play" size={50} color="black" />
-        </TouchableOpacity>
-      )}
-      {(playerState === "buffering" || playerState === "loading") && (
-        <ActivityIndicator testID="Loading Spinner" size="large" />
-      )}
+      <PlayPauseButton />
       <JumpForwardButton />
       <Image
         testID="Currently Playing Artwork"
