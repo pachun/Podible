@@ -1,3 +1,5 @@
+import TrackPlayer, { Track } from "react-native-track-player"
+
 const trackPlayerTrackFromEpisode = (episode: Episode): Track => ({
   id: episode.audioUrl,
   title: episode.title,
