@@ -8,80 +8,38 @@ import JumpForwardButton from "./JumpForwardButton"
 import JumpBackwardButton from "./JumpBackwardButton"
 import PlayPauseButton from "./PlayPauseButton"
 import TrackPlayerSlider from "./TrackPlayerSlider"
+import styles from "./styles"
 
 const Details = () => {
   const navigation = useNavigation()
   const { episode } = useContext(PodibleContext)
+  const goBack = () => {
+    Haptics.impactAsync()
+    navigation.goBack()
+  }
 
   return (
-    <View
-      testID="Details"
-      style={{
-        flex: 1,
-        alignItems: "center",
-        backgroundColor: "white",
-      }}
-    >
-      <TouchableOpacity
-        onPress={() => {
-          Haptics.impactAsync()
-          navigation.goBack()
-        }}
-        style={{
-          width: "100%",
-          height: 100,
-          justifyContent: "flex-end",
-          alignItems: "center",
-        }}
-      >
+    <View testID="Details" style={styles.container}>
+      <TouchableOpacity onPress={goBack} style={styles.backButton}>
         <Entypo name="chevron-small-down" size={60} color="black" />
       </TouchableOpacity>
-      <Image
-        source={{ uri: episode.artworkUrl }}
-        style={{
-          width: "90%",
-          aspectRatio: 1,
-          borderRadius: 10,
-          marginTop: 20,
-        }}
-      />
+      <Image source={{ uri: episode.artworkUrl }} style={styles.artwork} />
       <View style={{ height: 30 }} />
-      <View style={{ width: "100%", alignItems: "center" }}>
-        <Text
-          numberOfLines={2}
-          style={{
-            fontWeight: "bold",
-            fontSize: 24,
-            textAlign: "center",
-            maxWidth: "90%",
-          }}
-        >
+      <View style={styles.titleAndPublisherContainer}>
+        <Text numberOfLines={2} style={styles.title}>
           {episode.title}
         </Text>
         <View style={{ height: 10 }} />
-        <Text
-          numberOfLines={1}
-          style={{
-            fontSize: 24,
-            textAlign: "center",
-            maxWidth: "90%",
-          }}
-        >
+        <Text numberOfLines={1} style={styles.publisher}>
           {episode.publisher}
         </Text>
       </View>
       <View style={{ height: 30 }} />
-      <View style={{ width: "80%" }}>
+      <View style={styles.sliderContainer}>
         <TrackPlayerSlider />
       </View>
       <View style={{ height: 30 }} />
-      <View
-        style={{
-          flexDirection: "row",
-          width: "60%",
-          justifyContent: "space-between",
-        }}
-      >
+      <View style={styles.playbackControlsContainer}>
         <JumpBackwardButton />
         <PlayPauseButton />
         <JumpForwardButton />
