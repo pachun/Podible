@@ -2,11 +2,15 @@ import React, { useContext, useMemo } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import * as Amplitude from "expo-analytics-amplitude"
 import TrackPlayer from "react-native-track-player"
+import he from "he"
 import { PodibleContext } from "../../Provider"
 import trackPlayerTrackFromEpisode from "../../shared/trackPlayerTrackFromEpisode"
 import humanReadableDuration from "./humanReadableDuration"
 import shortDate from "./shortDate"
 import styles from "./styles"
+
+const removeHtml = (s: string) =>
+  he.decode(unescape(s.replace(/(<([^>]+)>)/gi, "")))
 
 interface EpisodeProps {
   episode: Episode
@@ -38,7 +42,7 @@ const Episode = ({ episode }: EpisodeProps) => {
             episode.publishedOn,
           )} · ${duration}`}</Text>
           <View style={{ height: 5 }} />
-          <Text numberOfLines={2}>{episode.description}</Text>
+          <Text numberOfLines={2}>{removeHtml(episode.description)}</Text>
         </View>
       </View>
     </TouchableOpacity>

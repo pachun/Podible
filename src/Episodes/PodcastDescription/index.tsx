@@ -1,5 +1,6 @@
 import React from "react"
 import { Image, Text, View } from "react-native"
+import ShowHtml from "../../shared/ShowHtml"
 import styles from "./styles"
 
 interface PodcastDescriptionProps {
@@ -31,7 +32,7 @@ const PodcastDescription = ({ podcast }: PodcastDescriptionProps) => (
     <View style={styles.podcastDescriptionContainer}>
       <View style={styles.podcastDescriptionBackground}>
         <Text style={styles.podcastDescriptionLabel}>
-          {podcast.description}
+          <ShowHtml html={podcast.description} />
         </Text>
       </View>
     </View>
