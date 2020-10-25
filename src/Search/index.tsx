@@ -43,6 +43,7 @@ const Search = () => {
             value={searchFieldText}
             onChangeText={setSearchFieldText}
             returnKeyType="search"
+            autoCorrect={false}
           />
           {searchFieldText !== "" && (
             <TouchableOpacity
