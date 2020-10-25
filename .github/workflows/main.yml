@@ -11,5 +11,3 @@ jobs:
       run: yarn
     - name: Typecheck
       run: yarn tsc
-    - name: Test
-      run: yarn test
