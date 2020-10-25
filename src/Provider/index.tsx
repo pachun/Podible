@@ -28,10 +28,7 @@ const Provider = ({
     // @ts-ignore
     [TrackPlayer.TrackPlayerEvents.PLAYBACK_STATE],
     // @ts-ignore
-    event => {
-      setPlaybackState(event.state)
-      console.log(event)
-    },
+    event => setPlaybackState(event.state),
   )
 
   const value: PodibleContextType = {
