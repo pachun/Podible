@@ -46,15 +46,25 @@ const Details = () => {
         }}
       />
       <View style={{ height: 30 }} />
-      <View>
-        <Text style={{ fontWeight: "bold", fontSize: 24, textAlign: "center" }}>
+      <View style={{ width: "100%", alignItems: "center" }}>
+        <Text
+          numberOfLines={2}
+          style={{
+            fontWeight: "bold",
+            fontSize: 24,
+            textAlign: "center",
+            maxWidth: "90%",
+          }}
+        >
           {episode.title}
         </Text>
         <View style={{ height: 10 }} />
         <Text
+          numberOfLines={1}
           style={{
             fontSize: 24,
             textAlign: "center",
+            maxWidth: "90%",
           }}
         >
           {episode.publisher}
