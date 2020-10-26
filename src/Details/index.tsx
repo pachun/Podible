@@ -20,7 +20,6 @@ const Details = () => {
     navigation.goBack()
   }
   const hasNotch = insets.bottom > 0
-  console.log(insets)
 
   return (
     <View testID="Details" style={styles.container}>
