@@ -20,13 +20,21 @@ const PlayPauseButton = () => {
   return (
     <>
       {(playbackState === "playing" || playbackState === "ready") && (
-        <TouchableOpacity testID="Pause Button" onPress={pause}>
-          <Ionicons name="ios-pause" size={50} color="black" />
+        <TouchableOpacity
+          testID="Pause Button"
+          onPress={pause}
+          style={{ marginTop: -20 }}
+        >
+          <Ionicons name="ios-pause" size={80} color="black" />
         </TouchableOpacity>
       )}
       {playbackState === "paused" && (
-        <TouchableOpacity testID="Play Button" onPress={play}>
-          <Ionicons name="ios-play" size={50} color="black" />
+        <TouchableOpacity
+          testID="Play Button"
+          onPress={play}
+          style={{ marginTop: -20 }}
+        >
+          <Ionicons name="ios-play" size={80} color="black" />
         </TouchableOpacity>
       )}
       {(playbackState === "buffering" ||
