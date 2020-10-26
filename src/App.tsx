@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import useAppUpdates from "./hooks/useAppUpdates"
 import SetupReactNativeTrackPlayer from "./setup-react-native-track-player"
+import Loading from "./Loading"
 import Provider from "./Provider"
 import Search from "./Search"
 import Episodes from "./Episodes"
@@ -62,7 +63,9 @@ const App = () => {
         <AppWithMiniPlayerAndModalPodcastDetails />
       </NavigationContainer>
     </Provider>
-  ) : null
+  ) : (
+    <Loading />
+  )
 }
 
 export default App

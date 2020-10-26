@@ -1,6 +1,7 @@
 import React from "react"
-import { ActivityIndicator, FlatList, View } from "react-native"
+import { FlatList, View } from "react-native"
 import { RouteProp } from "@react-navigation/native"
+import Loading from "../Loading"
 import PodcastDescription from "./PodcastDescription"
 import Episode from "./Episode"
 import usePodcastFromRssFeed from "../hooks/usePodcastFromRssFeed"
@@ -30,9 +31,7 @@ const Episodes = ({ route }: EpisodesProps) => {
       />
     </View>
   ) : (
-    <View style={styles.loadingSpinnerContainer}>
-      <ActivityIndicator size="large" testID="Loading Spinner" />
-    </View>
+    <Loading />
   )
 }
 

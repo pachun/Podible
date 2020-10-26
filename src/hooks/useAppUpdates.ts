@@ -4,7 +4,7 @@ import useAppLifecycle from "./useAppLifecycle"
 import * as Updates from "expo-updates"
 
 const useAppUpdates = () => {
-  const [isUpdating, setIsUpdating] = useState<boolean>(false)
+  const [isUpdating, setIsUpdating] = useState<boolean>(true)
   const update = async () => {
     try {
       const update = await Updates.checkForUpdateAsync()
