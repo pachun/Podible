@@ -3,7 +3,9 @@ import jumpInterval from "./jump-interval"
 import ReactNativeTrackPlayerPlaybackService from "./react-native-track-player-playback-service"
 
 const ReactNativeTrackPlayerService = async () => {
-  await TrackPlayer.setupPlayer()
+  await TrackPlayer.setupPlayer({
+    iosCategoryMode: "spokenAudio",
+  })
   await TrackPlayer.registerPlaybackService(
     ReactNativeTrackPlayerPlaybackService,
   )
