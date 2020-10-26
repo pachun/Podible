@@ -8,15 +8,14 @@ const styles = StyleSheet.create({
   },
   backButton: {
     width: "100%",
-    height: 100,
     justifyContent: "flex-end",
     alignItems: "center",
+    paddingTop: 10,
   },
   artwork: {
     width: "90%",
     aspectRatio: 1,
     borderRadius: 10,
-    marginTop: 20,
   },
   titleAndPublisherContainer: {
     width: "100%",
