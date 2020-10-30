@@ -4,6 +4,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
+    "publish": "expo publish --target bare",
     "eject": "expo eject"
   },
   "dependencies": {
