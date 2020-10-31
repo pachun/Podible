@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react"
+import { NativeEventEmitter, NativeModules } from "react-native"
+import TrackPlayer from "react-native-track-player"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
@@ -16,7 +18,7 @@ const Stack = createStackNavigator<RouteParams>()
 const Tab = createBottomTabNavigator()
 
 const App = () => {
-  const isUpdating = useAppUpdates()
+  const isUpdating = __DEV__ ? useAppUpdates() : false
   const [isReadyToPlayAudio, setIsReadyToPlayAudio] = useState<boolean>(false)
 
   useEffect(() => {
@@ -25,6 +27,35 @@ const App = () => {
       setIsReadyToPlayAudio(true)
     }
     getReadyToPlayAudio()
+  }, [])
+
+  const audioInterruptionBegan = () => TrackPlayer.pause()
+
+  const audioInterruptionEnded = () => TrackPlayer.play()
+
+  useEffect(() => {
+    const audioInterruptions = new NativeEventEmitter(
+      NativeModules.AudioInterruptions,
+    )
+    audioInterruptions.addListener(
+      "audioInterruptionBegan",
+      audioInterruptionBegan,
+    )
+    audioInterruptions.addListener(
+      "audioInterruptionEnded",
+      audioInterruptionEnded,
+    )
+
+    return () => {
+      audioInterruptions.removeListener(
+        "audioInterruptionBegan",
+        audioInterruptionBegan,
+      )
+      audioInterruptions.removeListener(
+        "audioInterruptionEnded",
+        audioInterruptionEnded,
+      )
+    }
   }, [])
 
   const App = () => (

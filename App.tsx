@@ -7,7 +7,7 @@ import "expo-asset"
 // crash reporting - bugsnag
 import Bugsnag from "@bugsnag/react-native"
 
-Bugsnag.start()
+!__DEV__ && Bugsnag.start()
 
 // analytics - amplitude
 import * as Amplitude from "expo-analytics-amplitude"
