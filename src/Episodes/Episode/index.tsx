@@ -7,7 +7,7 @@ import { PodibleContext } from "../../Provider"
 import trackPlayerTrackFromEpisode from "../../shared/trackPlayerTrackFromEpisode"
 import humanReadableDuration from "./humanReadableDuration"
 import shortDate from "./shortDate"
-import styles from "./styles"
+import useStyles from "./useStyles"
 
 const removeHtml = (s: string) =>
   he.decode(unescape(s.replace(/(<([^>]+)>)/gi, "")))
@@ -17,6 +17,7 @@ interface EpisodeProps {
 }
 
 const Episode = ({ episode }: EpisodeProps) => {
+  const styles = useStyles()
   const { setEpisode } = useContext(PodibleContext)
   const duration = useMemo(() => humanReadableDuration(episode.duration), [
     episode.duration,
@@ -42,7 +43,9 @@ const Episode = ({ episode }: EpisodeProps) => {
             episode.publishedOn,
           )} · ${duration}`}</Text>
           <View style={{ height: 5 }} />
-          <Text numberOfLines={2}>{removeHtml(episode.description)}</Text>
+          <Text numberOfLines={2} style={styles.description}>
+            {removeHtml(episode.description)}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>

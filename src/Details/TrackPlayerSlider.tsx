@@ -5,8 +5,14 @@ import TrackPlayer from "react-native-track-player"
 import Slider from "@react-native-community/slider"
 import humanReadableDuration from "./humanReadableDuration"
 
-class TrackPlayerSlider extends ProgressComponent {
+interface TrackPlayerSliderProps {
+  colorScheme: any
+}
+
+class TrackPlayerSlider extends ProgressComponent<TrackPlayerSliderProps> {
   public render() {
+    const { colorScheme } = this.props
+
     return (
       <>
         <Slider
@@ -14,8 +20,8 @@ class TrackPlayerSlider extends ProgressComponent {
           value={this.state.position}
           minimumValue={0}
           maximumValue={this.state.duration}
-          minimumTrackTintColor="#000"
-          maximumTrackTintColor="#000ff"
+          minimumTrackTintColor={colorScheme.sliderElapsedColor}
+          maximumTrackTintColor={colorScheme.sliderRemainingColor}
           onSlidingComplete={newValue => TrackPlayer.seekTo(newValue)}
         />
         <View
@@ -25,8 +31,10 @@ class TrackPlayerSlider extends ProgressComponent {
             justifyContent: "space-between",
           }}
         >
-          <Text>{humanReadableDuration(Math.round(this.state.position))}</Text>
-          <Text>
+          <Text style={{ color: colorScheme.foreground }}>
+            {humanReadableDuration(Math.round(this.state.position))}
+          </Text>
+          <Text style={{ color: colorScheme.foreground }}>
             -
             {humanReadableDuration(
               Math.round(this.state.duration - this.state.position),

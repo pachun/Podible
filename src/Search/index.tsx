@@ -1,14 +1,17 @@
 import React, { useState } from "react"
-import { FlatList, TextInput, TouchableOpacity, View } from "react-native"
-import { Ionicons, MaterialIcons } from "@expo/vector-icons"
+import { FlatList, View } from "react-native"
+import { useSafeArea } from "react-native-safe-area-context"
 import * as Amplitude from "expo-analytics-amplitude"
 import { useNavigation } from "@react-navigation/native"
 import PodcastSearchResult from "./PodcastSearchResult"
+import SearchField from "./SearchField"
 import usePodcastSearchResults from "../hooks/usePodcastSearchResults"
-import styles from "./styles"
+import useStyles from "./useStyles"
 
 const Search = () => {
+  const styles = useStyles()
   const navigation = useNavigation()
+  const insets = useSafeArea()
 
   const [searchFieldText, setSearchFieldText] = useState<string>("")
 
@@ -26,35 +29,15 @@ const Search = () => {
     navigation.navigate("Episodes", { podcastSearchResult })
   }
 
-  const clearSearchFieldText = () => setSearchFieldText("")
-
   return (
     <View style={styles.container} testID="Search">
+      <View style={{ height: insets.top }} />
       <View style={{ height: 20 }} />
       <View style={styles.searchFieldContainer}>
-        <View style={styles.searchFieldBackground}>
-          <View style={styles.searchIconContainer}>
-            <Ionicons name="ios-search" size={24} color="#b6b4ba" />
-          </View>
-          <TextInput
-            testID="Search Field"
-            placeholder="Search"
-            style={styles.searchField}
-            value={searchFieldText}
-            onChangeText={setSearchFieldText}
-            returnKeyType="search"
-            autoCorrect={false}
-          />
-          {searchFieldText !== "" && (
-            <TouchableOpacity
-              onPress={clearSearchFieldText}
-              testID="Clear Search Text Button"
-              style={styles.clearSearchFieldTextButton}
-            >
-              <MaterialIcons name="cancel" size={26} color="#b6b4ba" />
-            </TouchableOpacity>
-          )}
-        </View>
+        <SearchField
+          searchFieldText={searchFieldText}
+          setSearchFieldText={setSearchFieldText}
+        />
       </View>
       <FlatList
         style={styles.podcastSearchResultsList}

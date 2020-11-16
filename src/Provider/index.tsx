@@ -1,5 +1,4 @@
-import React, { useState } from "react"
-import { useReducer, createContext } from "react"
+import React, { createContext, useReducer, useState } from "react"
 import reducer from "./reducer"
 
 import TrackPlayer from "react-native-track-player"

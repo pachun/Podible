@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { NativeEventEmitter, NativeModules } from "react-native"
+import { AppearanceProvider } from "react-native-appearance"
 import TrackPlayer from "react-native-track-player"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import useAppUpdates from "./hooks/useAppUpdates"
 import SetupReactNativeTrackPlayer from "./setup-react-native-track-player"
+import PodibleStatusBar from "./PodibleStatusBar"
 import Loading from "./Loading"
 import Provider from "./Provider"
 import Search from "./Search"
@@ -59,7 +61,7 @@ const App = () => {
   }, [])
 
   const App = () => (
-    <Stack.Navigator>
+    <Stack.Navigator headerMode="none">
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="Episodes" component={Episodes} />
     </Stack.Navigator>
@@ -89,11 +91,14 @@ const App = () => {
   )
 
   return isReadyToPlayAudio && !isUpdating ? (
-    <Provider>
-      <NavigationContainer>
-        <AppWithMiniPlayerAndModalPodcastDetails />
-      </NavigationContainer>
-    </Provider>
+    <AppearanceProvider>
+      <PodibleStatusBar />
+      <Provider>
+        <NavigationContainer>
+          <AppWithMiniPlayerAndModalPodcastDetails />
+        </NavigationContainer>
+      </Provider>
+    </AppearanceProvider>
   ) : (
     <Loading />
   )

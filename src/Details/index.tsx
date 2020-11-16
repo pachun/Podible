@@ -9,9 +9,14 @@ import JumpForwardButton from "./JumpForwardButton"
 import JumpBackwardButton from "./JumpBackwardButton"
 import PlayPauseButton from "./PlayPauseButton"
 import TrackPlayerSlider from "./TrackPlayerSlider"
-import styles from "./styles"
+import useColorScheme from "../hooks/useColorScheme"
+import colorSchemes from "../colorSchemes"
+import useStyles from "./useStyles"
 
 const Details = () => {
+  const styles = useStyles()
+  const colorSchemeName = useColorScheme()
+  const colorScheme = colorSchemes[colorSchemeName]
   const navigation = useNavigation()
   const { episode } = useContext(PodibleContext)
   const insets = useSafeArea()
@@ -27,7 +32,11 @@ const Details = () => {
         onPress={goBack}
         style={[styles.backButton, hasNotch ? { height: 100 } : {}]}
       >
-        <Entypo name="chevron-small-down" size={60} color="black" />
+        <Entypo
+          name="chevron-small-down"
+          size={60}
+          color={colorScheme.foreground}
+        />
       </TouchableOpacity>
       {hasNotch && <View style={{ height: 20 }} />}
       <Image source={{ uri: episode.artworkUrl }} style={styles.artwork} />
@@ -48,7 +57,7 @@ const Details = () => {
       </View>
       {hasNotch && <View style={{ height: 30 }} />}
       <View style={styles.sliderContainer}>
-        <TrackPlayerSlider />
+        <TrackPlayerSlider colorScheme={colorScheme} />
       </View>
       <View style={{ height: 20 }} />
       <View style={styles.playbackControlsContainer}>
