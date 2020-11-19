@@ -4,4 +4,5 @@ interface Podcast {
   description: string
   artworkUrl: string
   episodes: Episode[]
+  rssFeedUrl: string
 }

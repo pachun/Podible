@@ -17,7 +17,8 @@ const episodeFromRssItem = (rss: any) => (rssItem: any): Episode => ({
 const removingEpisodesWithoutAudio = (episode: Episode) =>
   Boolean(episode.audioUrl)
 
-const podcastFromRss = (rss: any): Podcast => ({
+const podcastFromRss = (rssFeedUrl: string, rss: any): Podcast => ({
+  rssFeedUrl,
   title: rss["rss"]["channel"][0]["title"][0],
   publisher: rss["rss"]["channel"][0]["itunes:author"][0],
   description: rss["rss"]["channel"][0]["description"][0],

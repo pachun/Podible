@@ -19,9 +19,9 @@ const Episodes = ({ route }: EpisodesProps) => {
   const insets = useSafeArea()
   const navigation = useNavigation()
 
-  const { podcast } = usePodcastFromRssFeed({
-    rssFeedUrl: route.params.podcastSearchResult.rssFeedUrl,
-  })
+  const rssFeedUrl = route.params.podcastSearchResult.rssFeedUrl
+
+  const { podcast } = usePodcastFromRssFeed({ rssFeedUrl })
 
   const keyExtractor = <T,>(_: T, position: number) => position.toString()
 
