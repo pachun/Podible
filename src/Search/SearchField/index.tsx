@@ -27,7 +27,7 @@ const SearchField = ({
         />
       </View>
       <TextInput
-        testID="Search Field"
+        autoFocus={true}
         placeholder="Search"
         style={styles.searchField}
         value={searchFieldText}
