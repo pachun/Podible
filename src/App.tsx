@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react"
-import { NativeEventEmitter, NativeModules } from "react-native"
+import React from "react"
 import { AppearanceProvider } from "react-native-appearance"
-import TrackPlayer from "react-native-track-player"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import useAudioPlayer from "./hooks/useAudioPlayer"
 import useAppUpdates from "./hooks/useAppUpdates"
-import SetupReactNativeTrackPlayer from "./setup-react-native-track-player"
 import PodibleStatusBar from "./PodibleStatusBar"
 import Loading from "./Loading"
 import Provider from "./Provider"
@@ -21,44 +19,7 @@ const Tab = createBottomTabNavigator()
 
 const App = () => {
   const isUpdating = __DEV__ ? useAppUpdates() : false
-  const [isReadyToPlayAudio, setIsReadyToPlayAudio] = useState<boolean>(false)
-
-  useEffect(() => {
-    const getReadyToPlayAudio = async () => {
-      await SetupReactNativeTrackPlayer()
-      setIsReadyToPlayAudio(true)
-    }
-    getReadyToPlayAudio()
-  }, [])
-
-  const audioInterruptionBegan = () => TrackPlayer.pause()
-
-  const audioInterruptionEnded = () => TrackPlayer.play()
-
-  useEffect(() => {
-    const audioInterruptions = new NativeEventEmitter(
-      NativeModules.AudioInterruptions,
-    )
-    audioInterruptions.addListener(
-      "audioInterruptionBegan",
-      audioInterruptionBegan,
-    )
-    audioInterruptions.addListener(
-      "audioInterruptionEnded",
-      audioInterruptionEnded,
-    )
-
-    return () => {
-      audioInterruptions.removeListener(
-        "audioInterruptionBegan",
-        audioInterruptionBegan,
-      )
-      audioInterruptions.removeListener(
-        "audioInterruptionEnded",
-        audioInterruptionEnded,
-      )
-    }
-  }, [])
+  const isReadyToPlayAudio = useAudioPlayer()
 
   const App = () => (
     <Stack.Navigator headerMode="none">
