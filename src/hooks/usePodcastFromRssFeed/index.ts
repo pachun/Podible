@@ -19,14 +19,14 @@ const usePodcastFromRssFeed = ({ rssFeedUrl }: UsePodcastFromRssFeedProps) => {
     const podcastHasBeenCached = Boolean(existingCachedPodcast)
     const podcastHasBeenUpdated =
       podcastHasBeenCached &&
-      existingCachedPodcast.episodes.length !== podcast.episodes.length
+      existingCachedPodcast.episodes[0].publishedOn !==
+        podcast.episodes[0].publishedOn
     if (!podcastHasBeenCached) {
       realm.write(() => realm.create("Podcast", podcast))
     } else if (podcastHasBeenUpdated) {
-      realm.delete(podcast)
+      realm.write(() => realm.delete(existingCachedPodcast))
       realm.write(() => realm.create("Podcast", podcast))
     }
-    realm.close()
   }
 
   const getPodcastFromRssFeed = async () => {
