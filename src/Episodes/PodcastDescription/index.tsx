@@ -17,7 +17,7 @@ const PodcastDescription = ({ podcast }: PodcastDescriptionProps) => {
           <Image
             style={styles.podcastArtwork}
             testID="Podcast Artwork"
-            source={{ uri: podcast.artworkUrl }}
+            source={{ uri: podcast.artwork_url }}
           />
           <View style={styles.podcastDetails}>
             <Text style={styles.titleLabel} numberOfLines={2}>

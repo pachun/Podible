@@ -39,7 +39,7 @@ const Details = () => {
         />
       </TouchableOpacity>
       {hasNotch && <View style={{ height: 20 }} />}
-      <Image source={{ uri: episode.artworkUrl }} style={styles.artwork} />
+      <Image source={{ uri: episode.artwork_url }} style={styles.artwork} />
 
       {hasNotch ? (
         <View style={{ height: 50 }} />

@@ -1,9 +1,11 @@
 import format from "date-fns/format"
+import parseISO from "date-fns/parseISO"
 import isSameDay from "date-fns/isSameDay"
 import isSameYear from "date-fns/isSameYear"
 import addDays from "date-fns/addDays"
 
-const shortDate = (date: Date) => {
+const shortDate = (dateStr: string) => {
+  const date = parseISO(dateStr)
   if (isSameDay(date, new Date())) {
     return "TODAY"
   } else if (isSameDay(date, addDays(new Date(), -1))) {

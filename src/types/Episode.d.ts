@@ -1,9 +1,9 @@
 interface Episode {
   title: string
   description: string
-  publishedOn: Date
+  published_on: string
   duration: number
-  audioUrl: string
-  artworkUrl: string
+  audio_url: string
+  artwork_url: string
   publisher: string
 }

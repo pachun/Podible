@@ -1,25 +1,25 @@
 const PodcastSchema = {
   name: "Podcast",
-  primaryKey: "rssFeedUrl",
+  primaryKey: "rss_feed_url",
   properties: {
     title: "string",
     publisher: "string",
     description: "string",
-    artworkUrl: "string",
+    artwork_url: "string",
     episodes: "Episode[]",
-    rssFeedUrl: "string",
+    rss_feed_url: "string",
   },
 }
 
 const EpisodeSchema = {
   name: "Episode",
   properties: {
-    audioUrl: "string",
+    audio_url: "string",
     title: "string",
     description: "string",
-    publishedOn: "date",
+    published_on: "string",
     duration: "int",
-    artworkUrl: "string",
+    artwork_url: "string",
     publisher: "string",
   },
 }

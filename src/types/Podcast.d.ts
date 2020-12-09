@@ -2,7 +2,7 @@ interface Podcast {
   title: string
   publisher: string
   description: string
-  artworkUrl: string
+  artwork_url: string
   episodes: Episode[]
-  rssFeedUrl: string
+  rss_feed_url: string
 }

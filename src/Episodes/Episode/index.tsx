@@ -40,7 +40,7 @@ const Episode = ({ episode }: EpisodeProps) => {
           </Text>
           <View style={{ height: 5 }} />
           <Text numberOfLines={1} style={styles.dateAndDuration}>{`${shortDate(
-            episode.publishedOn,
+            episode.published_on,
           )} · ${duration}`}</Text>
           <View style={{ height: 5 }} />
           <Text numberOfLines={2} style={styles.description}>

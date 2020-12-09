@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { FlatList, View } from "react-native"
 import { useSafeArea } from "react-native-safe-area-context"
 import { useNavigation } from "@react-navigation/native"
@@ -21,26 +21,36 @@ const Episodes = ({ route }: EpisodesProps) => {
 
   const rssFeedUrl = route.params.podcastSearchResult.rssFeedUrl
 
-  const { podcast } = usePodcastFromRssFeed({ rssFeedUrl })
+  const { podcast, abortController } = usePodcastFromRssFeed({ rssFeedUrl })
 
   const keyExtractor = <T,>(_: T, position: number) => position.toString()
 
-  return podcast ? (
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      abortController.abort()
+    })
+
+    return unsubscribe
+  }, [navigation])
+
+  return (
     <View testID="Episodes" style={styles.container}>
       <View style={{ height: insets.top }} />
       <HeaderBarWithBackButton goBack={navigation.goBack} />
-      <FlatList
-        style={styles.container}
-        scrollIndicatorInsets={{ right: 1 }}
-        ListHeaderComponent={<PodcastDescription podcast={podcast} />}
-        ListFooterComponent={<View style={{ height: 30 }} />}
-        data={podcast.episodes}
-        keyExtractor={keyExtractor}
-        renderItem={({ item: episode }) => <Episode episode={episode} />}
-      />
+      {podcast ? (
+        <FlatList
+          style={styles.container}
+          scrollIndicatorInsets={{ right: 1 }}
+          ListHeaderComponent={<PodcastDescription podcast={podcast} />}
+          ListFooterComponent={<View style={{ height: 30 }} />}
+          data={podcast.episodes}
+          keyExtractor={keyExtractor}
+          renderItem={({ item: episode }) => <Episode episode={episode} />}
+        />
+      ) : (
+        <Loading />
+      )}
     </View>
-  ) : (
-    <Loading />
   )
 }
 
