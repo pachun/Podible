@@ -3,7 +3,7 @@ import { AppearanceProvider } from "react-native-appearance"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import useAudioPlayer from "./hooks/useAudioPlayer"
+import useTrackPlayer from "./hooks/useTrackPlayer"
 import useAppUpdates from "./hooks/useAppUpdates"
 import PodibleStatusBar from "./PodibleStatusBar"
 import Loading from "./Loading"
@@ -19,7 +19,7 @@ const Tab = createBottomTabNavigator()
 
 const App = () => {
   const isUpdating = __DEV__ ? useAppUpdates() : false
-  const isReadyToPlayAudio = useAudioPlayer()
+  const isReadyToPlayAudio = useTrackPlayer()
 
   const App = () => (
     <Stack.Navigator headerMode="none">

@@ -4,6 +4,8 @@ import reducer from "./reducer"
 import TrackPlayer from "react-native-track-player"
 import { useTrackPlayerEvents } from "react-native-track-player/lib/hooks"
 
+import useAudioInterruptions from "../hooks/useAudioInterruptions"
+
 const defaultInitialState: PodibleState = {
   playbackState: "unknown",
 }
@@ -29,6 +31,8 @@ const Provider = ({
     // @ts-ignore
     event => setPlaybackState(event.state),
   )
+
+  useAudioInterruptions({ playbackState })
 
   const value: PodibleContextType = {
     episode: state.episode,
