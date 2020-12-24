@@ -18,7 +18,7 @@ const Stack = createStackNavigator<RouteParams>()
 const Tab = createBottomTabNavigator()
 
 const App = () => {
-  const isUpdating = __DEV__ ? useAppUpdates() : false
+  const isUpdating = __DEV__ ? false : useAppUpdates()
   const isReadyToPlayAudio = useTrackPlayer()
 
   const App = () => (
