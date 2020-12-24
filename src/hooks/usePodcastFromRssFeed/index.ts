@@ -45,9 +45,7 @@ const usePodcastFromRssFeed = ({
       const podcast = responseJson as Podcast
       setPodcast(podcast)
       setCachedPodcast(podcast)
-    } catch (error) {
-      console.log(`error: ${JSON.stringify(error)}`)
-    }
+    } catch {}
   }
 
   const getCachedPodcast = async () => {
@@ -58,9 +56,6 @@ const usePodcastFromRssFeed = ({
       .filtered(`rss_feed_url='${rssFeedUrl}'`)?.[0]
     if (realmPodcast) {
       setPodcast(realmPodcast)
-      console.log(
-        `using cached podcast with ${realmPodcast.episodes.length} episodes`,
-      )
     }
   }
 
