@@ -13,6 +13,7 @@ const PodcastSchema = {
 
 const EpisodeSchema = {
   name: "Episode",
+  primaryKey: "audio_url",
   properties: {
     audio_url: "string",
     title: "string",
@@ -21,6 +22,7 @@ const EpisodeSchema = {
     duration: "int",
     artwork_url: "string",
     publisher: "string",
+    seconds_listened_to: { type: "int", default: 0 },
   },
 }
 

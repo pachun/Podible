@@ -1,13 +1,11 @@
 import React, { useContext, useMemo } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
-import * as Amplitude from "expo-analytics-amplitude"
-import TrackPlayer from "react-native-track-player"
 import he from "he"
 import { PodibleContext } from "../../Provider"
-import trackPlayerTrackFromEpisode from "../../shared/trackPlayerTrackFromEpisode"
 import humanReadableDuration from "./humanReadableDuration"
 import shortDate from "./shortDate"
 import useStyles from "./useStyles"
+import { play, saveListeningProgress } from "../../AudioControls"
 
 const removeHtml = (s: string) =>
   he.decode(unescape(s.replace(/(<([^>]+)>)/gi, "")))
@@ -16,35 +14,42 @@ interface EpisodeProps {
   episode: Episode
 }
 
-const Episode = ({ episode }: EpisodeProps) => {
+const Episode = ({ episode: displayedEpisode }: EpisodeProps) => {
   const styles = useStyles()
-  const { setEpisode } = useContext(PodibleContext)
-  const duration = useMemo(() => humanReadableDuration(episode.duration), [
-    episode.duration,
-  ])
 
-  const play = () => {
-    Amplitude.logEventWithProperties("Began Listening To Episode", { episode })
-    TrackPlayer.stop()
-    setEpisode(episode)
-    TrackPlayer.add([trackPlayerTrackFromEpisode(episode)])
-    TrackPlayer.play()
+  const {
+    setEpisode,
+    episode: currentlyPlayingEpisode,
+    playbackState,
+  } = useContext(PodibleContext)
+
+  const duration = useMemo(
+    () => humanReadableDuration(displayedEpisode.duration),
+    [displayedEpisode.duration],
+  )
+
+  const playEpisode = async () => {
+    if (playbackState === "playing") {
+      saveListeningProgress(currentlyPlayingEpisode)
+    }
+    setEpisode(displayedEpisode)
+    play(displayedEpisode)
   }
 
   return (
-    <TouchableOpacity onPress={play}>
+    <TouchableOpacity onPress={playEpisode}>
       <View style={styles.container}>
         <View style={styles.background}>
           <Text numberOfLines={2} style={styles.title}>
-            {episode.title}
+            {displayedEpisode.title}
           </Text>
           <View style={{ height: 5 }} />
           <Text numberOfLines={1} style={styles.dateAndDuration}>{`${shortDate(
-            episode.published_on,
+            displayedEpisode.published_on,
           )} · ${duration}`}</Text>
           <View style={{ height: 5 }} />
           <Text numberOfLines={2} style={styles.description}>
-            {removeHtml(episode.description)}
+            {removeHtml(displayedEpisode.description)}
           </Text>
         </View>
       </View>

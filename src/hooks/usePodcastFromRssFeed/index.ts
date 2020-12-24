@@ -1,55 +1,49 @@
 import { useEffect, useState } from "react"
 import Realm from "realm"
-import realmConfiguration from "./realmConfiguration"
+import realmConfiguration from "../../realmConfiguration"
+
+const setCachedPodcast = async (
+  podcastFromRssFeed: Podcast,
+): Promise<Podcast> => {
+  const realm = await Realm.open(realmConfiguration)
+  realm.write(() => {
+    realm.create<Podcast>(
+      "Podcast",
+      podcastFromRssFeed,
+      Realm.UpdateMode.Modified,
+    )
+  })
+  const cachedPodcast = realm.objectForPrimaryKey<Podcast>(
+    "Podcast",
+    podcastFromRssFeed.rss_feed_url,
+  )
+  return cachedPodcast
+}
 
 interface UsePodcastFromRssFeedProps {
   rssFeedUrl: string
-  usingCache?: boolean
 }
 
-const usePodcastFromRssFeed = ({
-  rssFeedUrl,
-  usingCache = true,
-}: UsePodcastFromRssFeedProps) => {
+const usePodcastFromRssFeed = ({ rssFeedUrl }: UsePodcastFromRssFeedProps) => {
   const [podcast, setPodcast] = useState<Podcast>()
-
-  const setCachedPodcast = async (podcast: Podcast) => {
-    if (!usingCache) return
-    const realm = await Realm.open(realmConfiguration)
-    const existingCachedPodcast = realm
-      .objects<Podcast>("Podcast")
-      .filtered(`rss_feed_url='${rssFeedUrl}'`)?.[0]
-    const podcastHasBeenCached = Boolean(existingCachedPodcast)
-    const podcastHasBeenUpdated =
-      podcastHasBeenCached &&
-      existingCachedPodcast.episodes[0].published_on !==
-        podcast.episodes[0].published_on
-    if (!podcastHasBeenCached) {
-      realm.write(() => realm.create("Podcast", podcast))
-    } else if (podcastHasBeenUpdated) {
-      realm.write(() => realm.delete(existingCachedPodcast))
-      realm.write(() => realm.create("Podcast", podcast))
-    }
-  }
 
   const abortController = new AbortController()
   const getPodcastFromRssFeed = async () => {
     try {
       const response = await fetch(
         __DEV__
-          ? `http://172.20.10.2:4000/podcasts?rss_feed_url=${rssFeedUrl}`
+          ? `http://${process.env.REACT_NATIVE_API_URL}:4000/podcasts?rss_feed_url=${rssFeedUrl}`
           : `https://impeccable-nautical-aardvark.gigalixirapp.com/podcasts?rss_feed_url=${rssFeedUrl}`,
         { signal: abortController.signal },
       )
       const responseJson = await response.json()
-      const podcast = responseJson as Podcast
-      setPodcast(podcast)
-      setCachedPodcast(podcast)
+      const podcastFromRssFeed = responseJson as Podcast
+      const cachedPodcast = await setCachedPodcast(podcastFromRssFeed)
+      setPodcast(cachedPodcast)
     } catch {}
   }
 
   const getCachedPodcast = async () => {
-    if (!usingCache) return
     const realm = await Realm.open(realmConfiguration)
     const realmPodcast = realm
       .objects<Podcast>("Podcast")

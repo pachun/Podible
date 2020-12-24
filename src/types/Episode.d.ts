@@ -6,4 +6,5 @@ interface Episode {
   audio_url: string
   artwork_url: string
   publisher: string
+  seconds_listened_to: number
 }

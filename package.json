@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "start": "react-native start",
+    "start": "REACT_NATIVE_API_URL=$(ifconfig | grep 192 | cut -d ' ' -f 2) react-native start",
     "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "ios": "REACT_NATIVE_API_URL=$(ifconfig | grep 192 | cut -d ' ' -f 2) react-native run-ios",
     "web": "expo start --web",
     "publish": "expo publish --target bare",
     "eject": "expo eject"
@@ -43,9 +43,11 @@
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
+    "@types/node": "^14.14.16",
     "@types/react": "~16.9.35",
     "@types/react-dom": "~16.9.8",
     "@types/react-native": "~0.63.2",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "prettier": "^2.1.2",
     "react-native-web": "~0.13.7",
     "typescript": "~3.9.2"
