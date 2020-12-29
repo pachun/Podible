@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react"
+import React, { useContext, useMemo, useState, useEffect } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import he from "he"
 import { PodibleContext } from "../../Provider"
@@ -6,6 +6,7 @@ import humanReadableDuration from "./humanReadableDuration"
 import shortDate from "./shortDate"
 import useStyles from "./useStyles"
 import { play, saveListeningProgress } from "../../AudioControls"
+import realmConfiguration from "../../realmConfiguration"
 
 const removeHtml = (s: string) =>
   he.decode(unescape(s.replace(/(<([^>]+)>)/gi, "")))
@@ -23,10 +24,49 @@ const Episode = ({ episode: displayedEpisode }: EpisodeProps) => {
     playbackState,
   } = useContext(PodibleContext)
 
-  const duration = useMemo(
+  const [
+    durationOrTimeRemainingLabel,
+    setDurationOrTimeRemainingLabel,
+  ] = useState("")
+
+  const totalEpisodeDurationLabel = useMemo(
     () => humanReadableDuration(displayedEpisode.duration),
     [displayedEpisode.duration],
   )
+
+  const timeRemainingLabel = async () => {
+    const realm = await Realm.open(realmConfiguration)
+    const secondsListenedTo = realm.objectForPrimaryKey<Episode>(
+      "Episode",
+      displayedEpisode.audio_url,
+    ).seconds_listened_to
+    const secondsRemaining = displayedEpisode.duration - secondsListenedTo
+    return `${humanReadableDuration(secondsRemaining)} LEFT`
+  }
+
+  useEffect(() => {
+    const calculateDurationOrTimeRemainingLabel = async () => {
+      const realm = await Realm.open(realmConfiguration)
+      const secondsListenedTo = realm.objectForPrimaryKey<Episode>(
+        "Episode",
+        displayedEpisode.audio_url,
+      ).seconds_listened_to
+      const secondsRemaining = displayedEpisode.duration - secondsListenedTo
+
+      const hasNotListenedOrHasJustBegunListening = secondsListenedTo < 30
+      const hasFinishedListening = secondsRemaining <= 2
+
+      if (hasNotListenedOrHasJustBegunListening) {
+        setDurationOrTimeRemainingLabel(totalEpisodeDurationLabel)
+      } else if (hasFinishedListening) {
+        setDurationOrTimeRemainingLabel("PLAYED")
+      } else {
+        setDurationOrTimeRemainingLabel(await timeRemainingLabel())
+      }
+    }
+
+    calculateDurationOrTimeRemainingLabel()
+  }, [])
 
   const playEpisode = async () => {
     if (playbackState === "playing") {
@@ -46,7 +86,7 @@ const Episode = ({ episode: displayedEpisode }: EpisodeProps) => {
           <View style={{ height: 5 }} />
           <Text numberOfLines={1} style={styles.dateAndDuration}>{`${shortDate(
             displayedEpisode.published_on,
-          )} · ${duration}`}</Text>
+          )} · ${durationOrTimeRemainingLabel}`}</Text>
           <View style={{ height: 5 }} />
           <Text numberOfLines={2} style={styles.description}>
             {removeHtml(displayedEpisode.description)}
