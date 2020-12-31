@@ -10,6 +10,8 @@ const ReactNativeTrackPlayerService = async () => {
     ReactNativeTrackPlayerPlaybackService,
   )
   TrackPlayer.updateOptions({
+    //@ts-ignore
+    alwaysPauseOnInterruption: true,
     capabilities: [
       TrackPlayer.CAPABILITY_PLAY,
       TrackPlayer.CAPABILITY_PAUSE,

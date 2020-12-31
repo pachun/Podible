@@ -15,7 +15,6 @@
 		96905EF65AED1B983A6B3ABC /* libPods-Podible.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-Podible.a */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		DF2AA8F1253AB99B00956AA1 /* UseSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2AA8F0253AB99B00956AA1 /* UseSwift.swift */; };
-		DFE76DA1254E65D800BB9E1E /* AudioInterruptions.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE76DA0254E65D800BB9E1E /* AudioInterruptions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,8 +33,6 @@
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		DF2AA8EF253AB99B00956AA1 /* Podible-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Podible-Bridging-Header.h"; sourceTree = "<group>"; };
 		DF2AA8F0253AB99B00956AA1 /* UseSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseSwift.swift; sourceTree = "<group>"; };
-		DFE76D9F254E648D00BB9E1E /* AudioInterruptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioInterruptions.h; sourceTree = "<group>"; };
-		DFE76DA0254E65D800BB9E1E /* AudioInterruptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioInterruptions.m; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -59,8 +56,6 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				DFE76D9F254E648D00BB9E1E /* AudioInterruptions.h */,
-				DFE76DA0254E65D800BB9E1E /* AudioInterruptions.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -285,7 +280,6 @@
 				DF2AA8F1253AB99B00956AA1 /* UseSwift.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				DFE76DA1254E65D800BB9E1E /* AudioInterruptions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

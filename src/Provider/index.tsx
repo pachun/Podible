@@ -1,10 +1,18 @@
 import React, { createContext, useReducer, useState } from "react"
 import reducer from "./reducer"
 
-import TrackPlayer from "react-native-track-player"
+// @ts-ignore
+import TrackPlayer, { TrackPlayerEvents } from "react-native-track-player"
 import { useTrackPlayerEvents } from "react-native-track-player/lib/hooks"
 
-import useAudioInterruptions from "../hooks/useAudioInterruptions"
+const shouldStopPlayback = (event: TrackPlayerEvents): boolean =>
+  Boolean(event.permanent)
+
+const shouldPausePlayback = (event: TrackPlayerEvents): boolean =>
+  Boolean(event.paused)
+
+const shouldResumePlayback = (event: TrackPlayerEvents): boolean =>
+  !Boolean(event.paused) && !Boolean(event.permanent)
 
 const defaultInitialState: PodibleState = {
   playbackState: "unknown",
@@ -26,13 +34,21 @@ const Provider = ({
 
   const [playbackState, setPlaybackState] = useState<string>("unknown")
   useTrackPlayerEvents(
-    // @ts-ignore
-    [TrackPlayer.TrackPlayerEvents.PLAYBACK_STATE],
-    // @ts-ignore
-    event => setPlaybackState(event.state),
+    [TrackPlayerEvents.PLAYBACK_STATE, TrackPlayerEvents.REMOTE_DUCK],
+    (event: TrackPlayerEvents) => {
+      if (event.type === TrackPlayerEvents.PLAYBACK_STATE) {
+        setPlaybackState(event.state)
+      } else if (event.type === TrackPlayerEvents.REMOTE_DUCK) {
+        if (shouldStopPlayback(event)) {
+          TrackPlayer.stop()
+        } else if (shouldPausePlayback(event)) {
+          TrackPlayer.pause()
+        } else if (shouldResumePlayback(event)) {
+          TrackPlayer.play()
+        }
+      }
+    },
   )
-
-  useAudioInterruptions({ playbackState })
 
   const value: PodibleContextType = {
     episode: state.episode,
