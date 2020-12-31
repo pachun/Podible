@@ -29,14 +29,12 @@ const PlayPauseButton = () => {
           <Ionicons name="ios-pause" size={50} color={colorScheme.foreground} />
         </TouchableOpacity>
       )}
-      {playbackState === "paused" && (
+      {(playbackState === "paused" || playbackState === "idle") && (
         <TouchableOpacity testID="Play Button" onPress={playEpisode}>
           <Ionicons name="ios-play" size={50} color={colorScheme.foreground} />
         </TouchableOpacity>
       )}
-      {(playbackState === "buffering" ||
-        playbackState === "loading" ||
-        playbackState === "idle") && (
+      {(playbackState === "buffering" || playbackState === "loading") && (
         <ActivityIndicator size="large" color={colorScheme.foreground} />
       )}
     </>
