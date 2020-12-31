@@ -5,6 +5,7 @@ import * as Amplitude from "expo-analytics-amplitude"
 import { useNavigation } from "@react-navigation/native"
 import PodcastSearchResult from "./PodcastSearchResult"
 import SearchField from "./SearchField"
+import useDebounce from "../hooks/useDebounce"
 import usePodcastSearchResults from "../hooks/usePodcastSearchResults"
 import useStyles from "./useStyles"
 
@@ -14,9 +15,10 @@ const Search = () => {
   const insets = useSafeArea()
 
   const [searchFieldText, setSearchFieldText] = useState<string>("")
+  const debouncedSearchFieldText = useDebounce(searchFieldText, 500)
 
   const { podcastSearchResults } = usePodcastSearchResults({
-    searchedText: searchFieldText,
+    searchedText: debouncedSearchFieldText,
   })
 
   const keyExtractor = <T,>(_: T, position: number) => position.toString()
