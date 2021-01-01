@@ -42,6 +42,7 @@ const Search = () => {
         />
       </View>
       <FlatList
+        keyboardShouldPersistTaps="always"
         style={styles.podcastSearchResultsList}
         data={podcastSearchResults}
         keyExtractor={keyExtractor}
