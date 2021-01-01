@@ -36,6 +36,7 @@ const SearchField = ({
         autoCorrect={false}
         keyboardAppearance={colorSchemeName}
         placeholderTextColor={colorScheme.searchFieldForeground}
+        enablesReturnKeyAutomatically={true}
       />
       {searchFieldText !== "" && (
         <TouchableOpacity
