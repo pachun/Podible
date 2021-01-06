@@ -1,5 +1,6 @@
 import React from "react"
-import { Image, Text, View } from "react-native"
+import { Text, View } from "react-native"
+import FastImage from "react-native-fast-image"
 import ShowHtml from "../../shared/ShowHtml"
 import useStyles from "./useStyles"
 
@@ -14,7 +15,7 @@ const PodcastDescription = ({ podcast }: PodcastDescriptionProps) => {
       <View style={{ height: 20 }} />
       <View style={styles.podcastDetailsContainer}>
         <View style={styles.podcastDetailsBackground}>
-          <Image
+          <FastImage
             style={styles.podcastArtwork}
             testID="Podcast Artwork"
             source={{ uri: podcast.artwork_url }}

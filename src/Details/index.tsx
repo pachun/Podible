@@ -1,5 +1,6 @@
 import React, { useContext } from "react"
-import { Image, Text, TouchableOpacity, View } from "react-native"
+import { Text, TouchableOpacity, View } from "react-native"
+import FastImage from "react-native-fast-image"
 import { useSafeArea } from "react-native-safe-area-context"
 import * as Haptics from "expo-haptics"
 import { Entypo } from "@expo/vector-icons"
@@ -39,7 +40,7 @@ const Details = () => {
         />
       </TouchableOpacity>
       {hasNotch && <View style={{ height: 20 }} />}
-      <Image source={{ uri: episode.artwork_url }} style={styles.artwork} />
+      <FastImage source={{ uri: episode.artwork_url }} style={styles.artwork} />
 
       {hasNotch ? (
         <View style={{ height: 50 }} />

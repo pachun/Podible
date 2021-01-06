@@ -1,5 +1,6 @@
 import React, { useContext } from "react"
-import { Image, TouchableOpacity, View } from "react-native"
+import { TouchableOpacity, View } from "react-native"
+import FastImage from "react-native-fast-image"
 import * as Haptics from "expo-haptics"
 import { Entypo } from "@expo/vector-icons"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
@@ -44,7 +45,7 @@ const MiniPlayer = () => {
         <JumpBackwardButton />
         <PlayPauseButton />
         <JumpForwardButton />
-        <Image
+        <FastImage
           testID="Currently Playing Artwork"
           source={{ uri: track.artwork }}
           style={styles.artwork}
