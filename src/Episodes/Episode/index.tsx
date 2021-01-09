@@ -85,7 +85,7 @@ const Episode = ({ episode: displayedEpisode }: EpisodeProps) => {
           </Text>
           <View style={{ height: 5 }} />
           <Text numberOfLines={1} style={styles.dateAndDuration}>{`${shortDate(
-            displayedEpisode.published_on,
+            displayedEpisode.published_at,
           )} · ${durationOrTimeRemainingLabel}`}</Text>
           <View style={{ height: 5 }} />
           <Text numberOfLines={2} style={styles.description}>

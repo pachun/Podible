@@ -32,8 +32,8 @@ const usePodcastFromRssFeed = ({ rssFeedUrl }: UsePodcastFromRssFeedProps) => {
     try {
       const response = await fetch(
         __DEV__
-          ? `http://${process.env.REACT_NATIVE_API_URL}:4000/podcasts?rss_feed_url=${rssFeedUrl}`
-          : `https://impeccable-nautical-aardvark.gigalixirapp.com/podcasts?rss_feed_url=${rssFeedUrl}`,
+          ? `http://${process.env.REACT_NATIVE_API_URL}:3000/rss_feed?url=${rssFeedUrl}`
+          : `https://podible-web.herokuapp.com/rss_feed?url=${rssFeedUrl}`,
         { signal: abortController.signal },
       )
       const responseJson = await response.json()

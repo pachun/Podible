@@ -18,7 +18,7 @@ const EpisodeSchema = {
     audio_url: "string",
     title: "string",
     description: "string",
-    published_on: "string",
+    published_at: "string",
     duration: "int",
     artwork_url: "string",
     publisher: "string",
