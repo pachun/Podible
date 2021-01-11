@@ -1,17 +1,23 @@
+const lightest = "#fff"
+const light = "#a8a8a8"
+const tone = "#333"
+const dark = "#3a3a3a"
+const darkest = "#111"
+
 const darkMode = {
-  foreground: "#fff",
-  background: "#000",
+  foreground: lightest,
+  background: darkest,
 
-  publisherLabel: "#888",
-  episodeDateAndDurationLabel: "#888",
-  searchFieldForeground: "#888",
+  publisherLabel: light,
+  episodeDateAndDurationLabel: light,
+  searchFieldForeground: light,
 
-  searchFieldBackground: "#222",
+  searchFieldBackground: dark,
 
-  episodeListBorder: "#444",
+  episodeListBorder: tone,
 
-  sliderElapsedColor: "#fff",
-  sliderRemainingColor: "#222",
+  sliderElapsedColor: lightest,
+  sliderRemainingColor: dark,
 }
 
 export default darkMode
