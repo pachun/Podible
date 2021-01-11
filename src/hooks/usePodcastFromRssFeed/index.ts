@@ -2,6 +2,20 @@ import { useEffect, useState } from "react"
 import Realm from "realm"
 import realmConfiguration from "../../realmConfiguration"
 
+const apiUrl = __DEV__
+  ? `http://${process.env.REACT_NATIVE_API_URL}:3000`
+  : `https://podible-web.herokuapp.com`
+
+const logError = (rssFeedUrl: string, exception: any) =>
+  fetch(`${apiUrl}/client_rss_feed_errors`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      rss_feed_url: rssFeedUrl,
+      exception: JSON.stringify(exception),
+    }),
+  })
+
 const setCachedPodcast = async (
   podcastFromRssFeed: Podcast,
 ): Promise<Podcast> => {
@@ -30,17 +44,16 @@ const usePodcastFromRssFeed = ({ rssFeedUrl }: UsePodcastFromRssFeedProps) => {
   const abortController = new AbortController()
   const getPodcastFromRssFeed = async () => {
     try {
-      const response = await fetch(
-        __DEV__
-          ? `http://${process.env.REACT_NATIVE_API_URL}:3000/rss_feed?url=${rssFeedUrl}`
-          : `https://podible-web.herokuapp.com/rss_feed?url=${rssFeedUrl}`,
-        { signal: abortController.signal },
-      )
+      const response = await fetch(`${apiUrl}/rss_feed?url=${rssFeedUrl}`, {
+        signal: abortController.signal,
+      })
       const responseJson = await response.json()
       const podcastFromRssFeed = responseJson as Podcast
       const cachedPodcast = await setCachedPodcast(podcastFromRssFeed)
       setPodcast(cachedPodcast)
-    } catch {}
+    } catch (exception) {
+      logError(rssFeedUrl, exception)
+    }
   }
 
   const getCachedPodcast = async () => {
