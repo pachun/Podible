@@ -5,14 +5,22 @@ import reducer from "./reducer"
 import TrackPlayer, { TrackPlayerEvents } from "react-native-track-player"
 import { useTrackPlayerEvents } from "react-native-track-player/lib/hooks"
 
+const whenPlayedOrPaused = TrackPlayerEvents.PLAYBACK_STATE
+const whenAudioIsInterrupted = TrackPlayerEvents.REMOTE_DUCK
+
+const wasPlayedOrPaused = (event: TrackPlayerEvents): boolean =>
+  event.type === whenPlayedOrPaused
+
 const shouldStopPlayback = (event: TrackPlayerEvents): boolean =>
-  Boolean(event.permanent)
+  event.type === whenAudioIsInterrupted && Boolean(event.permanent)
 
 const shouldPausePlayback = (event: TrackPlayerEvents): boolean =>
-  Boolean(event.paused)
+  event.type === whenAudioIsInterrupted && Boolean(event.paused)
 
 const shouldResumePlayback = (event: TrackPlayerEvents): boolean =>
-  !Boolean(event.paused) && !Boolean(event.permanent)
+  event.type === whenAudioIsInterrupted &&
+  !Boolean(event.paused) &&
+  !Boolean(event.permanent)
 
 const defaultInitialState: PodibleState = {
   playbackState: "unknown",
@@ -33,22 +41,20 @@ const Provider = ({
   )
 
   const [playbackState, setPlaybackState] = useState<string>("unknown")
-  useTrackPlayerEvents(
-    [TrackPlayerEvents.PLAYBACK_STATE, TrackPlayerEvents.REMOTE_DUCK],
-    (event: TrackPlayerEvents) => {
-      if (event.type === TrackPlayerEvents.PLAYBACK_STATE) {
-        setPlaybackState(event.state)
-      } else if (event.type === TrackPlayerEvents.REMOTE_DUCK) {
-        if (shouldStopPlayback(event)) {
-          TrackPlayer.stop()
-        } else if (shouldPausePlayback(event)) {
-          TrackPlayer.pause()
-        } else if (shouldResumePlayback(event)) {
-          TrackPlayer.play()
-        }
-      }
-    },
-  )
+
+  const update = (event: TrackPlayerEvents) => {
+    if (wasPlayedOrPaused(event)) {
+      setPlaybackState(event.state)
+    } else if (shouldStopPlayback(event)) {
+      TrackPlayer.stop()
+    } else if (shouldPausePlayback(event)) {
+      TrackPlayer.pause()
+    } else if (shouldResumePlayback(event)) {
+      TrackPlayer.play()
+    }
+  }
+
+  useTrackPlayerEvents([whenPlayedOrPaused, whenAudioIsInterrupted], update)
 
   const value: PodibleContextType = {
     episode: state.episode,
