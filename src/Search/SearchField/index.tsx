@@ -41,7 +41,6 @@ const SearchField = ({
       {searchFieldText !== "" && (
         <TouchableOpacity
           onPress={() => setSearchFieldText("")}
-          testID="Clear Search Text Button"
           style={styles.clearSearchFieldTextButton}
         >
           <MaterialIcons

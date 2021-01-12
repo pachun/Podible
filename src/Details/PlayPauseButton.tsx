@@ -27,7 +27,6 @@ const PlayPauseButton = () => {
     <>
       {(playbackState === "playing" || playbackState === "ready") && (
         <TouchableOpacity
-          testID="Pause Button"
           onPress={pauseEpisode}
           style={{ marginTop: -20 }}
         >
@@ -36,7 +35,6 @@ const PlayPauseButton = () => {
       )}
       {(playbackState === "paused" || playbackState === "idle") && (
         <TouchableOpacity
-          testID="Play Button"
           onPress={playEpisode}
           style={{ marginTop: -20 }}
         >

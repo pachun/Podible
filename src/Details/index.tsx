@@ -28,7 +28,7 @@ const Details = () => {
   const hasNotch = insets.bottom > 0
 
   return (
-    <View testID="Details" style={styles.container}>
+    <View style={styles.container}>
       <TouchableOpacity
         onPress={goBack}
         style={[styles.backButton, hasNotch ? { height: 100 } : {}]}

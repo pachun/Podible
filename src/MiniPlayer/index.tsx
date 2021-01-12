@@ -27,10 +27,9 @@ const MiniPlayer = () => {
 
   return Boolean(track) ? (
     <>
-      <View testID="Mini Player" style={styles.container}>
+      <View style={styles.container}>
         <TouchableOpacity
           style={{ width: 60, justifyContent: "center", alignItems: "center" }}
-          testID="Show Episode Details"
           onPress={() => {
             Haptics.impactAsync()
             navigation.navigate("Details")
@@ -45,11 +44,7 @@ const MiniPlayer = () => {
         <JumpBackwardButton />
         <PlayPauseButton />
         <JumpForwardButton />
-        <FastImage
-          testID="Currently Playing Artwork"
-          source={{ uri: track.artwork }}
-          style={styles.artwork}
-        />
+        <FastImage source={{ uri: track.artwork }} style={styles.artwork} />
       </View>
       <View
         style={{

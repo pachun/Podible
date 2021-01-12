@@ -17,7 +17,6 @@ const PodcastDescription = ({ podcast }: PodcastDescriptionProps) => {
         <View style={styles.podcastDetailsBackground}>
           <FastImage
             style={styles.podcastArtwork}
-            testID="Podcast Artwork"
             source={{ uri: podcast.artwork_url }}
           />
           <View style={styles.podcastDetails}>

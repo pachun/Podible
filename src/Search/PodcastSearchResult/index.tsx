@@ -17,7 +17,6 @@ const PodcastSearchResult = ({
     <TouchableOpacity style={styles.container} onPress={showPodcastEpisodes}>
       <View style={styles.background}>
         <FastImage
-          testID="Podcast Artwork"
           style={styles.image}
           source={{ uri: podcastSearchResult.artworkUrl }}
         />

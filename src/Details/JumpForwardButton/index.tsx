@@ -12,7 +12,6 @@ const JumpForwardButton = () => {
   const colorScheme = colorSchemes[colorSchemeName]
   return (
     <TouchableOpacity
-      testID="Skip Forward"
       onPress={async () => {
         Haptics.impactAsync()
         const position = await TrackPlayer.getPosition()

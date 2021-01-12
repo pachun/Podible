@@ -12,7 +12,6 @@ const JumpBackwardButton = () => {
   const colorScheme = colorSchemes[colorSchemeName]
   return (
     <TouchableOpacity
-      testID="Skip Backward"
       onPress={async () => {
         Haptics.impactAsync()
         const position = await TrackPlayer.getPosition()

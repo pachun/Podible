@@ -32,7 +32,7 @@ const Search = () => {
   }
 
   return (
-    <View style={styles.container} testID="Search">
+    <View style={styles.container}>
       <View style={{ height: insets.top }} />
       <View style={{ height: 20 }} />
       <View style={styles.searchFieldContainer}>

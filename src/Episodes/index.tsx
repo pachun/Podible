@@ -51,7 +51,7 @@ const Episodes = ({ route }: EpisodesProps) => {
   }, [navigation])
 
   return (
-    <View testID="Episodes" style={styles.container}>
+    <View style={styles.container}>
       <View style={{ height: insets.top }} />
       <HeaderBarWithBackButton goBack={navigation.goBack} />
       {!episodes && !didError && <Loading />}
