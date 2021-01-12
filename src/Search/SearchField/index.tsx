@@ -32,11 +32,10 @@ const SearchField = ({
         style={styles.searchField}
         value={searchFieldText}
         onChangeText={setSearchFieldText}
-        returnKeyType="search"
+        returnKeyType="done"
         autoCorrect={false}
         keyboardAppearance={colorSchemeName}
         placeholderTextColor={colorScheme.searchFieldForeground}
-        enablesReturnKeyAutomatically={true}
       />
       {searchFieldText !== "" && (
         <TouchableOpacity

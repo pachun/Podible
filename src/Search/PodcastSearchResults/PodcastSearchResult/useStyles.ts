@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import { StyleSheet } from "react-native"
-import useColorScheme from "../../hooks/useColorScheme"
-import colorSchemes from "../../colorSchemes"
+import useColorScheme from "../../../hooks/useColorScheme"
+import colorSchemes from "../../../colorSchemes"
 
 const useStyles = () => {
   const colorSchemeName = useColorScheme()

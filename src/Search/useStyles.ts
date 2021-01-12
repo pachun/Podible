@@ -13,7 +13,7 @@ const useStyles = () => {
         flex: 1,
         backgroundColor: colorScheme.background,
       },
-      podcastSearchResultsList: {
+      list: {
         flex: 1,
       },
       searchFieldContainer: {

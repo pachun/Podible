@@ -26,7 +26,7 @@ const Episodes = ({ route }: EpisodesProps) => {
   const insets = useSafeArea()
   const navigation = useNavigation()
 
-  const rssFeedUrl = route.params.podcastSearchResult.rssFeedUrl
+  const rssFeedUrl = route.params.rssFeedUrl
 
   const { podcast, didError, abortController } = usePodcastFromRssFeed({
     rssFeedUrl,

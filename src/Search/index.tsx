@@ -1,9 +1,10 @@
-import React, { useState } from "react"
-import { FlatList, View } from "react-native"
+import React, { useState, useEffect } from "react"
+import { View } from "react-native"
 import { useSafeArea } from "react-native-safe-area-context"
-import * as Amplitude from "expo-analytics-amplitude"
+import getPodcastsWithUnfinishedEpisodes from "./getPodcastsWithUnfinishedEpisodes"
 import { useNavigation } from "@react-navigation/native"
-import PodcastSearchResult from "./PodcastSearchResult"
+import PodcastSearchResults from "./PodcastSearchResults"
+import PodcastsWithUnfinishedEpisodes from "./PodcastsWithUnfinishedEpisodes"
 import SearchField from "./SearchField"
 import useDebounce from "../hooks/useDebounce"
 import usePodcastSearchResults from "../hooks/usePodcastSearchResults"
@@ -21,15 +22,21 @@ const Search = () => {
     searchedText: debouncedSearchFieldText,
   })
 
-  const keyExtractor = <T,>(_: T, position: number) => position.toString()
+  const showPodcastEpisodes = (rssFeedUrl: string) => () =>
+    navigation.navigate("Episodes", {
+      rssFeedUrl,
+    })
 
-  const showPodcastEpisodes = (
-    podcastSearchResult: PodcastSearchResult,
-  ) => () => {
-    !__DEV__ &&
-      Amplitude.logEventWithProperties("Viewed Episodes", podcastSearchResult)
-    navigation.navigate("Episodes", { podcastSearchResult })
-  }
+  const [
+    podcastsWithUnfinishedEpisodes,
+    setPodcastsWithUnfinishedEpisodes,
+  ] = useState<Podcast[]>([])
+
+  useEffect(() => {
+    if (searchFieldText === "") {
+      getPodcastsWithUnfinishedEpisodes(setPodcastsWithUnfinishedEpisodes)
+    }
+  }, [searchFieldText])
 
   return (
     <View style={styles.container}>
@@ -41,18 +48,15 @@ const Search = () => {
           setSearchFieldText={setSearchFieldText}
         />
       </View>
-      <FlatList
-        keyboardShouldPersistTaps="always"
-        style={styles.podcastSearchResultsList}
-        data={podcastSearchResults}
-        keyExtractor={keyExtractor}
-        ListFooterComponent={<View style={{ height: 30 }} />}
-        renderItem={({ item: podcastSearchResult }) => (
-          <PodcastSearchResult
-            podcastSearchResult={podcastSearchResult}
-            onPress={showPodcastEpisodes(podcastSearchResult)}
-          />
-        )}
+      <PodcastSearchResults
+        isVisible={Boolean(debouncedSearchFieldText)}
+        podcastSearchResults={podcastSearchResults}
+        onPress={showPodcastEpisodes}
+      />
+      <PodcastsWithUnfinishedEpisodes
+        isVisible={!Boolean(debouncedSearchFieldText)}
+        podcastsWithUnfinishedEpisodes={podcastsWithUnfinishedEpisodes}
+        onPress={showPodcastEpisodes}
       />
     </View>
   )

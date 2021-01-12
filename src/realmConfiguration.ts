@@ -23,6 +23,11 @@ const EpisodeSchema = {
     artwork_url: "string",
     publisher: "string",
     seconds_listened_to: { type: "int", default: 0 },
+    podcast: {
+      type: "linkingObjects",
+      objectType: "Podcast",
+      property: "episodes",
+    },
   },
 }
 

@@ -1,4 +1,4 @@
 type RouteParams = {
   Search: undefined
-  Episodes: { podcastSearchResult: PodcastSearchResult }
+  Episodes: { rssFeedUrl: string }
 }
