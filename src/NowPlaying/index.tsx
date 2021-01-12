@@ -14,7 +14,7 @@ import useColorScheme from "../hooks/useColorScheme"
 import colorSchemes from "../colorSchemes"
 import useStyles from "./useStyles"
 
-const Details = () => {
+const NowPlaying = () => {
   const styles = useStyles()
   const colorSchemeName = useColorScheme()
   const colorScheme = colorSchemes[colorSchemeName]
@@ -70,4 +70,4 @@ const Details = () => {
   )
 }
 
-export default Details
+export default NowPlaying

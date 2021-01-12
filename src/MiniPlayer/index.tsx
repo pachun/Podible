@@ -32,7 +32,7 @@ const MiniPlayer = () => {
           style={{ width: 60, justifyContent: "center", alignItems: "center" }}
           onPress={() => {
             Haptics.impactAsync()
-            navigation.navigate("Details")
+            navigation.navigate("Now Playing")
           }}
         >
           <Entypo

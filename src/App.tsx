@@ -11,7 +11,7 @@ import Provider from "./Provider"
 import Search from "./Search"
 import Episodes from "./Episodes"
 import MiniPlayer from "./MiniPlayer"
-import Details from "./Details"
+import NowPlaying from "./NowPlaying"
 
 const ModalStack = createStackNavigator()
 const Stack = createStackNavigator<RouteParams>()
@@ -40,12 +40,12 @@ const App = () => {
     },
   }
 
-  const AppWithMiniPlayerAndModalPodcastDetails = () => (
+  const AppWithMiniPlayerAndNowPlayingModal = () => (
     <ModalStack.Navigator mode="modal" headerMode="none">
       <ModalStack.Screen name="Search" component={AppWithMiniPlayer} />
       <ModalStack.Screen
-        name="Details"
-        component={Details}
+        name="Now Playing"
+        component={NowPlaying}
         options={hideHeadersDefaultBottomBorder}
       />
     </ModalStack.Navigator>
@@ -56,7 +56,7 @@ const App = () => {
       <PodibleStatusBar />
       <Provider>
         <NavigationContainer>
-          <AppWithMiniPlayerAndModalPodcastDetails />
+          <AppWithMiniPlayerAndNowPlayingModal />
         </NavigationContainer>
       </Provider>
     </AppearanceProvider>
