@@ -40,6 +40,7 @@ interface UsePodcastFromRssFeedProps {
 
 const usePodcastFromRssFeed = ({ rssFeedUrl }: UsePodcastFromRssFeedProps) => {
   const [podcast, setPodcast] = useState<Podcast>()
+  const [didError, setDidError] = useState(false)
 
   const abortController = new AbortController()
   const getPodcastFromRssFeed = async () => {
@@ -47,11 +48,16 @@ const usePodcastFromRssFeed = ({ rssFeedUrl }: UsePodcastFromRssFeedProps) => {
       const response = await fetch(`${apiUrl}/rss_feed?url=${rssFeedUrl}`, {
         signal: abortController.signal,
       })
+      if (response.status === 422) {
+        setDidError(true)
+        return
+      }
       const responseJson = await response.json()
       const podcastFromRssFeed = responseJson as Podcast
       const cachedPodcast = await setCachedPodcast(podcastFromRssFeed)
       setPodcast(cachedPodcast)
     } catch (exception) {
+      setDidError(true)
       logError(rssFeedUrl, exception)
     }
   }
@@ -74,7 +80,7 @@ const usePodcastFromRssFeed = ({ rssFeedUrl }: UsePodcastFromRssFeedProps) => {
     getPodcastFromRssFeed()
   }, [rssFeedUrl])
 
-  return { podcast, abortController }
+  return { podcast, didError, abortController }
 }
 
 export default usePodcastFromRssFeed

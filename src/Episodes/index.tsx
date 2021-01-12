@@ -7,6 +7,7 @@ import { RouteProp } from "@react-navigation/native"
 import Loading from "../Loading"
 import PodcastDescription from "./PodcastDescription"
 import HeaderBarWithBackButton from "./HeaderBarWithBackButton"
+import SomethingWentWrong from "../SomethingWentWrong"
 import Episode from "./Episode"
 import usePodcastFromRssFeed from "../hooks/usePodcastFromRssFeed"
 import useStyles from "./useStyles"
@@ -27,7 +28,9 @@ const Episodes = ({ route }: EpisodesProps) => {
 
   const rssFeedUrl = route.params.podcastSearchResult.rssFeedUrl
 
-  const { podcast, abortController } = usePodcastFromRssFeed({ rssFeedUrl })
+  const { podcast, didError, abortController } = usePodcastFromRssFeed({
+    rssFeedUrl,
+  })
 
   const episodes = useMemo(
     () =>
@@ -51,6 +54,7 @@ const Episodes = ({ route }: EpisodesProps) => {
     <View testID="Episodes" style={styles.container}>
       <View style={{ height: insets.top }} />
       <HeaderBarWithBackButton goBack={navigation.goBack} />
+      {!episodes && !didError && <Loading />}
       {episodes ? (
         <FlatList
           style={styles.container}
@@ -62,7 +66,7 @@ const Episodes = ({ route }: EpisodesProps) => {
           renderItem={({ item: episode }) => <Episode episode={episode} />}
         />
       ) : (
-        <Loading />
+        <SomethingWentWrong />
       )}
     </View>
   )
