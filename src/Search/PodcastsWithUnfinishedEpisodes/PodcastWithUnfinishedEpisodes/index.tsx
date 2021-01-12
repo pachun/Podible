@@ -21,6 +21,7 @@ const PodcastWithUnfinishedEpisodes = ({
           <Text style={styles.podcastTitle} numberOfLines={2}>
             {podcast.title}
           </Text>
+          <View style={{ height: 5 }} />
           <Text style={styles.podcastPublisher} numberOfLines={2}>
             {podcast.publisher.toUpperCase()}
           </Text>

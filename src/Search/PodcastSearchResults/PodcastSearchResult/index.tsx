@@ -24,6 +24,7 @@ const PodcastSearchResult = ({
           <Text style={styles.podcastTitle} numberOfLines={2}>
             {podcastSearchResult.title}
           </Text>
+          <View style={{ height: 5 }} />
           <Text style={styles.podcastPublisher} numberOfLines={2}>
             {podcastSearchResult.publisher.toUpperCase()}
           </Text>

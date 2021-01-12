@@ -1,5 +1,5 @@
 import React from "react"
-import { FlatList, View } from "react-native"
+import { FlatList, Text, View } from "react-native"
 import PodcastWithUnfinishedEpisodes from "./PodcastWithUnfinishedEpisodes"
 import useStyles from "./useStyles"
 
@@ -25,6 +25,15 @@ const PodcastsWithUnfinishedEpisodes = ({
         style={styles.list}
         data={podcastsWithUnfinishedEpisodes}
         keyExtractor={keyExtractor}
+        stickyHeaderIndices={[0]}
+        ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+        ListHeaderComponent={
+          <View style={styles.headerContainer}>
+            <View style={styles.headerBackground}>
+              <Text style={styles.headerTitle}>RECENTLY PLAYED</Text>
+            </View>
+          </View>
+        }
         ListFooterComponent={<View style={{ height: 30 }} />}
         renderItem={({ item: podcast }) => (
           <PodcastWithUnfinishedEpisodes

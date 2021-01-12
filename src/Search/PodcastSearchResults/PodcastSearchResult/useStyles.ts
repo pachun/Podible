@@ -11,7 +11,6 @@ const useStyles = () => {
     return StyleSheet.create({
       container: {
         alignItems: "center",
-        marginTop: 20,
       },
       background: {
         width: "90%",

@@ -8,6 +8,8 @@ const darkMode = {
   foreground: lightest,
   background: darkest,
 
+  tableHeader: light,
+
   publisherLabel: light,
   episodeDateAndDurationLabel: light,
   searchFieldForeground: light,
