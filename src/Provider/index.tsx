@@ -1,9 +1,28 @@
-import React, { createContext, useReducer, useState } from "react"
+import React, { createContext, useReducer, useState, useEffect } from "react"
 import reducer from "./reducer"
 
 // @ts-ignore
 import TrackPlayer, { TrackPlayerEvents } from "react-native-track-player"
-import { useTrackPlayerEvents } from "react-native-track-player/lib/hooks"
+import {
+  useTrackPlayerProgress,
+  useTrackPlayerEvents,
+} from "react-native-track-player/lib/hooks"
+
+import realmConfiguration from "../realmConfiguration"
+
+const saveListeningProgress = async (
+  episode: Episode,
+  secondsListenedTo: number,
+) => {
+  const realm = await Realm.open(realmConfiguration)
+  realm.write(() => {
+    const cachedEpisode = realm.objectForPrimaryKey<Episode>(
+      "Episode",
+      episode.audio_url,
+    )
+    cachedEpisode.seconds_listened_to = secondsListenedTo
+  })
+}
 
 const whenPlayedOrPaused = TrackPlayerEvents.PLAYBACK_STATE
 const whenAudioIsInterrupted = TrackPlayerEvents.REMOTE_DUCK
@@ -55,6 +74,15 @@ const Provider = ({
   }
 
   useTrackPlayerEvents([whenPlayedOrPaused, whenAudioIsInterrupted], update)
+
+  const everySecond = 1000
+  const { position } = useTrackPlayerProgress(everySecond)
+
+  useEffect(() => {
+    if (state.episode) {
+      saveListeningProgress(state.episode, position)
+    }
+  }, [position, state.episode])
 
   const value: PodibleContextType = {
     episode: state.episode,

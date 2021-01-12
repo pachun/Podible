@@ -6,7 +6,7 @@ import { PodibleContext } from "../../Provider"
 import humanReadableDuration from "./humanReadableDuration"
 import shortDate from "./shortDate"
 import useStyles from "./useStyles"
-import { play, saveListeningProgress } from "../../AudioControls"
+import { play } from "../../AudioControls"
 import realmConfiguration from "../../realmConfiguration"
 
 const removeHtml = (s: string) =>
@@ -20,11 +20,7 @@ const Episode = ({ episode: displayedEpisode }: EpisodeProps) => {
   const styles = useStyles()
   const navigation = useNavigation()
 
-  const {
-    setEpisode,
-    episode: currentlyPlayingEpisode,
-    playbackState,
-  } = useContext(PodibleContext)
+  const { setEpisode } = useContext(PodibleContext)
 
   const [
     durationOrTimeRemainingLabel,
@@ -71,9 +67,6 @@ const Episode = ({ episode: displayedEpisode }: EpisodeProps) => {
   }, [])
 
   const playEpisode = async () => {
-    if (playbackState === "playing") {
-      saveListeningProgress(currentlyPlayingEpisode)
-    }
     setEpisode(displayedEpisode)
     play(displayedEpisode)
     navigation.navigate("Now Playing")

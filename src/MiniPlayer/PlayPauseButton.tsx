@@ -15,8 +15,9 @@ const PlayPauseButton = () => {
 
   const pauseEpisode = () => {
     Haptics.impactAsync()
-    pause(episode)
+    pause()
   }
+
   const playEpisode = () => {
     Haptics.impactAsync()
     play(episode)

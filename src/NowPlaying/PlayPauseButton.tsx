@@ -15,7 +15,7 @@ const PlayPauseButton = () => {
 
   const pauseEpisode = async () => {
     Haptics.impactAsync()
-    pause(episode)
+    pause()
   }
 
   const playEpisode = () => {
@@ -26,18 +26,12 @@ const PlayPauseButton = () => {
   return (
     <>
       {(playbackState === "playing" || playbackState === "ready") && (
-        <TouchableOpacity
-          onPress={pauseEpisode}
-          style={{ marginTop: -20 }}
-        >
+        <TouchableOpacity onPress={pauseEpisode} style={{ marginTop: -20 }}>
           <Ionicons name="ios-pause" size={80} color={colorScheme.foreground} />
         </TouchableOpacity>
       )}
       {(playbackState === "paused" || playbackState === "idle") && (
-        <TouchableOpacity
-          onPress={playEpisode}
-          style={{ marginTop: -20 }}
-        >
+        <TouchableOpacity onPress={playEpisode} style={{ marginTop: -20 }}>
           <Ionicons name="ios-play" size={80} color={colorScheme.foreground} />
         </TouchableOpacity>
       )}

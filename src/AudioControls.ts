@@ -1,5 +1,4 @@
 import TrackPlayer from "react-native-track-player"
-import realmConfiguration from "./realmConfiguration"
 import trackPlayerTrackFromEpisode from "./shared/trackPlayerTrackFromEpisode"
 
 const isCurrentEpisode = async (episode: Episode) =>
@@ -26,19 +25,4 @@ export const play = async (episode: Episode) => {
   }
 }
 
-export const saveListeningProgress = async (episode: Episode) => {
-  const realm = await Realm.open(realmConfiguration)
-  const secondsListenedTo = await TrackPlayer.getPosition()
-  realm.write(() => {
-    const cachedEpisode = realm.objectForPrimaryKey<Episode>(
-      "Episode",
-      episode.audio_url,
-    )
-    cachedEpisode.seconds_listened_to = secondsListenedTo
-  })
-}
-
-export const pause = async (episode: Episode) => {
-  saveListeningProgress(episode)
-  TrackPlayer.pause()
-}
+export const pause = async () => TrackPlayer.pause()
