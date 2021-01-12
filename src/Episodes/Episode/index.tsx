@@ -1,5 +1,6 @@
 import React, { useContext, useMemo, useState, useEffect } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
+import { useNavigation } from "@react-navigation/native"
 import he from "he"
 import { PodibleContext } from "../../Provider"
 import humanReadableDuration from "./humanReadableDuration"
@@ -17,6 +18,7 @@ interface EpisodeProps {
 
 const Episode = ({ episode: displayedEpisode }: EpisodeProps) => {
   const styles = useStyles()
+  const navigation = useNavigation()
 
   const {
     setEpisode,
@@ -74,6 +76,7 @@ const Episode = ({ episode: displayedEpisode }: EpisodeProps) => {
     }
     setEpisode(displayedEpisode)
     play(displayedEpisode)
+    navigation.navigate("Now Playing")
   }
 
   return (
