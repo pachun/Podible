@@ -7,6 +7,7 @@ import humanReadableDuration from "./humanReadableDuration"
 import shortDate from "./shortDate"
 import useStyles from "./useStyles"
 import { play } from "../../AudioControls"
+import Realm from "realm"
 import realmConfiguration from "../../realmConfiguration"
 
 const removeHtml = (s: string) =>
