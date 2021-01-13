@@ -6,8 +6,7 @@ import useStyles from "./useStyles"
 const random = <T,>(items: T[]) =>
   items[Math.floor(Math.random() * items.length)]
 
-// const unhappyEmojis = ["🥺", "🤕", "😳", "😰"]
-const unhappyEmojis = ["", ""]
+const unhappyEmojis = ["🥺", "🤕", "😳", "😰"]
 
 const SomethingWentWrong = () => {
   const styles = useStyles()
