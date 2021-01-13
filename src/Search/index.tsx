@@ -54,7 +54,10 @@ const Search = () => {
         onPress={showPodcastEpisodes}
       />
       <PodcastsWithUnfinishedEpisodes
-        isVisible={!Boolean(debouncedSearchFieldText)}
+        isVisible={
+          !Boolean(debouncedSearchFieldText) &&
+          podcastsWithUnfinishedEpisodes.length > 0
+        }
         podcastsWithUnfinishedEpisodes={podcastsWithUnfinishedEpisodes}
         onPress={showPodcastEpisodes}
       />
