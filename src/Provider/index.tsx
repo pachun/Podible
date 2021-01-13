@@ -8,6 +8,7 @@ import {
   useTrackPlayerEvents,
 } from "react-native-track-player/lib/hooks"
 
+import Realm from "realm"
 import realmConfiguration from "../realmConfiguration"
 
 const saveListeningProgress = async (
@@ -79,7 +80,7 @@ const Provider = ({
   const { position } = useTrackPlayerProgress(everySecond)
 
   useEffect(() => {
-    if (state.episode) {
+    if (state.episode && position > 0) {
       saveListeningProgress(state.episode, position)
     }
   }, [position, state.episode])
