@@ -40,13 +40,24 @@ const App = () => {
     },
   }
 
+  const allowSwipingDownAnywhereToDismiss = {
+    gestureResponseDistance: {
+      vertical: 10000,
+      horizontal: 10000,
+    },
+    gestureVelocityImpact: 1,
+  }
+
   const AppWithMiniPlayerAndNowPlayingModal = () => (
     <ModalStack.Navigator mode="modal" headerMode="none">
       <ModalStack.Screen name="Search" component={AppWithMiniPlayer} />
       <ModalStack.Screen
         name="Now Playing"
         component={NowPlaying}
-        options={hideHeadersDefaultBottomBorder}
+        options={{
+          ...hideHeadersDefaultBottomBorder,
+          ...allowSwipingDownAnywhereToDismiss,
+        }}
       />
     </ModalStack.Navigator>
   )
