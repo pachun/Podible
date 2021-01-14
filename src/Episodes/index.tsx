@@ -55,7 +55,7 @@ const Episodes = ({ route }: EpisodesProps) => {
       <View style={{ height: insets.top }} />
       <HeaderBarWithBackButton goBack={navigation.goBack} />
       {!episodes && !didError && <Loading />}
-      {episodes ? (
+      {episodes && (
         <FlatList
           style={styles.container}
           scrollIndicatorInsets={{ right: 1 }}
@@ -65,9 +65,8 @@ const Episodes = ({ route }: EpisodesProps) => {
           keyExtractor={keyExtractor}
           renderItem={({ item: episode }) => <Episode episode={episode} />}
         />
-      ) : (
-        <SomethingWentWrong />
       )}
+      {didError && <SomethingWentWrong />}
     </View>
   )
 }
