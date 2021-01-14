@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState, useEffect } from "react"
+import React, { useMemo, useContext, useState, useEffect } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import he from "he"
@@ -7,8 +7,6 @@ import humanReadableDuration from "./humanReadableDuration"
 import shortDate from "./shortDate"
 import useStyles from "./useStyles"
 import { play } from "../../AudioControls"
-import Realm from "realm"
-import realmConfiguration from "../../realmConfiguration"
 
 const removeHtml = (s: string) =>
   he.decode(unescape(s.replace(/(<([^>]+)>)/gi, "")))
@@ -33,39 +31,28 @@ const Episode = ({ episode: displayedEpisode }: EpisodeProps) => {
     [displayedEpisode.duration],
   )
 
-  const timeRemainingLabel = async () => {
-    const realm = await Realm.open(realmConfiguration)
-    const secondsListenedTo = realm.objectForPrimaryKey<Episode>(
-      "Episode",
-      displayedEpisode.audio_url,
-    ).seconds_listened_to
-    const secondsRemaining = displayedEpisode.duration - secondsListenedTo
+  const timeRemainingLabel = useMemo(() => {
+    const secondsRemaining =
+      displayedEpisode.duration - displayedEpisode.seconds_listened_to
     return `${humanReadableDuration(secondsRemaining)} LEFT`
-  }
+  }, [displayedEpisode.duration, displayedEpisode.seconds_listened_to])
 
   useEffect(() => {
-    const calculateDurationOrTimeRemainingLabel = async () => {
-      const realm = await Realm.open(realmConfiguration)
-      const secondsListenedTo = realm.objectForPrimaryKey<Episode>(
-        "Episode",
-        displayedEpisode.audio_url,
-      ).seconds_listened_to
-      const secondsRemaining = displayedEpisode.duration - secondsListenedTo
+    const secondsRemaining =
+      displayedEpisode.duration - displayedEpisode.seconds_listened_to
 
-      const hasNotListenedOrHasJustBegunListening = secondsListenedTo < 30
-      const hasFinishedListening = secondsRemaining <= 2
+    const hasNotListenedOrHasJustBegunListening =
+      displayedEpisode.seconds_listened_to < 30
+    const hasFinishedListening = secondsRemaining <= 2
 
-      if (hasNotListenedOrHasJustBegunListening) {
-        setDurationOrTimeRemainingLabel(totalEpisodeDurationLabel)
-      } else if (hasFinishedListening) {
-        setDurationOrTimeRemainingLabel("PLAYED")
-      } else {
-        setDurationOrTimeRemainingLabel(await timeRemainingLabel())
-      }
+    if (hasNotListenedOrHasJustBegunListening) {
+      setDurationOrTimeRemainingLabel(totalEpisodeDurationLabel)
+    } else if (hasFinishedListening) {
+      setDurationOrTimeRemainingLabel("PLAYED")
+    } else {
+      setDurationOrTimeRemainingLabel(timeRemainingLabel)
     }
-
-    calculateDurationOrTimeRemainingLabel()
-  }, [])
+  }, [displayedEpisode, totalEpisodeDurationLabel, timeRemainingLabel])
 
   const playEpisode = async () => {
     setEpisode(displayedEpisode)
@@ -94,4 +81,4 @@ const Episode = ({ episode: displayedEpisode }: EpisodeProps) => {
   )
 }
 
-export default Episode
+export default React.memo(Episode)

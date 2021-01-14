@@ -1,9 +1,19 @@
-import React, { useMemo, useEffect } from "react"
+import React, {
+  ReactElement,
+  useState,
+  useContext,
+  useMemo,
+  useEffect,
+} from "react"
 import { FlatList, View } from "react-native"
 import { useSafeArea } from "react-native-safe-area-context"
-import parseISO from "date-fns/parseISO"
 import { useNavigation } from "@react-navigation/native"
 import { RouteProp } from "@react-navigation/native"
+import { useTrackPlayerProgress } from "react-native-track-player/lib/hooks"
+import { PodibleContext } from "../Provider"
+import sortNewestEpisodesFirst from "./sortNewestEpisodesFirst"
+import saveListeningProgressInRealm from "./saveListeningProgressInRealm"
+import useEpisodesWithUpdatedSecondsListenedTo from "./useEpisodesWithUpdatedSecondsListenedTo"
 import Loading from "../Loading"
 import PodcastDescription from "./PodcastDescription"
 import HeaderBarWithBackButton from "./HeaderBarWithBackButton"
@@ -12,35 +22,26 @@ import Episode from "./Episode"
 import usePodcastFromRssFeed from "../hooks/usePodcastFromRssFeed"
 import useStyles from "./useStyles"
 
-const newestEpisodesFirst = (episodes: Episode[]) =>
-  Array.from(episodes).sort((e1, e2) =>
-    parseISO(e1.published_at) > parseISO(e2.published_at) ? -1 : 1,
-  )
-
 type EpisodesProps = {
   route: RouteProp<RouteParams, "Episodes">
 }
 
-const Episodes = ({ route }: EpisodesProps) => {
+const Episodes = ({ route }: EpisodesProps): ReactElement => {
   const styles = useStyles()
   const insets = useSafeArea()
   const navigation = useNavigation()
 
-  const rssFeedUrl = route.params.rssFeedUrl
+  const everySecond = 1000
+  const { position } = useTrackPlayerProgress(everySecond)
+  const { episode: playingEpisode, playbackState } = useContext(PodibleContext)
+  const [secondsListenedTo, setSecondsListenedTo] = useState<number>(
+    playingEpisode ? playingEpisode.seconds_listened_to : 0,
+  )
 
+  const rssFeedUrl = route.params.rssFeedUrl
   const { podcast, didError, abortController } = usePodcastFromRssFeed({
     rssFeedUrl,
   })
-
-  const episodes = useMemo(
-    () =>
-      podcast && podcast.episodes
-        ? newestEpisodesFirst(podcast.episodes)
-        : undefined,
-    [podcast],
-  )
-
-  const keyExtractor = <T,>(_: T, position: number) => position.toString()
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("blur", () => {
@@ -48,7 +49,51 @@ const Episodes = ({ route }: EpisodesProps) => {
     })
 
     return unsubscribe
-  }, [navigation])
+  }, [navigation, abortController])
+
+  const podcastEpisodesExist = useMemo(() => podcast && podcast.episodes, [
+    podcast,
+  ])
+
+  const newestEpisodesFirst = useMemo(
+    () =>
+      podcastEpisodesExist
+        ? sortNewestEpisodesFirst(podcast.episodes)
+        : undefined,
+    [podcastEpisodesExist, podcast],
+  )
+
+  const {
+    episodes: episodesWithUpdatedSecondsListenedTo,
+  } = useEpisodesWithUpdatedSecondsListenedTo({
+    episodes: newestEpisodesFirst,
+    playingEpisode,
+    secondsListenedTo,
+  })
+
+  const episodes = useMemo(() => {
+    if (podcastEpisodesExist && playbackState === "playing") {
+      return episodesWithUpdatedSecondsListenedTo
+    } else if (podcastEpisodesExist) {
+      return newestEpisodesFirst
+    }
+    return undefined
+  }, [
+    podcastEpisodesExist,
+    playbackState,
+    newestEpisodesFirst,
+    episodesWithUpdatedSecondsListenedTo,
+  ])
+
+  useEffect(() => {
+    const seekHasFinished = position > 0
+    if (playingEpisode && seekHasFinished) {
+      saveListeningProgressInRealm(playingEpisode, position)
+      setSecondsListenedTo(position)
+    }
+  }, [position, playingEpisode])
+
+  const keyExtractor = <T,>(_: T, position: number) => position.toString()
 
   return (
     <View style={styles.container}>

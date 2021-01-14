@@ -5,7 +5,8 @@
     "ios": "REACT_NATIVE_API_URL=$(ifconfig | grep 192 | cut -d ' ' -f 2) react-native run-ios",
     "web": "expo start --web",
     "publish": "expo publish --target bare",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "lint": "eslint '**/*.ts' '**/*.tsx'"
   },
   "dependencies": {
     "@bugsnag/react-native": "^7.5.1",
@@ -49,10 +50,16 @@
     "@types/react": "~16.9.35",
     "@types/react-dom": "~16.9.8",
     "@types/react-native": "~0.63.2",
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "eslint": "^7.17.0",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-react-native": "^3.10.0",
     "prettier": "^2.1.2",
     "react-native-web": "~0.13.7",
-    "typescript": "~4.0.0"
+    "typescript": "^4.1.3"
   },
   "private": true,
   "name": "Podible",

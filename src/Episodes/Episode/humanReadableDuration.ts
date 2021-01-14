@@ -1,13 +1,14 @@
 const secondsInAnHour = 3600
 const secondsInAMinute = 60
 
-const humanReadableDuration = (secondDuration: number) => {
+const humanReadableDuration = (secondDuration: number): string => {
   const hours = Math.floor(secondDuration / secondsInAnHour)
   const minutes = Math.floor(
     (secondDuration - hours * secondsInAnHour) / secondsInAMinute,
   )
-  const seconds =
-    secondDuration - hours * secondsInAnHour - minutes * secondsInAMinute
+  const seconds = Math.round(
+    secondDuration - hours * secondsInAnHour - minutes * secondsInAMinute,
+  )
 
   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
     2,

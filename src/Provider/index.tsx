@@ -1,29 +1,9 @@
-import React, { createContext, useReducer, useState, useEffect } from "react"
+import React, { ReactElement, createContext, useReducer, useState } from "react"
 import reducer from "./reducer"
 
 // @ts-ignore
 import TrackPlayer, { TrackPlayerEvents } from "react-native-track-player"
-import {
-  useTrackPlayerProgress,
-  useTrackPlayerEvents,
-} from "react-native-track-player/lib/hooks"
-
-import Realm from "realm"
-import realmConfiguration from "../realmConfiguration"
-
-const saveListeningProgress = async (
-  episode: Episode,
-  secondsListenedTo: number,
-) => {
-  const realm = await Realm.open(realmConfiguration)
-  realm.write(() => {
-    const cachedEpisode = realm.objectForPrimaryKey<Episode>(
-      "Episode",
-      episode.audio_url,
-    )
-    cachedEpisode.seconds_listened_to = secondsListenedTo
-  })
-}
+import { useTrackPlayerEvents } from "react-native-track-player/lib/hooks"
 
 const whenPlayedOrPaused = TrackPlayerEvents.PLAYBACK_STATE
 const whenAudioIsInterrupted = TrackPlayerEvents.REMOTE_DUCK
@@ -38,9 +18,7 @@ const shouldPausePlayback = (event: TrackPlayerEvents): boolean =>
   event.type === whenAudioIsInterrupted && Boolean(event.paused)
 
 const shouldResumePlayback = (event: TrackPlayerEvents): boolean =>
-  event.type === whenAudioIsInterrupted &&
-  !Boolean(event.paused) &&
-  !Boolean(event.permanent)
+  event.type === whenAudioIsInterrupted && !event.paused && !event.permanent
 
 const defaultInitialState: PodibleState = {
   playbackState: "unknown",
@@ -54,7 +32,7 @@ const Provider = ({
 }: {
   children: React.ReactNode
   initialState?: PodibleState
-}) => {
+}): ReactElement => {
   const [state, dispatch] = useReducer(
     reducer,
     initialState || defaultInitialState,
@@ -75,15 +53,6 @@ const Provider = ({
   }
 
   useTrackPlayerEvents([whenPlayedOrPaused, whenAudioIsInterrupted], update)
-
-  const everySecond = 1000
-  const { position } = useTrackPlayerProgress(everySecond)
-
-  useEffect(() => {
-    if (state.episode && position > 0) {
-      saveListeningProgress(state.episode, position)
-    }
-  }, [position, state.episode])
 
   const value: PodibleContextType = {
     episode: state.episode,
