@@ -27,3 +27,9 @@ yarn lint
 yarn start # leave running
 yarn ios # run in separate terminal tab
 ```
+
+### Deploy
+
+```bash
+yarn deploy
+```
