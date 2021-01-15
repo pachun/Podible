@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect } from "react"
+import React, { ReactElement, useMemo, useState, useEffect } from "react"
 import { View } from "react-native"
 import { useSafeArea } from "react-native-safe-area-context"
 import getPodcastsWithUnfinishedEpisodes from "./getPodcastsWithUnfinishedEpisodes"
@@ -32,6 +32,11 @@ const Search = (): ReactElement => {
     setPodcastsWithUnfinishedEpisodes,
   ] = useState<Podcast[]>([])
 
+  const autoFocusSearchField = useMemo(
+    () => podcastsWithUnfinishedEpisodes.length > 0,
+    [podcastsWithUnfinishedEpisodes],
+  )
+
   useEffect(() => {
     if (searchFieldText === "") {
       getPodcastsWithUnfinishedEpisodes(setPodcastsWithUnfinishedEpisodes)
@@ -46,6 +51,7 @@ const Search = (): ReactElement => {
         <SearchField
           searchFieldText={searchFieldText}
           setSearchFieldText={setSearchFieldText}
+          autoFocus={autoFocusSearchField}
         />
       </View>
       <PodcastSearchResults
