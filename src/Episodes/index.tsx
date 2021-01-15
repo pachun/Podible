@@ -44,7 +44,7 @@ const Episodes = ({ route }: EpisodesProps): ReactElement => {
   })
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener("blur", () => {
+    const unsubscribe = navigation.addListener("beforeRemove", () => {
       abortController.abort()
     })
 
