@@ -39,7 +39,7 @@
     "react-native-swift": "^1.2.3",
     "react-native-track-player": "^1.2.3",
     "react-native-unimodules": "~0.12.0",
-    "react-native-web": "~0.13.12",
+    "react-native-web": "~0.13.7",
     "react-native-webview": "11.0.0",
     "react-native-xml2js": "^1.0.3",
     "realm": "^10.0.0-rc.2"
