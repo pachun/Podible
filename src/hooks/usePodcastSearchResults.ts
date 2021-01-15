@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useCallback, useState, useEffect } from "react"
 
 interface UsePodcastSearchResultsProps {
   searchedText: string
@@ -6,12 +6,14 @@ interface UsePodcastSearchResultsProps {
 
 const usePodcastSearchResults = ({
   searchedText,
-}: UsePodcastSearchResultsProps) => {
+}: UsePodcastSearchResultsProps): {
+  podcastSearchResults: PodcastSearchResult[]
+} => {
   const [podcastSearchResults, setPodcastSearchResults] = useState<
     PodcastSearchResult[]
   >([])
 
-  const getPodcastSearchResults = async () => {
+  const getPodcastSearchResults = useCallback(async () => {
     // https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api
     const podcastSearchUrl = `https://itunes.apple.com/search`
 
@@ -35,11 +37,11 @@ const usePodcastSearchResults = ({
     )
 
     setPodcastSearchResults(podcastSearchResults)
-  }
+  }, [searchedText])
 
   useEffect(() => {
     getPodcastSearchResults()
-  }, [searchedText])
+  }, [getPodcastSearchResults])
 
   return { podcastSearchResults }
 }

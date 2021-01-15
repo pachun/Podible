@@ -1,4 +1,4 @@
-const reducer = (state: PodibleState, action: PodibleAction) => {
+const reducer = (state: PodibleState, action: PodibleAction): PodibleState => {
   switch (action.type) {
     case "SET_EPISODE":
       return { ...state, episode: action.value }

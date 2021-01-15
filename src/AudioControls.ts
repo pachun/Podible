@@ -4,7 +4,7 @@ import trackPlayerTrackFromEpisode from "./shared/trackPlayerTrackFromEpisode"
 const isCurrentEpisode = async (episode: Episode) =>
   (await TrackPlayer.getCurrentTrack()) === episode.audio_url
 
-export const play = async (episode: Episode) => {
+export const play = async (episode: Episode): Promise<void> => {
   if (await isCurrentEpisode(episode)) {
     TrackPlayer.play()
   } else {
@@ -25,4 +25,4 @@ export const play = async (episode: Episode) => {
   }
 }
 
-export const pause = async () => TrackPlayer.pause()
+export const pause = async (): Promise<void> => TrackPlayer.pause()

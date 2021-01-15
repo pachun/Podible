@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native"
 import useColorScheme from "../../../hooks/useColorScheme"
 import colorSchemes from "../../../colorSchemes"
 
-const useStyles = () => {
+const useStyles = (): any => {
   const colorSchemeName = useColorScheme()
   const colorScheme = colorSchemes[colorSchemeName]
 
@@ -29,7 +29,7 @@ const useStyles = () => {
       podcastPublisher: {
         fontSize: 12,
         fontWeight: "bold",
-        color: "#7f7f7e",
+        color: colorScheme.publisherLabel,
         maxWidth: 250,
       },
       image: {

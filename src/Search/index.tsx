@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { ReactElement, useState, useEffect } from "react"
 import { View } from "react-native"
 import { useSafeArea } from "react-native-safe-area-context"
 import getPodcastsWithUnfinishedEpisodes from "./getPodcastsWithUnfinishedEpisodes"
@@ -10,7 +10,7 @@ import useDebounce from "../hooks/useDebounce"
 import usePodcastSearchResults from "../hooks/usePodcastSearchResults"
 import useStyles from "./useStyles"
 
-const Search = () => {
+const Search = (): ReactElement => {
   const styles = useStyles()
   const navigation = useNavigation()
   const insets = useSafeArea()
@@ -55,8 +55,7 @@ const Search = () => {
       />
       <PodcastsWithUnfinishedEpisodes
         isVisible={
-          !Boolean(debouncedSearchFieldText) &&
-          podcastsWithUnfinishedEpisodes.length > 0
+          !debouncedSearchFieldText && podcastsWithUnfinishedEpisodes.length > 0
         }
         podcastsWithUnfinishedEpisodes={podcastsWithUnfinishedEpisodes}
         onPress={showPodcastEpisodes}

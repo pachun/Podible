@@ -2,7 +2,7 @@ import TrackPlayer from "react-native-track-player"
 import jumpForward from "./jump-forward"
 import jumpBackward from "./jump-backward"
 
-const ReactNativeTrackPlayerPlaybackService = () => async () => {
+const ReactNativeTrackPlayerPlaybackService = () => async (): Promise<void> => {
   await TrackPlayer.addEventListener("remote-play", TrackPlayer.play)
   await TrackPlayer.addEventListener("remote-pause", TrackPlayer.pause)
   await TrackPlayer.addEventListener("remote-stop", TrackPlayer.stop)

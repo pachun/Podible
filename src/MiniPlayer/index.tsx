@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { ReactElement, useContext } from "react"
 import { TouchableOpacity, View } from "react-native"
 import FastImage from "react-native-fast-image"
 import * as Haptics from "expo-haptics"
@@ -14,7 +14,7 @@ import useColorScheme from "../hooks/useColorScheme"
 import colorSchemes from "../colorSchemes"
 import useStyles from "./useStyles"
 
-const MiniPlayer = () => {
+const MiniPlayer = (): ReactElement => {
   const styles = useStyles()
   const colorSchemeName = useColorScheme()
   const colorScheme = colorSchemes[colorSchemeName]
@@ -25,7 +25,7 @@ const MiniPlayer = () => {
   const { episode } = useContext(PodibleContext)
   const track = episode && trackPlayerTrackFromEpisode(episode)
 
-  return Boolean(track) ? (
+  return track ? (
     <>
       <View style={styles.container}>
         <TouchableOpacity

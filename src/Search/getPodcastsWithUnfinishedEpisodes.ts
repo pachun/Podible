@@ -23,7 +23,7 @@ const removingDuplicates = (
 
 const getPodcastsWithUnfinishedEpisodes = async (
   setPodcastsWithUnfinishedEpisodes: (podcasts: Podcast[]) => void,
-) => {
+): Promise<void> => {
   const realm = await Realm.open(realmConfiguration)
 
   const startedEpisodes = Array.from(

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { ReactElement, useState, useEffect } from "react"
 import { Text, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import useStyles from "./useStyles"
@@ -8,7 +8,7 @@ const random = <T,>(items: T[]) =>
 
 const unhappyEmojis = ["🥺", "🤕", "😳", "😰"]
 
-const SomethingWentWrong = () => {
+const SomethingWentWrong = (): ReactElement | null => {
   const styles = useStyles()
   const navigation = useNavigation()
 

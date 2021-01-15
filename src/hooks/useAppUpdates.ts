@@ -1,11 +1,11 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import * as Amplitude from "expo-analytics-amplitude"
 import useAppLifecycle from "./useAppLifecycle"
 import * as Updates from "expo-updates"
 
-const useAppUpdates = () => {
+const useAppUpdates = (): boolean => {
   const [isUpdating, setIsUpdating] = useState<boolean>(true)
-  const update = async () => {
+  const update = useCallback(async () => {
     try {
       const update = await Updates.checkForUpdateAsync()
       if (update.isAvailable) {
@@ -17,7 +17,7 @@ const useAppUpdates = () => {
       Amplitude.logEventWithProperties("App Update Failed", { reason })
     }
     setIsUpdating(false)
-  }
+  }, [])
   useAppLifecycle({ onLaunch: update, onForeground: update })
   return isUpdating
 }

@@ -12,6 +12,8 @@ module.exports = {
     "react-native/react-native": true,
   },
   rules: {
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "react-native/no-unused-styles": 2,
     "react-native/split-platform-components": 2,

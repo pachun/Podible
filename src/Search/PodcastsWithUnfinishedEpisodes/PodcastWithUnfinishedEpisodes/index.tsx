@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ReactElement } from "react"
 import { View, TouchableOpacity, Text } from "react-native"
 import FastImage from "react-native-fast-image"
 import useStyles from "./useStyles"
@@ -11,7 +11,7 @@ interface PodcastWithUnfinishedEpisodesProps {
 const PodcastWithUnfinishedEpisodes = ({
   podcast,
   onPress: showPodcastEpisodes,
-}: PodcastWithUnfinishedEpisodesProps) => {
+}: PodcastWithUnfinishedEpisodesProps): ReactElement => {
   const styles = useStyles()
   return (
     <TouchableOpacity style={styles.container} onPress={showPodcastEpisodes}>

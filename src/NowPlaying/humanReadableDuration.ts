@@ -1,7 +1,7 @@
 const secondsInAnHour = 3600
 const secondsInAMinute = 60
 
-const humanReadableDuration = (secondDuration: number) => {
+const humanReadableDuration = (secondDuration: number): string => {
   const hours = Math.floor(secondDuration / secondsInAnHour)
   const minutes = Math.floor(
     (secondDuration - hours * secondsInAnHour) / secondsInAMinute,

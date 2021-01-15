@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ReactElement } from "react"
 import { Text, View } from "react-native"
 import { ProgressComponent } from "react-native-track-player"
 import TrackPlayer from "react-native-track-player"
@@ -10,7 +10,7 @@ interface TrackPlayerSliderProps {
 }
 
 class TrackPlayerSlider extends ProgressComponent<TrackPlayerSliderProps> {
-  public render() {
+  public render(): ReactElement {
     const { colorScheme } = this.props
 
     return (

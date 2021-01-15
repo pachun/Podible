@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ReactElement } from "react"
 import { TouchableOpacity, View } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import useColorScheme from "../../hooks/useColorScheme"
@@ -9,7 +9,9 @@ interface HeaderBarWithBackButtonProps {
   goBack: () => void
 }
 
-const HeaderBarWithBackButton = ({ goBack }: HeaderBarWithBackButtonProps) => {
+const HeaderBarWithBackButton = ({
+  goBack,
+}: HeaderBarWithBackButtonProps): ReactElement => {
   const colorSchemeName = useColorScheme()
   const colorScheme = colorSchemes[colorSchemeName]
   return (

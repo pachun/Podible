@@ -1,8 +1,8 @@
-import React from "react"
+import React, { ReactElement } from "react"
 import { StatusBar } from "expo-status-bar"
 import useColorScheme from "../hooks/useColorScheme"
 
-const PodibleStatusBar = () => {
+const PodibleStatusBar = (): ReactElement => {
   const colorSchemeName = useColorScheme()
   const statusBarStyle = colorSchemeName === "dark" ? "light" : "dark"
 

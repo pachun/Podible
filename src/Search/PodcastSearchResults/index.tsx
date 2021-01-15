@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ReactElement } from "react"
 import { FlatList, View } from "react-native"
 import PodcastSearchResult from "./PodcastSearchResult"
 import useColorScheme from "../../hooks/useColorScheme"
@@ -15,7 +15,7 @@ const PodcastSearchResults = ({
   isVisible,
   podcastSearchResults,
   onPress: showPodcastEpisodes,
-}: PodcastSearchResultsProps) => {
+}: PodcastSearchResultsProps): ReactElement => {
   const styles = useStyles()
   const colorSchemeName = useColorScheme()
   const colorScheme = colorSchemes[colorSchemeName]

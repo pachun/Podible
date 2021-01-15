@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { ReactElement, useContext } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import FastImage from "react-native-fast-image"
 import { useSafeArea } from "react-native-safe-area-context"
@@ -14,7 +14,7 @@ import useColorScheme from "../hooks/useColorScheme"
 import colorSchemes from "../colorSchemes"
 import useStyles from "./useStyles"
 
-const NowPlaying = () => {
+const NowPlaying = (): ReactElement => {
   const styles = useStyles()
   const colorSchemeName = useColorScheme()
   const colorScheme = colorSchemes[colorSchemeName]

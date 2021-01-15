@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useCallback, useEffect, useRef } from "react"
 import { AppState, AppStateStatus } from "react-native"
 
 interface Props {
@@ -16,9 +16,9 @@ const noOperation = () => {}
 const useAppLifecycle = ({
   onForeground = noOperation,
   onLaunch = noOperation,
-}: Props) => {
+}: Props): void => {
   const appState = useRef(AppState.currentState)
-  const respondToLifecycleUpdates = () => {
+  const respondToLifecycleUpdates = useCallback(() => {
     const _handleAppStateChange = (nextAppState: AppStateStatus) => {
       if (appIsBeingForegrounded(nextAppState, appState.current)) onForeground()
       appState.current = nextAppState
@@ -26,14 +26,14 @@ const useAppLifecycle = ({
 
     AppState.addEventListener("change", _handleAppStateChange)
     return () => AppState.removeEventListener("change", _handleAppStateChange)
-  }
+  }, [onForeground])
 
   useEffect(() => {
     respondToLifecycleUpdates()
-  }, [])
+  }, [respondToLifecycleUpdates])
   useEffect(() => {
     onLaunch()
-  }, [])
+  }, [onLaunch])
 }
 
 export default useAppLifecycle

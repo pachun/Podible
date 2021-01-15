@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ReactElement } from "react"
 import { TouchableOpacity, View, Text } from "react-native"
 import * as Haptics from "expo-haptics"
 import { AntDesign } from "@expo/vector-icons"
@@ -7,7 +7,7 @@ import jumpInterval from "../../setup-react-native-track-player/jump-interval"
 import useColorScheme from "../../hooks/useColorScheme"
 import colorSchemes from "../../colorSchemes"
 
-const JumpBackwardButton = () => {
+const JumpBackwardButton = (): ReactElement => {
   const colorSchemeName = useColorScheme()
   const colorScheme = colorSchemes[colorSchemeName]
   return (

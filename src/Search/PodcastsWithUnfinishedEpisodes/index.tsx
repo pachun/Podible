@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ReactElement } from "react"
 import { FlatList, Text, View } from "react-native"
 import PodcastWithUnfinishedEpisodes from "./PodcastWithUnfinishedEpisodes"
 import useStyles from "./useStyles"
@@ -13,7 +13,7 @@ const PodcastsWithUnfinishedEpisodes = ({
   isVisible,
   podcastsWithUnfinishedEpisodes,
   onPress: showPodcastEpisodes,
-}: PodcastsWithUnfinishedEpisodesProps) => {
+}: PodcastsWithUnfinishedEpisodesProps): ReactElement => {
   const styles = useStyles()
 
   const keyExtractor = <T,>(_: T, position: number) => position.toString()

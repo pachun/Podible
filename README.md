@@ -2,14 +2,26 @@
 
 A React Native Podcast player.
 
-## Install
+### Install
 
 ```bash
 yarn
 npx pod-install
 ```
 
-## Run
+### Type Check
+
+```
+yarn tsc
+```
+
+### Lint
+
+```
+yarn lint
+```
+
+### Run
 
 ```bash
 yarn start # leave running

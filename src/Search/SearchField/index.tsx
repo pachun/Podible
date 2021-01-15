@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ReactElement } from "react"
 import { TextInput, TouchableOpacity, View } from "react-native"
 import { Ionicons, MaterialIcons } from "@expo/vector-icons"
 import useColorScheme from "../../hooks/useColorScheme"
@@ -13,7 +13,7 @@ interface SearchFieldProps {
 const SearchField = ({
   searchFieldText,
   setSearchFieldText,
-}: SearchFieldProps) => {
+}: SearchFieldProps): ReactElement => {
   const styles = useStyles()
   const colorSchemeName = useColorScheme()
   const colorScheme = colorSchemes[colorSchemeName]

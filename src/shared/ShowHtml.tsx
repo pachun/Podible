@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ReactElement } from "react"
 import { Linking } from "react-native"
 import HTML from "react-native-render-html"
 import useColorScheme from "../hooks/useColorScheme"
@@ -8,7 +8,7 @@ interface ShowHtmlProps {
   html: string
 }
 
-const ShowHtml = ({ html }: ShowHtmlProps) => {
+const ShowHtml = ({ html }: ShowHtmlProps): ReactElement => {
   const colorSchemeName = useColorScheme()
   const colorScheme = colorSchemes[colorSchemeName]
 

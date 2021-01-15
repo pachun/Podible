@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useRef, useCallback, useEffect, useState } from "react"
 import Realm from "realm"
 import realmConfiguration from "../../realmConfiguration"
 
@@ -6,13 +6,13 @@ const apiUrl = __DEV__
   ? `http://${process.env.REACT_NATIVE_API_URL}:3000`
   : `https://podible-web.herokuapp.com`
 
-const logError = (rssFeedUrl: string, exception: any) =>
+const logError = (rssFeedUrl: string, exception: string) =>
   fetch(`${apiUrl}/client_rss_feed_errors`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       rss_feed_url: rssFeedUrl,
-      exception: JSON.stringify(exception),
+      exception: exception,
     }),
   })
 
@@ -38,15 +38,21 @@ interface UsePodcastFromRssFeedProps {
   rssFeedUrl: string
 }
 
-const usePodcastFromRssFeed = ({ rssFeedUrl }: UsePodcastFromRssFeedProps) => {
+const usePodcastFromRssFeed = ({
+  rssFeedUrl,
+}: UsePodcastFromRssFeedProps): {
+  podcast: Podcast
+  didError: boolean
+  abortController: AbortController
+} => {
   const [podcast, setPodcast] = useState<Podcast>()
   const [didError, setDidError] = useState(false)
 
-  const abortController = new AbortController()
-  const getPodcastFromRssFeed = async () => {
+  const abortController = useRef(new AbortController())
+  const getPodcastFromRssFeed = useCallback(async () => {
     try {
       const response = await fetch(`${apiUrl}/rss_feed?url=${rssFeedUrl}`, {
-        signal: abortController.signal,
+        signal: abortController.current.signal,
       })
       if (response.status === 422) {
         setDidError(true)
@@ -60,9 +66,9 @@ const usePodcastFromRssFeed = ({ rssFeedUrl }: UsePodcastFromRssFeedProps) => {
       setDidError(true)
       logError(rssFeedUrl, exception)
     }
-  }
+  }, [rssFeedUrl])
 
-  const getCachedPodcast = async () => {
+  const getCachedPodcast = useCallback(async () => {
     const realm = await Realm.open(realmConfiguration)
     const realmPodcast = realm
       .objects<Podcast>("Podcast")
@@ -70,17 +76,17 @@ const usePodcastFromRssFeed = ({ rssFeedUrl }: UsePodcastFromRssFeedProps) => {
     if (realmPodcast) {
       setPodcast(realmPodcast)
     }
-  }
+  }, [rssFeedUrl])
 
   useEffect(() => {
     getCachedPodcast()
-  }, [rssFeedUrl])
+  }, [getCachedPodcast])
 
   useEffect(() => {
     getPodcastFromRssFeed()
-  }, [rssFeedUrl])
+  }, [getPodcastFromRssFeed])
 
-  return { podcast, didError, abortController }
+  return { podcast, didError, abortController: abortController.current }
 }
 
 export default usePodcastFromRssFeed

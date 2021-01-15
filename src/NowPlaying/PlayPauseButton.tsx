@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { ReactElement, useContext } from "react"
 import { ActivityIndicator, TouchableOpacity } from "react-native"
 import * as Haptics from "expo-haptics"
 import { Ionicons } from "@expo/vector-icons"
@@ -7,7 +7,7 @@ import useColorScheme from "../hooks/useColorScheme"
 import colorSchemes from "../colorSchemes"
 import { play, pause } from "../AudioControls"
 
-const PlayPauseButton = () => {
+const PlayPauseButton = (): ReactElement => {
   const colorSchemeName = useColorScheme()
   const colorScheme = colorSchemes[colorSchemeName]
 

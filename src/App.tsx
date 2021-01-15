@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ReactElement } from "react"
 import { AppearanceProvider } from "react-native-appearance"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
@@ -17,7 +17,8 @@ const ModalStack = createStackNavigator()
 const Stack = createStackNavigator<RouteParams>()
 const Tab = createBottomTabNavigator()
 
-const App = () => {
+const App = (): ReactElement => {
+  // eslint-disable-next-line
   const isUpdating = __DEV__ ? false : useAppUpdates()
   const isReadyToPlayAudio = useTrackPlayer()
 

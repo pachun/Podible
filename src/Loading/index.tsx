@@ -1,9 +1,9 @@
-import React from "react"
+import React, { ReactElement } from "react"
 import { ActivityIndicator, View } from "react-native"
 import useColorScheme from "../hooks/useColorScheme"
 import colorSchemes from "../colorSchemes"
 
-const Loading = () => {
+const Loading = (): ReactElement => {
   const colorSchemeName = useColorScheme()
   const colorScheme = colorSchemes[colorSchemeName]
   return (
