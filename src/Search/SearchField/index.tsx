@@ -8,13 +8,11 @@ import useStyles from "./useStyles"
 interface SearchFieldProps {
   searchFieldText: string
   setSearchFieldText: (searchFieldText: string) => void
-  autoFocus: boolean
 }
 
 const SearchField = ({
   searchFieldText,
   setSearchFieldText,
-  autoFocus,
 }: SearchFieldProps): ReactElement => {
   const styles = useStyles()
   const colorSchemeName = useColorScheme()
@@ -29,7 +27,6 @@ const SearchField = ({
         />
       </View>
       <TextInput
-        autoFocus={autoFocus}
         placeholder="Search"
         style={styles.searchField}
         value={searchFieldText}

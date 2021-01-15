@@ -1,10 +1,11 @@
 import React, { ReactElement, useMemo, useState, useEffect } from "react"
 import { View } from "react-native"
 import { useSafeArea } from "react-native-safe-area-context"
-import getPodcastsWithUnfinishedEpisodes from "./getPodcastsWithUnfinishedEpisodes"
 import { useNavigation } from "@react-navigation/native"
+import getPodcastsWithUnfinishedEpisodes from "./getPodcastsWithUnfinishedEpisodes"
+import getSubscribedPodcasts from "./getSubscribedPodcasts"
 import PodcastSearchResults from "./PodcastSearchResults"
-import PodcastsWithUnfinishedEpisodes from "./PodcastsWithUnfinishedEpisodes"
+import MyPodcasts from "./MyPodcasts"
 import SearchField from "./SearchField"
 import useDebounce from "../hooks/useDebounce"
 import usePodcastSearchResults from "../hooks/usePodcastSearchResults"
@@ -32,16 +33,36 @@ const Search = (): ReactElement => {
     setPodcastsWithUnfinishedEpisodes,
   ] = useState<Podcast[]>([])
 
-  const autoFocusSearchField = useMemo(
-    () => podcastsWithUnfinishedEpisodes.length > 0,
-    [podcastsWithUnfinishedEpisodes],
-  )
+  const [subscribedPodcasts, setSubscribedPodcasts] = useState<Podcast[]>([])
+
+  const recalculateMyPodcasts = () => {
+    getPodcastsWithUnfinishedEpisodes(setPodcastsWithUnfinishedEpisodes)
+    getSubscribedPodcasts(setSubscribedPodcasts)
+  }
 
   useEffect(() => {
-    if (searchFieldText === "") {
-      getPodcastsWithUnfinishedEpisodes(setPodcastsWithUnfinishedEpisodes)
-    }
+    if (searchFieldText === "") recalculateMyPodcasts()
   }, [searchFieldText])
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      recalculateMyPodcasts()
+    })
+
+    return unsubscribe
+  }, [navigation])
+
+  const myPodcastsAreVisible = useMemo(
+    () =>
+      !debouncedSearchFieldText &&
+      (podcastsWithUnfinishedEpisodes.length > 0 ||
+        subscribedPodcasts.length > 0),
+    [
+      debouncedSearchFieldText,
+      podcastsWithUnfinishedEpisodes,
+      subscribedPodcasts,
+    ],
+  )
 
   return (
     <View style={styles.container}>
@@ -51,7 +72,6 @@ const Search = (): ReactElement => {
         <SearchField
           searchFieldText={searchFieldText}
           setSearchFieldText={setSearchFieldText}
-          autoFocus={autoFocusSearchField}
         />
       </View>
       <PodcastSearchResults
@@ -59,11 +79,10 @@ const Search = (): ReactElement => {
         podcastSearchResults={podcastSearchResults}
         onPress={showPodcastEpisodes}
       />
-      <PodcastsWithUnfinishedEpisodes
-        isVisible={
-          !debouncedSearchFieldText && podcastsWithUnfinishedEpisodes.length > 0
-        }
-        podcastsWithUnfinishedEpisodes={podcastsWithUnfinishedEpisodes}
+      <MyPodcasts
+        isVisible={myPodcastsAreVisible}
+        recentlyPlayedPodcasts={podcastsWithUnfinishedEpisodes}
+        subscribedPodcasts={subscribedPodcasts}
         onPress={showPodcastEpisodes}
       />
     </View>

@@ -3,15 +3,15 @@ import { View, TouchableOpacity, Text } from "react-native"
 import FastImage from "react-native-fast-image"
 import useStyles from "./useStyles"
 
-interface PodcastWithUnfinishedEpisodesProps {
+interface MyPodcastProps {
   podcast: Podcast
   onPress: () => void
 }
 
-const PodcastWithUnfinishedEpisodes = ({
+const MyPodcast = ({
   podcast,
   onPress: showPodcastEpisodes,
-}: PodcastWithUnfinishedEpisodesProps): ReactElement => {
+}: MyPodcastProps): ReactElement => {
   const styles = useStyles()
   return (
     <TouchableOpacity style={styles.container} onPress={showPodcastEpisodes}>
@@ -31,4 +31,4 @@ const PodcastWithUnfinishedEpisodes = ({
   )
 }
 
-export default PodcastWithUnfinishedEpisodes
+export default MyPodcast

@@ -1,4 +1,5 @@
 interface Podcast {
+  id: number
   title: string
   publisher: string
   description: string

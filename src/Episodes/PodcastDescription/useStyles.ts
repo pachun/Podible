@@ -44,6 +44,24 @@ const useStyles = (): any => {
         color: colorScheme.foreground,
         fontSize: 16,
       },
+      subscribeButtonContainer: {
+        width: "100%",
+        alignItems: "center",
+      },
+      subscribeButtonBackground: {
+        width: 200,
+        height: 50,
+        backgroundColor: colorScheme.subscribeButton,
+        borderRadius: 15,
+        justifyContent: "center",
+        alignItems: "center",
+      },
+      subscribeButtonLabel: {
+        color: colorScheme.subscribeButtonLabel,
+        fontWeight: "700",
+        fontSize: 18,
+        letterSpacing: 2,
+      },
     })
   }, [colorScheme])
 

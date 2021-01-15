@@ -1,8 +1,13 @@
-import React, { ReactElement } from "react"
-import { Text, View } from "react-native"
+import React, { ReactElement, useState } from "react"
+import { Text, View, TouchableOpacity } from "react-native"
 import FastImage from "react-native-fast-image"
+import { showMessage } from "react-native-flash-message"
+import subscribeToPodcast from "./subscribeToPodcast"
 import ShowHtml from "../../shared/ShowHtml"
 import useStyles from "./useStyles"
+import useSubscriptions from "./useSubscriptions"
+import useColorScheme from "../../hooks/useColorScheme"
+import colorSchemes from "../../colorSchemes"
 
 interface PodcastDescriptionProps {
   podcast: Podcast
@@ -12,6 +17,23 @@ const PodcastDescription = ({
   podcast,
 }: PodcastDescriptionProps): ReactElement => {
   const styles = useStyles()
+  const colorSchemeName = useColorScheme()
+  const colorScheme = colorSchemes[colorSchemeName]
+
+  const [isSubscribed, setIsSubscribed] = useState<boolean>(false)
+
+  const subscribe = () => {
+    setIsSubscribed(true)
+    showMessage({
+      message: `Subscribed to ${podcast.title}`,
+      backgroundColor: colorScheme.subscribeButton,
+      icon: "success",
+    })
+    subscribeToPodcast(podcast)
+  }
+
+  useSubscriptions(podcast.id, setIsSubscribed)
+
   return (
     <>
       <View style={{ height: 20 }} />
@@ -40,6 +62,18 @@ const PodcastDescription = ({
           </Text>
         </View>
       </View>
+      <View style={{ height: 10 }} />
+      {!isSubscribed && (
+        <View style={styles.subscribeButtonContainer}>
+          <TouchableOpacity
+            style={styles.subscribeButtonBackground}
+            hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
+            onPress={subscribe}
+          >
+            <Text style={styles.subscribeButtonLabel}>SUBSCRIBE</Text>
+          </TouchableOpacity>
+        </View>
+      )}
       <View style={{ height: 20 }} />
     </>
   )

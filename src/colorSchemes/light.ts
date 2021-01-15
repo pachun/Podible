@@ -13,6 +13,9 @@ const lightMode = {
 
   sliderElapsedColor: "#000",
   sliderRemainingColor: "#eee",
+
+  subscribeButton: "#A436F3",
+  subscribeButtonLabel: "#fff",
 }
 
 export default lightMode

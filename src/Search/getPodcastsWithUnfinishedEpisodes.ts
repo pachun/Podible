@@ -21,6 +21,21 @@ const removingDuplicates = (
   ]
 }
 
+const isSubscribedTo = (
+  podcast: Podcast,
+  subscribedPodcastIds: number[],
+): boolean => subscribedPodcastIds.includes(podcast.id)
+
+const removingSubscribed = (subscribedPodcastIds: number[]) => (
+  podcastsWithUnfinishedEpisodes: Podcast[],
+  podcast: Podcast,
+): Podcast[] => {
+  return [
+    ...podcastsWithUnfinishedEpisodes,
+    ...(isSubscribedTo(podcast, subscribedPodcastIds) ? [] : [podcast]),
+  ]
+}
+
 const getPodcastsWithUnfinishedEpisodes = async (
   setPodcastsWithUnfinishedEpisodes: (podcasts: Podcast[]) => void,
 ): Promise<void> => {
@@ -36,9 +51,14 @@ const getPodcastsWithUnfinishedEpisodes = async (
     return secondsRemaining >= 2
   })
 
+  const subscribedPodcastIds = Array.from(
+    realm.objects<SubscribedPodcast>("SubscribedPodcast"),
+  ).map(subscribedPodcast => subscribedPodcast.podcast_id)
+
   const podcastsWithUnfinishedEpisodes = unfinishedEpisodes
     .map(unfinishedEpisode => unfinishedEpisode.podcast[0])
     .reduce(removingDuplicates, [])
+    .reduce(removingSubscribed(subscribedPodcastIds), [])
 
   setPodcastsWithUnfinishedEpisodes(podcastsWithUnfinishedEpisodes)
 }

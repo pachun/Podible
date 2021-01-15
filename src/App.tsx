@@ -3,6 +3,7 @@ import { AppearanceProvider } from "react-native-appearance"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import FlashMessage from "react-native-flash-message"
 import useTrackPlayer from "./hooks/useTrackPlayer"
 import useAppUpdates from "./hooks/useAppUpdates"
 import PodibleStatusBar from "./PodibleStatusBar"
@@ -70,6 +71,7 @@ const App = (): ReactElement => {
         <NavigationContainer>
           <AppWithMiniPlayerAndNowPlayingModal />
         </NavigationContainer>
+        <FlashMessage position="top" />
       </Provider>
     </AppearanceProvider>
   ) : (
