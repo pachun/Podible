@@ -9,5 +9,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install
       run: yarn
-    - name: Typecheck
+    - name: Type Check
       run: yarn tsc
+    - name: Lint
+      run: yarn lint
