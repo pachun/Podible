@@ -54,7 +54,7 @@ const PodcastDescription = ({
           </View>
         </View>
       </View>
-      <View style={{ height: 10 }} />
+      <View style={{ height: 20 }} />
       <View style={styles.podcastDescriptionContainer}>
         <View style={styles.podcastDescriptionBackground}>
           <Text style={styles.podcastDescriptionLabel}>
@@ -64,17 +64,19 @@ const PodcastDescription = ({
       </View>
       <View style={{ height: 10 }} />
       {!isSubscribed && (
-        <View style={styles.subscribeButtonContainer}>
-          <TouchableOpacity
-            style={styles.subscribeButtonBackground}
-            hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
-            onPress={subscribe}
-          >
-            <Text style={styles.subscribeButtonLabel}>SUBSCRIBE</Text>
-          </TouchableOpacity>
-        </View>
+        <>
+          <View style={styles.subscribeButtonContainer}>
+            <TouchableOpacity
+              style={styles.subscribeButtonBackground}
+              hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
+              onPress={subscribe}
+            >
+              <Text style={styles.subscribeButtonLabel}>SUBSCRIBE</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ height: 20 }} />
+        </>
       )}
-      <View style={{ height: 20 }} />
     </>
   )
 }
