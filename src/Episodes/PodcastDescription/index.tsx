@@ -26,7 +26,7 @@ const PodcastDescription = ({
     setIsSubscribed(true)
     showMessage({
       message: `Subscribed to ${podcast.title}`,
-      backgroundColor: colorScheme.subscribeButton,
+      backgroundColor: colorScheme.button,
       icon: "success",
     })
     subscribeToPodcast(podcast)

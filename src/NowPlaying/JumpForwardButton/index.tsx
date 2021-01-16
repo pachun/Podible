@@ -19,7 +19,7 @@ const JumpForwardButton = (): ReactElement => {
       }}
     >
       <View>
-        <AntDesign name="reload1" size={40} color={colorScheme.foreground} />
+        <AntDesign name="reload1" size={40} color={colorScheme.button} />
         <View
           style={{
             position: "absolute",
@@ -35,7 +35,7 @@ const JumpForwardButton = (): ReactElement => {
             style={{
               fontSize: 16,
               fontWeight: "bold",
-              color: colorScheme.foreground,
+              color: colorScheme.button,
             }}
           >
             {jumpInterval}

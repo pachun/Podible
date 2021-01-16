@@ -27,16 +27,16 @@ const PlayPauseButton = (): ReactElement => {
     <>
       {(playbackState === "playing" || playbackState === "ready") && (
         <TouchableOpacity onPress={pauseEpisode} style={{ marginTop: -20 }}>
-          <Ionicons name="ios-pause" size={80} color={colorScheme.foreground} />
+          <Ionicons name="ios-pause" size={80} color={colorScheme.button} />
         </TouchableOpacity>
       )}
       {(playbackState === "paused" || playbackState === "idle") && (
         <TouchableOpacity onPress={playEpisode} style={{ marginTop: -20 }}>
-          <Ionicons name="ios-play" size={80} color={colorScheme.foreground} />
+          <Ionicons name="ios-play" size={80} color={colorScheme.button} />
         </TouchableOpacity>
       )}
       {(playbackState === "buffering" || playbackState === "loading") && (
-        <ActivityIndicator color={colorScheme.foreground} size="large" />
+        <ActivityIndicator color={colorScheme.button} size="large" />
       )}
     </>
   )

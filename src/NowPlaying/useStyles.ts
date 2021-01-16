@@ -37,7 +37,7 @@ const useStyles = (): any => {
         maxWidth: "90%",
       },
       publisher: {
-        color: colorScheme.foreground,
+        color: colorScheme.publisherLabel,
         fontSize: 24,
         textAlign: "center",
         maxWidth: "90%",

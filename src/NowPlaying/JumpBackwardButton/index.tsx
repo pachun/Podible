@@ -22,7 +22,7 @@ const JumpBackwardButton = (): ReactElement => {
         <AntDesign
           name="reload1"
           size={40}
-          color={colorScheme.foreground}
+          color={colorScheme.button}
           style={{ transform: [{ scaleX: -1 }] }}
         />
         <View
@@ -40,7 +40,7 @@ const JumpBackwardButton = (): ReactElement => {
             style={{
               fontSize: 16,
               fontWeight: "bold",
-              color: colorScheme.foreground,
+              color: colorScheme.button,
             }}
           >
             {jumpInterval}

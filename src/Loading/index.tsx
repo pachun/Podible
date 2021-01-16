@@ -15,7 +15,7 @@ const Loading = (): ReactElement => {
         backgroundColor: colorScheme.background,
       }}
     >
-      <ActivityIndicator size="large" />
+      <ActivityIndicator size="large" color={colorScheme.tableHeader} />
     </View>
   )
 }

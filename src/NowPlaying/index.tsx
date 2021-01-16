@@ -36,7 +36,7 @@ const NowPlaying = (): ReactElement => {
         <Entypo
           name="chevron-small-down"
           size={60}
-          color={colorScheme.foreground}
+          color={colorScheme.button}
         />
       </TouchableOpacity>
       {hasNotch && <View style={{ height: 20 }} />}

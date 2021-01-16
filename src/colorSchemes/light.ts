@@ -1,21 +1,23 @@
 const lightMode = {
   foreground: "#000",
-  background: "#fff",
+  background: "#FDF6E3",
 
-  tableHeader: "#888",
+  tableHeader: "#D33682",
 
   publisherLabel: "#888",
   episodeDateAndDurationLabel: "#888",
   searchFieldForeground: "#888",
 
-  searchFieldBackground: "#eee",
+  searchFieldBackground: "#EEE8D5",
   episodeListBorder: "#ddd",
 
-  sliderElapsedColor: "#000",
   sliderRemainingColor: "#eee",
 
-  subscribeButton: "#A436F3",
-  subscribeButtonLabel: "#fff",
+  button: "#2B8DD2",
+
+  timeLabel: "#888",
+
+  descriptionLabel: "#888",
 }
 
 export default lightMode

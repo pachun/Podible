@@ -20,7 +20,8 @@ class TrackPlayerSlider extends ProgressComponent<TrackPlayerSliderProps> {
           value={this.state.position}
           minimumValue={0}
           maximumValue={this.state.duration}
-          minimumTrackTintColor={colorScheme.sliderElapsedColor}
+          minimumTrackTintColor={colorScheme.button}
+          thumbTintColor={colorScheme.button}
           maximumTrackTintColor={colorScheme.sliderRemainingColor}
           onSlidingComplete={newValue => TrackPlayer.seekTo(newValue)}
         />
@@ -31,10 +32,10 @@ class TrackPlayerSlider extends ProgressComponent<TrackPlayerSliderProps> {
             justifyContent: "space-between",
           }}
         >
-          <Text style={{ color: colorScheme.foreground }}>
+          <Text style={{ color: colorScheme.timeLabel }}>
             {humanReadableDuration(Math.round(this.state.position))}
           </Text>
-          <Text style={{ color: colorScheme.foreground }}>
+          <Text style={{ color: colorScheme.timeLabel }}>
             -
             {humanReadableDuration(
               Math.round(this.state.duration - this.state.position),

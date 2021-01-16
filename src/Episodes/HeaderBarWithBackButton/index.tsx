@@ -17,11 +17,7 @@ const HeaderBarWithBackButton = ({
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => goBack()}>
-        <Ionicons
-          name="ios-arrow-back"
-          size={36}
-          color={colorScheme.foreground}
-        />
+        <Ionicons name="ios-arrow-back" size={36} color={colorScheme.button} />
       </TouchableOpacity>
     </View>
   )

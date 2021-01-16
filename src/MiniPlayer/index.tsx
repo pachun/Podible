@@ -38,7 +38,7 @@ const MiniPlayer = (): ReactElement => {
           <Entypo
             name="chevron-small-up"
             size={60}
-            color={colorScheme.foreground}
+            color={colorScheme.button}
           />
         </TouchableOpacity>
         <JumpBackwardButton />

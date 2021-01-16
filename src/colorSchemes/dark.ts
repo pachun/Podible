@@ -1,22 +1,23 @@
 const darkMode = {
   foreground: "#fff",
-  background: "#111",
+  background: "#002B36",
 
-  tableHeader: "#a8a8a8",
+  tableHeader: "#6C71C4",
 
   publisherLabel: "#a8a8a8",
   episodeDateAndDurationLabel: "#a8a8a8",
   searchFieldForeground: "#a8a8a8",
 
-  searchFieldBackground: "#3a3a3a",
+  searchFieldBackground: "#073642",
+  episodeListBorder: "#004F47",
 
-  episodeListBorder: "#333",
-
-  sliderElapsedColor: "#fff",
   sliderRemainingColor: "#3a3a3a",
 
-  subscribeButton: "#53A1DB",
-  subscribeButtonLabel: "#fff",
+  button: "#299F97",
+
+  timeLabel: "#a8a8a8",
+
+  descriptionLabel: "#bbb",
 }
 
 export default darkMode

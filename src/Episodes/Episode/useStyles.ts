@@ -26,12 +26,13 @@ const useStyles = (): any => {
         color: colorScheme.foreground,
       },
       dateAndDuration: {
-        fontSize: 12,
+        fontSize: 14,
         fontWeight: "bold",
         color: colorScheme.episodeDateAndDurationLabel,
       },
       description: {
-        color: colorScheme.foreground,
+        color: colorScheme.descriptionLabel,
+        fontSize: 16,
       },
     })
   }, [colorScheme])

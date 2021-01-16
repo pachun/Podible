@@ -23,10 +23,10 @@ const useStyles = (): any => {
       },
       headerTitle: {
         color: colorScheme.tableHeader,
-        fontSize: 14,
+        fontSize: 18,
         width: "100%",
         textAlign: "center",
-        fontWeight: "600",
+        fontWeight: "800",
         letterSpacing: 2,
       },
     })

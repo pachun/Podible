@@ -23,11 +23,11 @@ const useStyles = (): any => {
       podcastTitle: {
         color: colorScheme.foreground,
         fontSize: 20,
-        fontWeight: "500",
+        fontWeight: "700",
         maxWidth: 250,
       },
       podcastPublisher: {
-        fontSize: 12,
+        fontSize: 14,
         fontWeight: "bold",
         color: colorScheme.publisherLabel,
         maxWidth: 250,

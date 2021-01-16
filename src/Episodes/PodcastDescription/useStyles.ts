@@ -51,13 +51,13 @@ const useStyles = (): any => {
       subscribeButtonBackground: {
         width: 200,
         height: 50,
-        backgroundColor: colorScheme.subscribeButton,
+        backgroundColor: colorScheme.button,
         borderRadius: 15,
         justifyContent: "center",
         alignItems: "center",
       },
       subscribeButtonLabel: {
-        color: colorScheme.subscribeButtonLabel,
+        color: colorScheme.background,
         fontWeight: "700",
         fontSize: 18,
         letterSpacing: 2,
