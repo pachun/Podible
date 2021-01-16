@@ -23,7 +23,7 @@ const useStyles = (): any => {
       },
       titleLabel: {
         color: colorScheme.foreground,
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: "bold",
       },
       publisherLabel: {
