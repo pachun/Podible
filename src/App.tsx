@@ -3,6 +3,7 @@ import { AppearanceProvider } from "react-native-appearance"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import * as Notifications from "expo-notifications"
 import FlashMessage from "react-native-flash-message"
 import useTrackPlayer from "./hooks/useTrackPlayer"
 import useAppUpdates from "./hooks/useAppUpdates"
@@ -13,6 +14,16 @@ import Search from "./Search"
 import Episodes from "./Episodes"
 import MiniPlayer from "./MiniPlayer"
 import NowPlaying from "./NowPlaying"
+
+// show notification popups when app is foregrounded
+// https://docs.expo.io/push-notifications/receiving-notifications/
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+})
 
 const ModalStack = createStackNavigator()
 const Stack = createStackNavigator<RouteParams>()

@@ -22,14 +22,16 @@ const PodcastDescription = ({
 
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false)
 
-  const subscribe = () => {
-    setIsSubscribed(true)
+  const removeSubscribeButton = () => setIsSubscribed(true)
+
+  const subscribe = async () => {
+    removeSubscribeButton()
+    subscribeToPodcast(podcast)
     showMessage({
       message: `Subscribed to ${podcast.title}`,
       backgroundColor: colorScheme.button,
       icon: "success",
     })
-    subscribeToPodcast(podcast)
   }
 
   useSubscriptions(podcast.id, setIsSubscribed)

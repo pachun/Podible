@@ -1,7 +1,14 @@
-import React, { ReactElement, useMemo, useState, useEffect } from "react"
+import React, {
+  ReactElement,
+  useContext,
+  useMemo,
+  useState,
+  useEffect,
+} from "react"
 import { View } from "react-native"
 import { useSafeArea } from "react-native-safe-area-context"
 import { useNavigation } from "@react-navigation/native"
+import { PodibleContext } from "../Provider"
 import getPodcastsWithUnfinishedEpisodes from "./getPodcastsWithUnfinishedEpisodes"
 import getSubscribedPodcasts from "./getSubscribedPodcasts"
 import PodcastSearchResults from "./PodcastSearchResults"
@@ -11,10 +18,15 @@ import useDebounce from "../hooks/useDebounce"
 import usePodcastSearchResults from "../hooks/usePodcastSearchResults"
 import useStyles from "./useStyles"
 
+import useNotifications from "../hooks/useNotifications"
+
 const Search = (): ReactElement => {
   const styles = useStyles()
   const navigation = useNavigation()
   const insets = useSafeArea()
+  const { setEpisode } = useContext(PodibleContext)
+
+  useNotifications({ setEpisode, navigation })
 
   const [searchFieldText, setSearchFieldText] = useState<string>("")
   const debouncedSearchFieldText = useDebounce(searchFieldText, 500)
