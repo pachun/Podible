@@ -1,6 +1,5 @@
 import React, { ReactElement, useState, useEffect } from "react"
 import { Text, View } from "react-native"
-import { useNavigation } from "@react-navigation/native"
 import useStyles from "./useStyles"
 
 const random = <T,>(items: T[]) =>
@@ -10,17 +9,12 @@ const unhappyEmojis = ["🥺", "🤕", "😳", "😰"]
 
 const SomethingWentWrong = (): ReactElement | null => {
   const styles = useStyles()
-  const navigation = useNavigation()
 
   const [unhappyEmoji, setUnhappyEmoji] = useState("")
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      setUnhappyEmoji(random(unhappyEmojis))
-    })
-
-    return unsubscribe
-  }, [navigation])
+    setUnhappyEmoji(random(unhappyEmojis))
+  }, [])
 
   return unhappyEmoji ? (
     <View style={styles.container}>
