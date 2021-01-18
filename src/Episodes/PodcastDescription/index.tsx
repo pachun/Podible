@@ -57,14 +57,18 @@ const PodcastDescription = ({
         </View>
       </View>
       <View style={{ height: 20 }} />
-      <View style={styles.podcastDescriptionContainer}>
-        <View style={styles.podcastDescriptionBackground}>
-          <Text style={styles.podcastDescriptionLabel}>
-            <ShowHtml html={podcast.description} />
-          </Text>
-        </View>
-      </View>
-      <View style={{ height: 10 }} />
+      {Boolean(podcast.description) && (
+        <>
+          <View style={styles.podcastDescriptionContainer}>
+            <View style={styles.podcastDescriptionBackground}>
+              <Text style={styles.podcastDescriptionLabel}>
+                <ShowHtml html={podcast.description} />
+              </Text>
+            </View>
+          </View>
+          <View style={{ height: 10 }} />
+        </>
+      )}
       {!isSubscribed && (
         <>
           <View style={styles.subscribeButtonContainer}>

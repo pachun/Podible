@@ -1,5 +1,6 @@
 import React, { ReactElement, useMemo } from "react"
 import { SectionList, Text, View } from "react-native"
+import * as Animatable from "react-native-animatable"
 import MyPodcast from "./MyPodcast"
 import useStyles from "./useStyles"
 
@@ -46,27 +47,29 @@ const MyPodcasts = ({
 
   return (
     isVisible && (
-      <SectionList
-        style={styles.list}
-        sections={listSections}
-        keyExtractor={keyExtractor}
-        keyboardShouldPersistTaps="always"
-        ListFooterComponent={<View style={{ height: 30 }} />}
-        ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-        renderSectionHeader={({ section: { title } }) => (
-          <View style={styles.headerContainer}>
-            <View style={styles.headerBackground}>
-              <Text style={styles.headerTitle}>{title}</Text>
+      <Animatable.View animation="fadeIn" style={{ flex: 1 }}>
+        <SectionList
+          style={styles.list}
+          sections={listSections}
+          keyExtractor={keyExtractor}
+          keyboardShouldPersistTaps="always"
+          ListFooterComponent={<View style={{ height: 30 }} />}
+          ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+          renderSectionHeader={({ section: { title } }) => (
+            <View style={styles.headerContainer}>
+              <View style={styles.headerBackground}>
+                <Text style={styles.headerTitle}>{title}</Text>
+              </View>
             </View>
-          </View>
-        )}
-        renderItem={({ item: podcast }) => (
-          <MyPodcast
-            podcast={podcast}
-            onPress={showPodcastEpisodes(podcast.rss_feed_url)}
-          />
-        )}
-      />
+          )}
+          renderItem={({ item: podcast }) => (
+            <MyPodcast
+              podcast={podcast}
+              onPress={showPodcastEpisodes(podcast.rss_feed_url)}
+            />
+          )}
+        />
+      </Animatable.View>
     )
   )
 }

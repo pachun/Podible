@@ -9,6 +9,7 @@ import { FlatList, View } from "react-native"
 import { useSafeArea } from "react-native-safe-area-context"
 import { useNavigation } from "@react-navigation/native"
 import { RouteProp } from "@react-navigation/native"
+import * as Animatable from "react-native-animatable"
 import { useTrackPlayerProgress } from "react-native-track-player/lib/hooks"
 import { PodibleContext } from "../Provider"
 import sortNewestEpisodesFirst from "./sortNewestEpisodesFirst"
@@ -101,15 +102,17 @@ const Episodes = ({ route }: EpisodesProps): ReactElement => {
       <HeaderBarWithBackButton goBack={navigation.goBack} />
       {!episodes && !didError && <Loading />}
       {episodes && (
-        <FlatList
-          style={styles.container}
-          scrollIndicatorInsets={{ right: 1 }}
-          ListHeaderComponent={<PodcastDescription podcast={podcast} />}
-          ListFooterComponent={<View style={{ height: 30 }} />}
-          data={episodes}
-          keyExtractor={keyExtractor}
-          renderItem={({ item: episode }) => <Episode episode={episode} />}
-        />
+        <Animatable.View animation="fadeIn" style={{ flex: 1 }}>
+          <FlatList
+            style={styles.container}
+            scrollIndicatorInsets={{ right: 1 }}
+            ListHeaderComponent={<PodcastDescription podcast={podcast} />}
+            ListFooterComponent={<View style={{ height: 30 }} />}
+            data={episodes}
+            keyExtractor={keyExtractor}
+            renderItem={({ item: episode }) => <Episode episode={episode} />}
+          />
+        </Animatable.View>
       )}
       {didError && <SomethingWentWrong />}
     </View>
