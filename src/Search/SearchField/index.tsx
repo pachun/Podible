@@ -62,6 +62,7 @@ const SearchField = ({
           />
         </View>
         <TextInput
+          hitSlop={{ top: 30, left: 30, bottom: 30 }}
           ref={searchFieldRef}
           placeholder="Search"
           style={styles.searchField}
