@@ -89,7 +89,10 @@ const SearchField = ({
       </Animatable.View>
 
       <View style={styles.cancelButtonContainer}>
-        <TouchableOpacity onPress={cancelSearch}>
+        <TouchableOpacity
+          onPress={cancelSearch}
+          hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }}
+        >
           <Animatable.Text
             ref={cancelButtonRef}
             style={styles.cancelButtonLabel}
