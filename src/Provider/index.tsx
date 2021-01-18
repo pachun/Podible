@@ -1,4 +1,10 @@
-import React, { ReactElement, createContext, useReducer, useState } from "react"
+import React, {
+  ReactElement,
+  createContext,
+  useReducer,
+  useState,
+  useEffect,
+} from "react"
 import reducer from "./reducer"
 
 // @ts-ignore
@@ -22,6 +28,7 @@ const shouldResumePlayback = (event: TrackPlayerEvents): boolean =>
 
 const defaultInitialState: PodibleState = {
   playbackState: "unknown",
+  playbackRate: 1.0,
 }
 
 export const PodibleContext = createContext<Partial<PodibleContextType>>({})
@@ -37,6 +44,12 @@ const Provider = ({
     reducer,
     initialState || defaultInitialState,
   )
+
+  const [playbackRate, setPlaybackRate] = useState<number>(1.0)
+
+  useEffect(() => {
+    TrackPlayer.setRate(playbackRate)
+  }, [playbackRate])
 
   const [playbackState, setPlaybackState] = useState<string>("unknown")
 
@@ -59,6 +72,8 @@ const Provider = ({
     setEpisode: (episode: Episode) =>
       dispatch({ type: "SET_EPISODE", value: episode }),
     playbackState,
+    playbackRate,
+    setPlaybackRate,
   }
 
   return (

@@ -18,10 +18,10 @@ const useStyles = (): any => {
         alignItems: "center",
         paddingTop: 10,
       },
-      artwork: {
+      carouselContainer: {
         width: "90%",
         aspectRatio: 1,
-        borderRadius: 10,
+        alignItems: "center",
       },
       titleAndPublisherContainer: {
         width: "100%",

@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useContext } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
-import FastImage from "react-native-fast-image"
+import PlaybackRate_Artwork_Description_Carousel from "./PlaybackRate_Artwork_Description_Carousel"
 import { useSafeArea } from "react-native-safe-area-context"
 import * as Haptics from "expo-haptics"
 import { Entypo } from "@expo/vector-icons"
@@ -43,13 +43,10 @@ const NowPlaying = (): ReactElement => {
         />
       </TouchableOpacity>
       {hasNotch && <View style={{ height: 20 }} />}
-      <FastImage source={{ uri: episode.artwork_url }} style={styles.artwork} />
+      <View style={styles.carouselContainer}>
+        <PlaybackRate_Artwork_Description_Carousel episode={episode} />
+      </View>
 
-      {hasNotch ? (
-        <View style={{ height: 50 }} />
-      ) : (
-        <View style={{ height: 20 }} />
-      )}
       <View style={styles.titleAndPublisherContainer}>
         <Text numberOfLines={2} style={styles.title}>
           {episode.title}
