@@ -22,6 +22,13 @@ const MiniPlayer = (): ReactElement => {
   const navigation = useNavigation()
   const insets = useSafeAreaInsets()
 
+  const showNowPlayingModal = () => {
+    const vibrateAfterAnimationIn = () => setTimeout(Haptics.impactAsync, 270)
+
+    navigation.navigate("Now Playing")
+    vibrateAfterAnimationIn()
+  }
+
   const { episode } = useContext(PodibleContext)
   const track = episode && trackPlayerTrackFromEpisode(episode)
 
@@ -29,11 +36,8 @@ const MiniPlayer = (): ReactElement => {
     <>
       <View style={styles.container}>
         <TouchableOpacity
-          style={{ width: 60, justifyContent: "center", alignItems: "center" }}
-          onPress={() => {
-            Haptics.impactAsync()
-            navigation.navigate("Now Playing")
-          }}
+          style={styles.openNowPlayingModalButton}
+          onPress={showNowPlayingModal}
         >
           <Entypo
             name="chevron-small-up"

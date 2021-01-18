@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext } from "react"
+import React, { ReactElement, useEffect, useContext } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import FastImage from "react-native-fast-image"
 import { useSafeArea } from "react-native-safe-area-context"
@@ -21,11 +21,16 @@ const NowPlaying = (): ReactElement => {
   const navigation = useNavigation()
   const { episode } = useContext(PodibleContext)
   const insets = useSafeArea()
-  const goBack = () => {
-    Haptics.impactAsync()
-    navigation.goBack()
-  }
+  const goBack = () => navigation.goBack()
   const hasNotch = insets.bottom > 0
+
+  const vibrateAfterAnimationOut = () => setTimeout(Haptics.impactAsync, 200)
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", vibrateAfterAnimationOut)
+
+    return unsubscribe
+  }, [navigation])
 
   return (
     <View style={styles.container}>
