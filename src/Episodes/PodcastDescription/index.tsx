@@ -9,7 +9,6 @@ import ShowHtml from "../../ShowHtml"
 import useStyles from "./useStyles"
 import useSubscriptions from "./useSubscriptions"
 import useColorScheme from "../../hooks/useColorScheme"
-import colorSchemes from "../../colorSchemes"
 
 interface PodcastDescriptionProps {
   podcast: Podcast
@@ -19,8 +18,7 @@ const PodcastDescription = ({
   podcast,
 }: PodcastDescriptionProps): ReactElement => {
   const styles = useStyles()
-  const colorSchemeName = useColorScheme()
-  const colorScheme = colorSchemes[colorSchemeName]
+  const colorScheme = useColorScheme()
 
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false)
 

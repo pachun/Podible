@@ -1,4 +1,6 @@
 const lightMode = {
+  keyboardAppearance: "light",
+
   foreground: "#000",
   background: "#FDF6E3",
 

@@ -11,13 +11,11 @@ import JumpBackwardButton from "./JumpBackwardButton"
 import { trackPlayerTrackFromEpisode } from "../shared/trackPlayerHelpers"
 import PlayPauseButton from "./PlayPauseButton"
 import useColorScheme from "../hooks/useColorScheme"
-import colorSchemes from "../colorSchemes"
 import useStyles from "./useStyles"
 
 const MiniPlayer = (): ReactElement => {
   const styles = useStyles()
-  const colorSchemeName = useColorScheme()
-  const colorScheme = colorSchemes[colorSchemeName]
+  const colorScheme = useColorScheme()
 
   const navigation = useNavigation()
   const insets = useSafeAreaInsets()

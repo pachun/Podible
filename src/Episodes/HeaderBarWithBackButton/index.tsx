@@ -2,7 +2,6 @@ import React, { ReactElement } from "react"
 import { TouchableOpacity, View } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import useColorScheme from "../../hooks/useColorScheme"
-import colorSchemes from "../../colorSchemes"
 import styles from "./styles"
 
 interface HeaderBarWithBackButtonProps {
@@ -12,8 +11,7 @@ interface HeaderBarWithBackButtonProps {
 const HeaderBarWithBackButton = ({
   goBack,
 }: HeaderBarWithBackButtonProps): ReactElement => {
-  const colorSchemeName = useColorScheme()
-  const colorScheme = colorSchemes[colorSchemeName]
+  const colorScheme = useColorScheme()
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => goBack()}>

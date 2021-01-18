@@ -2,12 +2,10 @@ import React, { ReactElement, useRef, useState, useEffect } from "react"
 import { Image, View } from "react-native"
 import * as Animatable from "react-native-animatable"
 import useColorScheme from "../hooks/useColorScheme"
-import colorSchemes from "../colorSchemes"
 import logo from "../../assets/logo.png"
 
 const Loading = (): ReactElement => {
-  const colorSchemeName = useColorScheme()
-  const colorScheme = colorSchemes[colorSchemeName]
+  const colorScheme = useColorScheme()
 
   const loadingIconRef = useRef<Animatable.Image & Image>(null)
   const [iteration, setIteration] = useState(0)

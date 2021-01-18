@@ -5,11 +5,9 @@ import { AntDesign } from "@expo/vector-icons"
 import TrackPlayer from "react-native-track-player"
 import { jumpInterval } from "../../shared/trackPlayerHelpers"
 import useColorScheme from "../../hooks/useColorScheme"
-import colorSchemes from "../../colorSchemes"
 
 const JumpForwardButton = (): ReactElement => {
-  const colorSchemeName = useColorScheme()
-  const colorScheme = colorSchemes[colorSchemeName]
+  const colorScheme = useColorScheme()
   return (
     <TouchableOpacity
       onPress={async () => {

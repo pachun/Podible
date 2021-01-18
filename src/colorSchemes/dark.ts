@@ -1,4 +1,6 @@
 const darkMode = {
+  keyboardAppearance: "dark",
+
   foreground: "#fff",
   background: "#002B36",
 

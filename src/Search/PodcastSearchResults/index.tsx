@@ -3,7 +3,6 @@ import { FlatList, View } from "react-native"
 import * as Animatable from "react-native-animatable"
 import PodcastSearchResult from "./PodcastSearchResult"
 import useColorScheme from "../../hooks/useColorScheme"
-import colorSchemes from "../../colorSchemes"
 import useStyles from "./useStyles"
 
 interface PodcastSearchResultsProps {
@@ -18,8 +17,7 @@ const PodcastSearchResults = ({
   onPress: showPodcastEpisodes,
 }: PodcastSearchResultsProps): ReactElement => {
   const styles = useStyles()
-  const colorSchemeName = useColorScheme()
-  const colorScheme = colorSchemes[colorSchemeName]
+  const colorScheme = useColorScheme()
 
   const keyExtractor = <T,>(_: T, position: number) => position.toString()
 

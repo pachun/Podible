@@ -11,13 +11,11 @@ import JumpBackwardButton from "./JumpBackwardButton"
 import PlayPauseButton from "./PlayPauseButton"
 import TrackPlayerSlider from "./TrackPlayerSlider"
 import useColorScheme from "../hooks/useColorScheme"
-import colorSchemes from "../colorSchemes"
 import useStyles from "./useStyles"
 
 const NowPlaying = (): ReactElement => {
   const styles = useStyles()
-  const colorSchemeName = useColorScheme()
-  const colorScheme = colorSchemes[colorSchemeName]
+  const colorScheme = useColorScheme()
   const navigation = useNavigation()
   const { episode } = useContext(PodibleContext)
   const insets = useSafeArea()

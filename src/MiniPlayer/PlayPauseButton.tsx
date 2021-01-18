@@ -4,12 +4,10 @@ import * as Haptics from "expo-haptics"
 import { Ionicons } from "@expo/vector-icons"
 import { PodibleContext } from "../Provider"
 import useColorScheme from "../hooks/useColorScheme"
-import colorSchemes from "../colorSchemes"
 import { play, pause } from "../shared/trackPlayerHelpers"
 
 const PlayPauseButton = (): ReactElement => {
-  const colorSchemeName = useColorScheme()
-  const colorScheme = colorSchemes[colorSchemeName]
+  const colorScheme = useColorScheme()
 
   const { episode, playbackState } = useContext(PodibleContext)
 

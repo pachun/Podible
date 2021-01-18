@@ -3,7 +3,6 @@ import { Keyboard, TextInput, TouchableOpacity, View } from "react-native"
 import { Ionicons, MaterialIcons } from "@expo/vector-icons"
 import * as Animatable from "react-native-animatable"
 import useColorScheme from "../../hooks/useColorScheme"
-import colorSchemes from "../../colorSchemes"
 import useStyles from "./useStyles"
 
 interface SearchFieldProps {
@@ -16,8 +15,7 @@ const SearchField = ({
   setSearchFieldText,
 }: SearchFieldProps): ReactElement => {
   const styles = useStyles()
-  const colorSchemeName = useColorScheme()
-  const colorScheme = colorSchemes[colorSchemeName]
+  const colorScheme = useColorScheme()
 
   const searchFieldBackgroundRef = useRef<Animatable.View & View>()
   const cancelButtonRef = useRef<Animatable.View & View>()
@@ -71,7 +69,7 @@ const SearchField = ({
           onChangeText={setSearchFieldText}
           returnKeyType="done"
           autoCorrect={false}
-          keyboardAppearance={colorSchemeName}
+          keyboardAppearance={colorScheme.keyboardAppearance}
           placeholderTextColor={colorScheme.searchFieldForeground}
           onFocus={showTheCancelButton}
           onBlur={removeTheCancelButtonIfTheresNoSearchFieldText}
