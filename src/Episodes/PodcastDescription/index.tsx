@@ -1,6 +1,8 @@
-import React, { ReactElement, useState } from "react"
+import React, { ReactElement, useState, useRef } from "react"
 import { Text, View, TouchableOpacity } from "react-native"
+import * as Haptics from "expo-haptics"
 import FastImage from "react-native-fast-image"
+import * as Animatable from "react-native-animatable"
 import { showMessage } from "react-native-flash-message"
 import subscribeToPodcast from "./subscribeToPodcast"
 import ShowHtml from "../../shared/ShowHtml"
@@ -24,14 +26,18 @@ const PodcastDescription = ({
 
   const removeSubscribeButton = () => setIsSubscribed(true)
 
+  const subscribeButtonRef = useRef<Animatable.View & View>()
+
   const subscribe = async () => {
-    removeSubscribeButton()
+    Haptics.impactAsync()
     subscribeToPodcast(podcast)
     showMessage({
       message: `Subscribed to ${podcast.title}`,
       backgroundColor: colorScheme.button,
       icon: "success",
     })
+    await subscribeButtonRef.current.bounceOut()
+    removeSubscribeButton()
   }
 
   useSubscriptions(podcast.id, setIsSubscribed)
@@ -70,7 +76,7 @@ const PodcastDescription = ({
         </>
       )}
       {!isSubscribed && (
-        <>
+        <Animatable.View ref={subscribeButtonRef}>
           <View style={styles.subscribeButtonContainer}>
             <TouchableOpacity
               style={styles.subscribeButtonBackground}
@@ -81,7 +87,7 @@ const PodcastDescription = ({
             </TouchableOpacity>
           </View>
           <View style={{ height: 20 }} />
-        </>
+        </Animatable.View>
       )}
     </>
   )
