@@ -48,7 +48,12 @@ const MiniPlayer = (): ReactElement => {
         <JumpBackwardButton />
         <PlayPauseButton />
         <JumpForwardButton />
-        <FastImage source={{ uri: track.artwork }} style={styles.artwork} />
+        <TouchableOpacity
+          onPress={showNowPlayingModal}
+          hitSlop={{ left: 30, right: 30, top: 10, bottom: 10 }}
+        >
+          <FastImage source={{ uri: track.artwork }} style={styles.artwork} />
+        </TouchableOpacity>
       </View>
       <View
         style={{
