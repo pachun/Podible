@@ -9,6 +9,19 @@ const useStyles = (): any => {
 
   const styles = useMemo(() => {
     return StyleSheet.create({
+      searchFieldContainer: {
+        width: "90%",
+        justifyContent: "space-between",
+        flexDirection: "row",
+      },
+      cancelButtonContainer: {
+        justifyContent: "center",
+      },
+      cancelButtonLabel: {
+        fontSize: 18,
+        color: colorScheme.button,
+        opacity: 0,
+      },
       searchIconContainer: {
         height: "100%",
         justifyContent: "center",
@@ -19,7 +32,7 @@ const useStyles = (): any => {
         backgroundColor: colorScheme.searchFieldBackground,
         borderRadius: 10,
         height: 40,
-        width: "90%",
+        width: "100%",
         marginBottom: 5,
         paddingLeft: 10,
       },

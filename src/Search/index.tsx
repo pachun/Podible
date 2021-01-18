@@ -66,14 +66,20 @@ const Search = (): ReactElement => {
 
   const myPodcastsAreVisible = useMemo(
     () =>
-      !debouncedSearchFieldText &&
+      (!debouncedSearchFieldText || !searchFieldText) &&
       (podcastsWithUnfinishedEpisodes.length > 0 ||
         subscribedPodcasts.length > 0),
     [
       debouncedSearchFieldText,
+      searchFieldText,
       podcastsWithUnfinishedEpisodes,
       subscribedPodcasts,
     ],
+  )
+
+  const podcastSearchResultsAreVisible = useMemo(
+    () => Boolean(debouncedSearchFieldText) && Boolean(searchFieldText),
+    [debouncedSearchFieldText, searchFieldText],
   )
 
   return (
@@ -87,7 +93,7 @@ const Search = (): ReactElement => {
         />
       </View>
       <PodcastSearchResults
-        isVisible={Boolean(debouncedSearchFieldText)}
+        isVisible={podcastSearchResultsAreVisible}
         podcastSearchResults={podcastSearchResults}
         onPress={showPodcastEpisodes}
       />
