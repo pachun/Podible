@@ -6,7 +6,7 @@ import { PodibleContext } from "../../Provider"
 import humanReadableDuration from "./humanReadableDuration"
 import shortDate from "./shortDate"
 import useStyles from "./useStyles"
-import { play } from "../../AudioControls"
+import { play } from "../../shared/trackPlayerHelpers"
 
 const removeHtml = (s: string) =>
   he.decode(unescape(s.replace(/(<([^>]+)>)/gi, "")))

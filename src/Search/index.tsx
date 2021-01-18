@@ -15,7 +15,7 @@ import PodcastSearchResults from "./PodcastSearchResults"
 import MyPodcasts from "./MyPodcasts"
 import SearchField from "./SearchField"
 import useDebounce from "../hooks/useDebounce"
-import usePodcastSearchResults from "../hooks/usePodcastSearchResults"
+import usePodcastSearchResults from "./usePodcastSearchResults"
 import useStyles from "./useStyles"
 
 import useNotifications from "../hooks/useNotifications"

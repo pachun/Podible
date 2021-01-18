@@ -1,8 +1,16 @@
 import TrackPlayer from "react-native-track-player"
-import trackPlayerTrackFromEpisode from "./shared/trackPlayerTrackFromEpisode"
+import { Track } from "react-native-track-player"
 
 const isCurrentEpisode = async (episode: Episode) =>
   (await TrackPlayer.getCurrentTrack()) === episode.audio_url
+
+export const trackPlayerTrackFromEpisode = (episode: Episode): Track => ({
+  id: episode.audio_url,
+  title: episode.title,
+  artist: episode.publisher,
+  artwork: episode.artwork_url,
+  url: episode.audio_url,
+})
 
 export const play = async (episode: Episode): Promise<void> => {
   if (await isCurrentEpisode(episode)) {
@@ -26,3 +34,5 @@ export const play = async (episode: Episode): Promise<void> => {
 }
 
 export const pause = async (): Promise<void> => TrackPlayer.pause()
+
+export const jumpInterval = 30

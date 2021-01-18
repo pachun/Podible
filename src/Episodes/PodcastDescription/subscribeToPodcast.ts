@@ -1,5 +1,5 @@
 import Realm from "realm"
-import realmConfiguration from "../../realmConfiguration"
+import realmConfiguration from "../../shared/realmConfiguration"
 import getExpoPushToken from "./getExpoPushToken"
 
 const subscribeToPodcastInRealm = async (podcast: Podcast): Promise<void> => {

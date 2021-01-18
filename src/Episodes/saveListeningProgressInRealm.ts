@@ -1,5 +1,5 @@
 import Realm from "realm"
-import realmConfiguration from "../realmConfiguration"
+import realmConfiguration from "../shared/realmConfiguration"
 
 const saveListeningProgressInRealm = async (
   episode: Episode,

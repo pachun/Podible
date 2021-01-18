@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import * as Notifications from "expo-notifications"
-import { play } from "../AudioControls"
+import { play } from "../shared/trackPlayerHelpers"
 
 interface UseNotificationsProps {
   setEpisode: (episode: Episode) => void

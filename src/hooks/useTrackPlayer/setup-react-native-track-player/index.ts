@@ -1,5 +1,5 @@
 import TrackPlayer from "react-native-track-player"
-import jumpInterval from "./jump-interval"
+import { jumpInterval } from "../../../shared/trackPlayerHelpers"
 import ReactNativeTrackPlayerPlaybackService from "./react-native-track-player-playback-service"
 
 const ReactNativeTrackPlayerService = async (): Promise<void> => {

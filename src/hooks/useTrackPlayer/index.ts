@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import SetupReactNativeTrackPlayer from "../setup-react-native-track-player"
+import SetupReactNativeTrackPlayer from "./setup-react-native-track-player"
 
 const useTrackPlayer = (): boolean => {
   const [isReadyToPlayAudio, setIsReadyToPlayAudio] = useState<boolean>(false)

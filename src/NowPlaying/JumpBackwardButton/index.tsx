@@ -3,7 +3,7 @@ import { TouchableOpacity, View, Text } from "react-native"
 import * as Haptics from "expo-haptics"
 import { AntDesign } from "@expo/vector-icons"
 import TrackPlayer from "react-native-track-player"
-import jumpInterval from "../../setup-react-native-track-player/jump-interval"
+import { jumpInterval } from "../../shared/trackPlayerHelpers"
 import useColorScheme from "../../hooks/useColorScheme"
 import colorSchemes from "../../colorSchemes"
 

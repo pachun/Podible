@@ -1,6 +1,6 @@
 import { useRef, useCallback, useEffect, useState } from "react"
 import Realm from "realm"
-import realmConfiguration from "../../realmConfiguration"
+import realmConfiguration from "../../shared/realmConfiguration"
 
 const apiUrl = __DEV__
   ? `http://${process.env.REACT_NATIVE_API_URL}:3000`

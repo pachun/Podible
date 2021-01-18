@@ -20,7 +20,7 @@ import PodcastDescription from "./PodcastDescription"
 import HeaderBarWithBackButton from "./HeaderBarWithBackButton"
 import SomethingWentWrong from "../SomethingWentWrong"
 import Episode from "./Episode"
-import usePodcastFromRssFeed from "../hooks/usePodcastFromRssFeed"
+import usePodcastFromRssFeed from "./usePodcastFromRssFeed"
 import useStyles from "./useStyles"
 
 type EpisodesProps = {
