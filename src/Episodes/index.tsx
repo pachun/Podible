@@ -10,11 +10,10 @@ import { useSafeArea } from "react-native-safe-area-context"
 import { useNavigation } from "@react-navigation/native"
 import { RouteProp } from "@react-navigation/native"
 import * as Animatable from "react-native-animatable"
-import { useTrackPlayerProgress } from "react-native-track-player/lib/hooks"
 import { PodibleContext } from "../Provider"
 import sortNewestEpisodesFirst from "./sortNewestEpisodesFirst"
-import saveListeningProgressInRealm from "./saveListeningProgressInRealm"
 import useEpisodesWithUpdatedSecondsListenedTo from "./useEpisodesWithUpdatedSecondsListenedTo"
+import useSecondsListenedTo from "./useSecondsListenedTo"
 import Loading from "../Loading"
 import PodcastDescription from "./PodcastDescription"
 import HeaderBarWithBackButton from "./HeaderBarWithBackButton"
@@ -32,8 +31,6 @@ const Episodes = ({ route }: EpisodesProps): ReactElement => {
   const insets = useSafeArea()
   const navigation = useNavigation()
 
-  const everySecond = 1000
-  const { position } = useTrackPlayerProgress(everySecond)
   const { episode: playingEpisode, playbackState } = useContext(PodibleContext)
   const [secondsListenedTo, setSecondsListenedTo] = useState<number>(
     playingEpisode ? playingEpisode.seconds_listened_to : 0,
@@ -86,13 +83,7 @@ const Episodes = ({ route }: EpisodesProps): ReactElement => {
     episodesWithUpdatedSecondsListenedTo,
   ])
 
-  useEffect(() => {
-    const seekHasFinished = position > 0
-    if (playingEpisode && seekHasFinished) {
-      saveListeningProgressInRealm(playingEpisode, position)
-      setSecondsListenedTo(position)
-    }
-  }, [position, playingEpisode])
+  useSecondsListenedTo({ playingEpisode, setSecondsListenedTo })
 
   const keyExtractor = <T,>(_: T, position: number) => position.toString()
 
