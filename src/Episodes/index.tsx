@@ -1,25 +1,18 @@
-import React, {
-  ReactElement,
-  useState,
-  useContext,
-  useMemo,
-  useEffect,
-} from "react"
+import React, { ReactElement, useState, useContext, useEffect } from "react"
 import { FlatList, View } from "react-native"
 import { useSafeArea } from "react-native-safe-area-context"
 import { useNavigation } from "@react-navigation/native"
 import { RouteProp } from "@react-navigation/native"
 import * as Animatable from "react-native-animatable"
 import { PodibleContext } from "../Provider"
-import sortNewestEpisodesFirst from "./sortNewestEpisodesFirst"
-import useEpisodesWithUpdatedSecondsListenedTo from "./useEpisodesWithUpdatedSecondsListenedTo"
-import useSecondsListenedTo from "./useSecondsListenedTo"
 import Loading from "../Loading"
 import PodcastDescription from "./PodcastDescription"
 import HeaderBarWithBackButton from "./HeaderBarWithBackButton"
 import SomethingWentWrong from "../SomethingWentWrong"
 import Episode from "./Episode"
 import usePodcastFromRssFeed from "./usePodcastFromRssFeed"
+import useSecondsListenedTo from "./useSecondsListenedTo"
+import useDisplayableEpisodes from "./useDisplayableEpisodes"
 import useStyles from "./useStyles"
 
 type EpisodesProps = {
@@ -31,59 +24,39 @@ const Episodes = ({ route }: EpisodesProps): ReactElement => {
   const insets = useSafeArea()
   const navigation = useNavigation()
 
-  const { episode: playingEpisode, playbackState } = useContext(PodibleContext)
-  const [secondsListenedTo, setSecondsListenedTo] = useState<number>(
-    playingEpisode ? playingEpisode.seconds_listened_to : 0,
-  )
-
   const rssFeedUrl = route.params.rssFeedUrl
   const { podcast, didError, abortController } = usePodcastFromRssFeed({
     rssFeedUrl,
   })
 
-  useEffect(() => {
+  const cancelFetchPodcastNetworkRequest = () => {
     const unsubscribe = navigation.addListener("beforeRemove", () => {
       abortController.abort()
     })
-
     return unsubscribe
-  }, [navigation, abortController])
+  }
 
-  const podcastEpisodesExist = useMemo(() => podcast && podcast.episodes, [
-    podcast,
-  ])
+  useEffect(cancelFetchPodcastNetworkRequest, [navigation, abortController])
 
-  const newestEpisodesFirst = useMemo(
-    () =>
-      podcastEpisodesExist
-        ? sortNewestEpisodesFirst(podcast.episodes)
-        : undefined,
-    [podcastEpisodesExist, podcast],
+  const { episode: currentlyPlayingEpisode, playbackState } = useContext(
+    PodibleContext,
   )
 
-  const {
-    episodes: episodesWithUpdatedSecondsListenedTo,
-  } = useEpisodesWithUpdatedSecondsListenedTo({
-    episodes: newestEpisodesFirst,
-    playingEpisode,
-    secondsListenedTo,
+  const [secondsListenedTo, setSecondsListenedTo] = useState<number>(
+    currentlyPlayingEpisode ? currentlyPlayingEpisode.seconds_listened_to : 0,
+  )
+
+  useSecondsListenedTo({
+    currentlyPlayingEpisode,
+    setSecondsListenedTo,
   })
 
-  const episodes = useMemo(() => {
-    if (podcastEpisodesExist && playbackState === "playing") {
-      return episodesWithUpdatedSecondsListenedTo
-    } else if (podcastEpisodesExist) {
-      return newestEpisodesFirst
-    }
-    return undefined
-  }, [
-    podcastEpisodesExist,
+  const episodes = useDisplayableEpisodes({
+    podcast,
+    currentlyPlayingEpisode,
+    secondsListenedTo,
     playbackState,
-    newestEpisodesFirst,
-    episodesWithUpdatedSecondsListenedTo,
-  ])
-
-  useSecondsListenedTo({ playingEpisode, setSecondsListenedTo })
+  })
 
   const keyExtractor = <T,>(_: T, position: number) => position.toString()
 

@@ -1,9 +1,10 @@
 import { useMemo } from "react"
 
-const updating = (playingEpisode: Episode, secondsListenedTo: number) => (
-  episode: Episode,
-): Episode => {
-  return episode.audio_url === playingEpisode.audio_url
+const updating = (
+  currentlyPlayingEpisode: Episode,
+  secondsListenedTo: number,
+) => (episode: Episode): Episode => {
+  return episode.audio_url === currentlyPlayingEpisode.audio_url
     ? {
         title: episode.title,
         description: episode.description,
@@ -20,25 +21,27 @@ const updating = (playingEpisode: Episode, secondsListenedTo: number) => (
 
 interface UseEpisodesWithUpdatedSecondsListenedToProps {
   episodes: Episode[]
-  playingEpisode: Episode
+  currentlyPlayingEpisode: Episode
   secondsListenedTo: number
 }
 
 const useEpisodesWithUpdatedSecondsListenedTo = ({
   episodes,
-  playingEpisode,
+  currentlyPlayingEpisode,
   secondsListenedTo,
 }: UseEpisodesWithUpdatedSecondsListenedToProps): {
   episodes: Episode[] | undefined
 } => {
   return useMemo(() => {
-    if (episodes && playingEpisode) {
+    if (episodes && currentlyPlayingEpisode) {
       return {
-        episodes: episodes.map(updating(playingEpisode, secondsListenedTo)),
+        episodes: episodes.map(
+          updating(currentlyPlayingEpisode, secondsListenedTo),
+        ),
       }
     }
     return { episodes: undefined }
-  }, [episodes, playingEpisode, secondsListenedTo])
+  }, [episodes, currentlyPlayingEpisode, secondsListenedTo])
 }
 
 export default useEpisodesWithUpdatedSecondsListenedTo

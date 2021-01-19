@@ -8,12 +8,12 @@ import saveListeningProgressInRealm from "./saveListeningProgressInRealm"
 const everySecond = 1000
 
 interface UseSecondsListenedToProps {
-  playingEpisode: Episode
+  currentlyPlayingEpisode: Episode
   setSecondsListenedTo: (secondsListenedTo: number) => void
 }
 
 const useSecondsListenedTo = ({
-  playingEpisode,
+  currentlyPlayingEpisode,
   setSecondsListenedTo,
 }: UseSecondsListenedToProps): void => {
   const { position } = useTrackPlayerProgress(everySecond)
@@ -27,16 +27,16 @@ const useSecondsListenedTo = ({
       trackPlayerEpisodesAudioUrl,
     )
     const trackPlayerIsPlayingTheRequestedEpisode =
-      playingEpisode?.audio_url === trackPlayerEpisode.audio_url
+      currentlyPlayingEpisode?.audio_url === trackPlayerEpisode.audio_url
     const seekHasFinishedOrEpisodeHasBegunPlaying = position > 0
     if (
       trackPlayerIsPlayingTheRequestedEpisode &&
       seekHasFinishedOrEpisodeHasBegunPlaying
     ) {
-      saveListeningProgressInRealm(playingEpisode, position)
+      saveListeningProgressInRealm(currentlyPlayingEpisode, position)
       setSecondsListenedTo(position)
     }
-  }, [position, playingEpisode, setSecondsListenedTo])
+  }, [position, currentlyPlayingEpisode, setSecondsListenedTo])
 
   useEffect(() => {
     updateSecondsListenedTo()
