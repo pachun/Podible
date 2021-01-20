@@ -9,7 +9,7 @@ import { play, pause } from "../shared/trackPlayerHelpers"
 const PlayPauseButton = (): ReactElement => {
   const colorScheme = useColorScheme()
 
-  const { episode, playbackState } = useContext(PodibleContext)
+  const { currentlyPlayingEpisode, playbackState } = useContext(PodibleContext)
 
   const pauseEpisode = () => {
     Haptics.impactAsync()
@@ -18,7 +18,7 @@ const PlayPauseButton = (): ReactElement => {
 
   const playEpisode = () => {
     Haptics.impactAsync()
-    play(episode)
+    play(currentlyPlayingEpisode)
   }
 
   return (

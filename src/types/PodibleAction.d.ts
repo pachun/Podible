@@ -1,4 +1,4 @@
 interface PodibleAction {
-  type: "SET_EPISODE"
+  type: "SET_CURRENTLY_PLAYING_EPISODE"
   value: Episode
 }

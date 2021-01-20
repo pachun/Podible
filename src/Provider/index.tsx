@@ -68,9 +68,12 @@ const Provider = ({
   useTrackPlayerEvents([whenPlayedOrPaused, whenAudioIsInterrupted], update)
 
   const value: PodibleContextType = {
-    episode: state.episode,
-    setEpisode: (episode: Episode) =>
-      dispatch({ type: "SET_EPISODE", value: episode }),
+    currentlyPlayingEpisode: state.currentlyPlayingEpisode,
+    setCurrentlyPlayingEpisode: (currentlyPlayingEpisode: Episode) =>
+      dispatch({
+        type: "SET_CURRENTLY_PLAYING_EPISODE",
+        value: currentlyPlayingEpisode,
+      }),
     playbackState,
     playbackRate,
     setPlaybackRate,

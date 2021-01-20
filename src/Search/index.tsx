@@ -24,9 +24,9 @@ const Search = (): ReactElement => {
   const styles = useStyles()
   const navigation = useNavigation()
   const insets = useSafeArea()
-  const { setEpisode } = useContext(PodibleContext)
+  const { setCurrentlyPlayingEpisode } = useContext(PodibleContext)
 
-  useNotifications({ setEpisode, navigation })
+  useNotifications({ setCurrentlyPlayingEpisode, navigation })
 
   const [searchFieldText, setSearchFieldText] = useState<string>("")
   const debouncedSearchFieldText = useDebounce(searchFieldText, 500)

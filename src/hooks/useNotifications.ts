@@ -3,12 +3,12 @@ import * as Notifications from "expo-notifications"
 import { play } from "../shared/trackPlayerHelpers"
 
 interface UseNotificationsProps {
-  setEpisode: (episode: Episode) => void
+  setCurrentlyPlayingEpisode: (episode: Episode) => void
   navigation: any
 }
 
 const useNotifications = ({
-  setEpisode,
+  setCurrentlyPlayingEpisode,
   navigation,
 }: UseNotificationsProps): void => {
   useEffect(() => {
@@ -16,13 +16,13 @@ const useNotifications = ({
       response => {
         const episode: Episode = response.notification.request.content.data
           .episode as Episode
-        setEpisode(episode)
+        setCurrentlyPlayingEpisode(episode)
         navigation.navigate("Now Playing")
         play(episode)
       },
     )
     return () => subscription.remove()
-  }, [navigation, setEpisode])
+  }, [navigation, setCurrentlyPlayingEpisode])
 }
 
 export default useNotifications

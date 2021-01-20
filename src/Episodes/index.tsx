@@ -38,9 +38,7 @@ const Episodes = ({ route }: EpisodesProps): ReactElement => {
 
   useEffect(cancelFetchPodcastNetworkRequest, [navigation, abortController])
 
-  const { episode: currentlyPlayingEpisode, playbackState } = useContext(
-    PodibleContext,
-  )
+  const { currentlyPlayingEpisode, playbackState } = useContext(PodibleContext)
 
   const [secondsListenedTo, setSecondsListenedTo] = useState<number>(
     currentlyPlayingEpisode ? currentlyPlayingEpisode.seconds_listened_to : 0,

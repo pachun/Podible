@@ -17,7 +17,7 @@ const NowPlaying = (): ReactElement => {
   const styles = useStyles()
   const colorScheme = useColorScheme()
   const navigation = useNavigation()
-  const { episode } = useContext(PodibleContext)
+  const { currentlyPlayingEpisode } = useContext(PodibleContext)
   const insets = useSafeArea()
   const goBack = () => navigation.goBack()
   const hasNotch = insets.bottom > 0
@@ -44,16 +44,18 @@ const NowPlaying = (): ReactElement => {
       </TouchableOpacity>
       {hasNotch && <View style={{ height: 20 }} />}
       <View style={styles.carouselContainer}>
-        <PlaybackRate_Artwork_Description_Carousel episode={episode} />
+        <PlaybackRate_Artwork_Description_Carousel
+          episode={currentlyPlayingEpisode}
+        />
       </View>
 
       <View style={styles.titleAndPublisherContainer}>
         <Text numberOfLines={2} style={styles.title}>
-          {episode.title}
+          {currentlyPlayingEpisode.title}
         </Text>
         {hasNotch && <View style={{ height: 20 }} />}
         <Text numberOfLines={1} style={styles.publisher}>
-          {episode.publisher}
+          {currentlyPlayingEpisode.publisher}
         </Text>
       </View>
       {hasNotch && <View style={{ height: 30 }} />}

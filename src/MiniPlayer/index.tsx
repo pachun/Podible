@@ -27,8 +27,10 @@ const MiniPlayer = (): ReactElement => {
     vibrateAfterAnimationIn()
   }
 
-  const { episode } = useContext(PodibleContext)
-  const track = episode && trackPlayerTrackFromEpisode(episode)
+  const { currentlyPlayingEpisode } = useContext(PodibleContext)
+  const track =
+    currentlyPlayingEpisode &&
+    trackPlayerTrackFromEpisode(currentlyPlayingEpisode)
 
   return track ? (
     <>

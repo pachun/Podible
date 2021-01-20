@@ -1,5 +1,5 @@
 interface PodibleState {
-  episode?: Episode
+  currentlyPlayingEpisode?: Episode
   playbackState: string
   playbackRate: number
 }

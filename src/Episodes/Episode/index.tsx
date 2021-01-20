@@ -19,7 +19,7 @@ const Episode = ({ episode: displayedEpisode }: EpisodeProps) => {
   const styles = useStyles()
   const navigation = useNavigation()
 
-  const { setEpisode } = useContext(PodibleContext)
+  const { setCurrentlyPlayingEpisode } = useContext(PodibleContext)
 
   const [
     durationOrTimeRemainingLabel,
@@ -55,7 +55,7 @@ const Episode = ({ episode: displayedEpisode }: EpisodeProps) => {
   }, [displayedEpisode, totalEpisodeDurationLabel, timeRemainingLabel])
 
   const playEpisode = async () => {
-    setEpisode(displayedEpisode)
+    setCurrentlyPlayingEpisode(displayedEpisode)
     play(displayedEpisode)
     navigation.navigate("Now Playing")
   }
