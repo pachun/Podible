@@ -76,7 +76,7 @@ const Episodes = ({ route }: EpisodesProps): ReactElement => {
           />
         </Animatable.View>
       )}
-      {didError && <SomethingWentWrong />}
+      {!episodes && didError && <SomethingWentWrong />}
     </View>
   )
 }
