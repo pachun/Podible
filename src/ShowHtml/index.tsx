@@ -15,7 +15,7 @@ const ShowHtml = ({ html }: ShowHtmlProps): ReactElement => {
       html={`<p>${html}</p>`}
       onLinkPress={(_, href: string) => Linking.openURL(href)}
       tagsStyles={{
-        a: { fontWeight: "bold" },
+        a: { fontWeight: "bold", color: colorScheme.button },
         p: { color: colorScheme.foreground, fontSize: 16 },
       }}
     />
