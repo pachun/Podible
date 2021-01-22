@@ -2,6 +2,7 @@ import React, { ReactElement, useState, useEffect, useContext } from "react"
 import { Text, View } from "react-native"
 import * as Haptics from "expo-haptics"
 import Slider from "@react-native-community/slider"
+import TrackPlayer from "react-native-track-player"
 import { PodibleContext } from "../../../Provider"
 import useStyles from "./useStyles"
 import useColorScheme from "../../../hooks/useColorScheme"
@@ -53,13 +54,23 @@ const PlaybackRate = (): ReactElement => {
     lockValues.find(lockValue => lockValue.playbackRate === playbackRate)
       .sliderValue,
   )
+
+  const existingPlaybackRateLockValue = lockValues.find(
+    lockValue => lockValue.playbackRate === playbackRate,
+  )
+
+  const defaultPlaybackRateLockValue = lockValues.find(
+    lockValue => lockValue.playbackRate === 1,
+  )
+
   const [closestLockValue, setClosestLockValue] = useState<LockValue>(
-    lockValues[1],
+    existingPlaybackRateLockValue || defaultPlaybackRateLockValue,
   )
 
   useEffect(() => {
     Haptics.impactAsync()
     setPlaybackRate(closestLockValue.playbackRate)
+    TrackPlayer.setRate(closestLockValue.playbackRate)
   }, [closestLockValue, setPlaybackRate])
 
   return (

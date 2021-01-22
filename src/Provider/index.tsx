@@ -14,6 +14,9 @@ import { useTrackPlayerEvents } from "react-native-track-player/lib/hooks"
 const whenPlayedOrPaused = TrackPlayerEvents.PLAYBACK_STATE
 const whenAudioIsInterrupted = TrackPlayerEvents.REMOTE_DUCK
 
+const wasPlayed = (event: TrackPlayerEvents): boolean =>
+  event.type === whenPlayedOrPaused && event.state === "playing"
+
 const wasPlayedOrPaused = (event: TrackPlayerEvents): boolean =>
   event.type === whenPlayedOrPaused
 
@@ -48,12 +51,16 @@ const Provider = ({
   const [playbackRate, setPlaybackRate] = useState<number>(1.0)
 
   useEffect(() => {
-    TrackPlayer.setRate(playbackRate)
+    console.log(`playback rate set to ${playbackRate}`)
   }, [playbackRate])
 
   const [playbackState, setPlaybackState] = useState<string>("unknown")
 
   const update = (event: TrackPlayerEvents) => {
+    if (wasPlayed(event)) {
+      TrackPlayer.setRate(playbackRate)
+    }
+
     if (wasPlayedOrPaused(event)) {
       setPlaybackState(event.state)
     } else if (shouldStopPlayback(event)) {
