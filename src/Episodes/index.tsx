@@ -15,7 +15,11 @@ import useSecondsListenedTo from "./useSecondsListenedTo"
 import useDisplayableEpisodes from "./useDisplayableEpisodes"
 import useStyles from "./useStyles"
 
-type EpisodesProps = {
+const apiUrl = __DEV__
+  ? `http://${process.env.REACT_NATIVE_API_URL}:3000`
+  : `https://podible-web.herokuapp.com`
+
+interface EpisodesProps {
   route: RouteProp<RouteParams, "Episodes">
 }
 
@@ -25,7 +29,12 @@ const Episodes = ({ route }: EpisodesProps): ReactElement => {
   const navigation = useNavigation()
 
   const rssFeedUrl = route.params.rssFeedUrl
-  const { podcast, didError, abortController } = usePodcastFromRssFeed({
+  const {
+    podcast,
+    didError,
+    abortController,
+    loadNextPageOfEpisodes,
+  } = usePodcastFromRssFeed({
     rssFeedUrl,
   })
 
@@ -56,6 +65,7 @@ const Episodes = ({ route }: EpisodesProps): ReactElement => {
     playbackState,
   })
 
+  const twoScreenLengthsFromBottomOfList = 2
   const keyExtractor = <T,>(_: T, position: number) => position.toString()
 
   return (
@@ -73,6 +83,8 @@ const Episodes = ({ route }: EpisodesProps): ReactElement => {
             data={episodes}
             keyExtractor={keyExtractor}
             renderItem={({ item: episode }) => <Episode episode={episode} />}
+            onEndReachedThreshold={twoScreenLengthsFromBottomOfList}
+            onEndReached={loadNextPageOfEpisodes}
           />
         </Animatable.View>
       )}

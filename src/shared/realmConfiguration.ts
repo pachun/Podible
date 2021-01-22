@@ -7,8 +7,10 @@ const PodcastSchema = {
     publisher: "string",
     description: "string",
     artwork_url: "string",
-    episodes: "Episode[]",
     rss_feed_url: "string",
+    episode_pages_fetched: { type: "int", default: 1 },
+    every_episode_has_been_loaded: { type: "bool", default: false },
+    episodes: "Episode[]",
   },
 }
 

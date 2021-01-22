@@ -44,6 +44,7 @@ const usePodcastFromRssFeed = ({
   podcast: Podcast
   didError: boolean
   abortController: AbortController
+  loadNextPageOfEpisodes: () => void
 } => {
   const [podcast, setPodcast] = useState<Podcast>()
   const [didError, setDidError] = useState(false)
@@ -78,6 +79,44 @@ const usePodcastFromRssFeed = ({
     }
   }, [rssFeedUrl])
 
+  const loadNextPageOfEpisodes = async () => {
+    if (podcast.every_episode_has_been_loaded) {
+      return
+    }
+
+    const nextPage = podcast.episode_pages_fetched + 1
+    const response = await fetch(
+      `${apiUrl}/podcasts/${podcast.id}/episodes?page=${nextPage}`,
+      {
+        signal: abortController.current.signal,
+      },
+    )
+    const nextPageOfEpisodes: Episode[] = (await response.json()) as Episode[]
+    const realm = await Realm.open(realmConfiguration)
+    realm.write(() => {
+      const realmPodcast = realm.objectForPrimaryKey<Podcast>(
+        "Podcast",
+        podcast.rss_feed_url,
+      )
+      if (nextPageOfEpisodes.length > 0) {
+        const episodesAlreadyExist = realm.objectForPrimaryKey<Episode>(
+          "Episode",
+          nextPageOfEpisodes[0].audio_url,
+        )
+        if (!episodesAlreadyExist) {
+          realmPodcast.episode_pages_fetched = podcast.episode_pages_fetched + 1
+          realmPodcast.episodes = [
+            ...realmPodcast.episodes,
+            ...nextPageOfEpisodes,
+          ]
+          setPodcast(realmPodcast)
+        }
+      } else {
+        realmPodcast.every_episode_has_been_loaded = true
+      }
+    })
+  }
+
   useEffect(() => {
     getCachedPodcast()
   }, [getCachedPodcast])
@@ -86,7 +125,12 @@ const usePodcastFromRssFeed = ({
     getPodcastFromRssFeed()
   }, [getPodcastFromRssFeed])
 
-  return { podcast, didError, abortController: abortController.current }
+  return {
+    podcast,
+    didError,
+    abortController: abortController.current,
+    loadNextPageOfEpisodes,
+  }
 }
 
 export default usePodcastFromRssFeed
