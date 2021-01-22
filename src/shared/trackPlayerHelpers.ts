@@ -1,5 +1,4 @@
-import TrackPlayer from "react-native-track-player"
-import { Track } from "react-native-track-player"
+import TrackPlayer, { Track } from "react-native-track-player"
 
 const isCurrentEpisode = async (episode: Episode) =>
   (await TrackPlayer.getCurrentTrack()) === episode.audio_url
@@ -16,6 +15,9 @@ export const play = async (episode: Episode): Promise<void> => {
   if (await isCurrentEpisode(episode)) {
     TrackPlayer.play()
   } else {
+    const originalVolume = await TrackPlayer.getVolume()
+    await TrackPlayer.setVolume(0)
+
     await TrackPlayer.stop()
     await TrackPlayer.add([trackPlayerTrackFromEpisode(episode)])
     await TrackPlayer.skip(episode.audio_url)
@@ -24,11 +26,12 @@ export const play = async (episode: Episode): Promise<void> => {
     // https://github.com/react-native-kit/react-native-track-player/issues/387
     await TrackPlayer.play()
     if (episode.seconds_listened_to > 0) {
-      await TrackPlayer.pause()
-      setTimeout(async () => {
+      await setTimeout(async () => {
         await TrackPlayer.seekTo(episode.seconds_listened_to)
-        await TrackPlayer.play()
-      }, 1000)
+        setTimeout(async () => await TrackPlayer.setVolume(originalVolume), 500)
+      }, 1200)
+    } else {
+      await TrackPlayer.setVolume(originalVolume)
     }
   }
 }
