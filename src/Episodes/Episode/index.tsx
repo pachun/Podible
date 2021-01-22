@@ -1,10 +1,10 @@
-import React, { useMemo, useContext, useState, useEffect } from "react"
+import React, { useContext } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import he from "he"
 import { PodibleContext } from "../../Provider"
-import humanReadableDuration from "./humanReadableDuration"
 import shortDate from "./shortDate"
+import useDurationOrTimeRemainingLabel from "./useDurationOrTimeRemainingLabel"
 import useStyles from "./useStyles"
 import { play } from "../../shared/trackPlayerHelpers"
 
@@ -19,40 +19,14 @@ const Episode = ({ episode: displayedEpisode }: EpisodeProps) => {
   const styles = useStyles()
   const navigation = useNavigation()
 
-  const { setCurrentlyPlayingEpisode } = useContext(PodibleContext)
-
-  const [
-    durationOrTimeRemainingLabel,
-    setDurationOrTimeRemainingLabel,
-  ] = useState("")
-
-  const totalEpisodeDurationLabel = useMemo(
-    () => humanReadableDuration(displayedEpisode.duration),
-    [displayedEpisode.duration],
+  const { setCurrentlyPlayingEpisode, currentlyPlayingEpisode } = useContext(
+    PodibleContext,
   )
 
-  const timeRemainingLabel = useMemo(() => {
-    const secondsRemaining =
-      displayedEpisode.duration - displayedEpisode.seconds_listened_to
-    return `${humanReadableDuration(secondsRemaining)} LEFT`
-  }, [displayedEpisode.duration, displayedEpisode.seconds_listened_to])
-
-  useEffect(() => {
-    const secondsRemaining =
-      displayedEpisode.duration - displayedEpisode.seconds_listened_to
-
-    const hasNotListenedOrHasJustBegunListening =
-      displayedEpisode.seconds_listened_to < 30
-    const hasFinishedListening = secondsRemaining <= 2
-
-    if (hasNotListenedOrHasJustBegunListening) {
-      setDurationOrTimeRemainingLabel(totalEpisodeDurationLabel)
-    } else if (hasFinishedListening) {
-      setDurationOrTimeRemainingLabel("PLAYED")
-    } else {
-      setDurationOrTimeRemainingLabel(timeRemainingLabel)
-    }
-  }, [displayedEpisode, totalEpisodeDurationLabel, timeRemainingLabel])
+  const durationOrTimeRemainingLabel = useDurationOrTimeRemainingLabel({
+    displayedEpisode,
+    currentlyPlayingEpisode,
+  })
 
   const playEpisode = async () => {
     setCurrentlyPlayingEpisode(displayedEpisode)
