@@ -1,10 +1,4 @@
-import React, {
-  ReactElement,
-  createContext,
-  useReducer,
-  useState,
-  useEffect,
-} from "react"
+import React, { ReactElement, createContext, useReducer, useState } from "react"
 import reducer from "./reducer"
 
 // @ts-ignore
@@ -49,11 +43,6 @@ const Provider = ({
   )
 
   const [playbackRate, setPlaybackRate] = useState<number>(1.0)
-
-  useEffect(() => {
-    console.log(`playback rate set to ${playbackRate}`)
-  }, [playbackRate])
-
   const [playbackState, setPlaybackState] = useState<string>("unknown")
 
   const update = (event: TrackPlayerEvents) => {
