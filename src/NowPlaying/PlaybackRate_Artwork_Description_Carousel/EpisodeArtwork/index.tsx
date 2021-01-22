@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react"
 import { View } from "react-native"
-import FastImage from "react-native-fast-image"
+import PodibleImage from "../../../PodibleImage"
 import useStyles from "./useStyles"
 
 interface EpisodeArtworkProps {
@@ -12,7 +12,7 @@ const EpisodeArtwork = ({ episode }: EpisodeArtworkProps): ReactElement => {
 
   return (
     <View style={styles.container}>
-      <FastImage source={{ uri: episode.artwork_url }} style={styles.artwork} />
+      <PodibleImage url={episode.artwork_url} style={styles.artwork} />
     </View>
   )
 }

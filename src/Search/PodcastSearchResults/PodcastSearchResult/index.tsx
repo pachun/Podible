@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react"
 import { View, TouchableOpacity, Text } from "react-native"
-import FastImage from "react-native-fast-image"
+import PodibleImage from "../../../PodibleImage"
 import useStyles from "./useStyles"
 
 interface PodcastSearchResultProps {
@@ -16,9 +16,9 @@ const PodcastSearchResult = ({
   return (
     <TouchableOpacity style={styles.container} onPress={showPodcastEpisodes}>
       <View style={styles.background}>
-        <FastImage
+        <PodibleImage
           style={styles.image}
-          source={{ uri: podcastSearchResult.artworkUrl }}
+          url={podcastSearchResult.artworkUrl}
         />
         <View style={styles.podcastInformation}>
           <Text style={styles.podcastTitle} numberOfLines={2}>

@@ -1,7 +1,7 @@
 import React, { ReactElement, useState, useRef } from "react"
 import { Text, View, TouchableOpacity } from "react-native"
 import * as Haptics from "expo-haptics"
-import FastImage from "react-native-fast-image"
+import PodibleImage from "../../PodibleImage"
 import * as Animatable from "react-native-animatable"
 import { showMessage } from "react-native-flash-message"
 import subscribeToPodcast from "./subscribeToPodcast"
@@ -45,9 +45,9 @@ const PodcastDescription = ({
       <View style={{ height: 20 }} />
       <View style={styles.podcastDetailsContainer}>
         <View style={styles.podcastDetailsBackground}>
-          <FastImage
+          <PodibleImage
             style={styles.podcastArtwork}
-            source={{ uri: podcast.artwork_url }}
+            url={podcast.artwork_url}
           />
           <View style={styles.podcastDetails}>
             <Text style={styles.titleLabel} numberOfLines={2}>

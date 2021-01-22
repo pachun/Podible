@@ -1,6 +1,6 @@
 import React, { ReactElement, useContext } from "react"
 import { TouchableOpacity, View } from "react-native"
-import FastImage from "react-native-fast-image"
+import PodibleImage from "../PodibleImage"
 import * as Haptics from "expo-haptics"
 import { Entypo } from "@expo/vector-icons"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
@@ -52,7 +52,7 @@ const MiniPlayer = (): ReactElement => {
           onPress={showNowPlayingModal}
           hitSlop={{ left: 30, right: 30, top: 10, bottom: 10 }}
         >
-          <FastImage source={{ uri: track.artwork }} style={styles.artwork} />
+          <PodibleImage url={track.artwork} style={styles.artwork} />
         </TouchableOpacity>
       </View>
       <View
