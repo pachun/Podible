@@ -15,10 +15,6 @@ import useSecondsListenedTo from "./useSecondsListenedTo"
 import useDisplayableEpisodes from "./useDisplayableEpisodes"
 import useStyles from "./useStyles"
 
-const apiUrl = __DEV__
-  ? `http://${process.env.REACT_NATIVE_API_URL}:3000`
-  : `https://podible-web.herokuapp.com`
-
 interface EpisodesProps {
   route: RouteProp<RouteParams, "Episodes">
 }
@@ -64,6 +60,12 @@ const Episodes = ({ route }: EpisodesProps): ReactElement => {
     secondsListenedTo,
     playbackState,
   })
+
+  useEffect(() => {
+    if (podcast && podcast.episodes) {
+      console.log(`there are ${podcast.episodes.length} episodes`)
+    }
+  }, [podcast])
 
   const twoScreenLengthsFromBottomOfList = 2
   const keyExtractor = <T,>(_: T, position: number) => position.toString()

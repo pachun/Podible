@@ -5,7 +5,5 @@ interface Podcast {
   description: string
   artwork_url: string
   rss_feed_url: string
-  episode_pages_fetched: number
-  every_episode_has_been_loaded: boolean
   episodes: Episode[]
 }
