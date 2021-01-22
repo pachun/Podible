@@ -7251,6 +7251,14 @@ react-native-screens@~2.15.0:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.15.0.tgz#9b97c1881c4fcdf304bf363f0013225901625f44"
   integrity sha512-qTSQPy0WKHtlb8xt5gY0Gt6sdvfQUQAnFSqgsggW9UEvySbkHzpqOrOYNA79Ca8oXO0dCFwp6X8buIiDefa7+Q==
 
+react-native-see-more-inline@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-see-more-inline/-/react-native-see-more-inline-1.3.0.tgz#b4bb25231956dfa8c96960b6a12ac297ae481f21"
+  integrity sha512-H7Fn+M3Z/bBdgBYk9Z50Y9U93RuR8KI1MiZz5Osz9qbg+B1w9BjEJBDaiCVjcf0r+EhgAkKA+KBSapOBvzILYw==
+  dependencies:
+    lodash "^4.17.19"
+    prop-types "^15.7.2"
+
 react-native-snap-carousel@^3.9.1:
   version "3.9.1"
   resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.9.1.tgz#6fd9bd8839546c2c6043a41d2035afbc6fe0443e"
@@ -7266,6 +7274,11 @@ react-native-swift@^1.2.3:
   dependencies:
     "@raydeck/xcode" "^2.2.0"
     glob "^7.1.2"
+
+react-native-text-size@^4.0.0-rc.1:
+  version "4.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/react-native-text-size/-/react-native-text-size-4.0.0-rc.1.tgz#1e048d345dd6a5a8e1269e0585c1a5948c478da5"
+  integrity sha512-CysqjU2jK6Yc+a+kEI222pUyTY2ywcU2HqbFqf1KHymW6OPTdvBBHqbEJKL0QiLhQaFYDbqicM+h990s9TP00g==
 
 react-native-track-player@^1.2.3:
   version "1.2.3"

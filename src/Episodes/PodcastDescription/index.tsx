@@ -5,7 +5,7 @@ import FastImage from "react-native-fast-image"
 import * as Animatable from "react-native-animatable"
 import { showMessage } from "react-native-flash-message"
 import subscribeToPodcast from "./subscribeToPodcast"
-import ShowHtml from "../../ShowHtml"
+import SeeMore from "react-native-see-more-inline"
 import useStyles from "./useStyles"
 import useSubscriptions from "./useSubscriptions"
 import useColorScheme from "../../hooks/useColorScheme"
@@ -65,9 +65,16 @@ const PodcastDescription = ({
         <>
           <View style={styles.podcastDescriptionContainer}>
             <View style={styles.podcastDescriptionBackground}>
-              <Text style={styles.podcastDescriptionLabel}>
-                <ShowHtml html={podcast.description} />
-              </Text>
+              <SeeMore
+                numberOfLines={3}
+                style={styles.podcastDescriptionLabel}
+                linkColor={colorScheme.button}
+                linkStyle={{ fontWeight: "bold" }}
+                seeMoreText="more"
+                seeLessText=""
+              >
+                {podcast.description}
+              </SeeMore>
             </View>
           </View>
           <View style={{ height: 10 }} />
