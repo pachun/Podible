@@ -1,6 +1,7 @@
 import Realm from "realm"
+import apiUrl from "../../shared/apiUrl"
 import realmConfiguration from "../../shared/realmConfiguration"
-import getExpoPushToken from "./getExpoPushToken"
+import getExpoPushToken from "../../shared/getExpoPushToken"
 
 const subscribeToPodcastInRealm = async (podcast: Podcast): Promise<void> => {
   const realm = await Realm.open(realmConfiguration)
@@ -8,10 +9,6 @@ const subscribeToPodcastInRealm = async (podcast: Podcast): Promise<void> => {
     realm.create("SubscribedPodcast", { podcast_id: podcast.id })
   })
 }
-
-const apiUrl = __DEV__
-  ? `http://${process.env.REACT_NATIVE_API_URL}:3000`
-  : `https://podible-web.herokuapp.com`
 
 const sendNotificationsWhenNewEpisodesComeOut = async (
   podcast: Podcast,

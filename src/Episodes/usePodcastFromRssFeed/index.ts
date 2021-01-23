@@ -1,10 +1,7 @@
 import { useRef, useCallback, useEffect, useState } from "react"
 import Realm from "realm"
+import apiUrl from "../../shared/apiUrl"
 import realmConfiguration from "../../shared/realmConfiguration"
-
-const apiUrl = __DEV__
-  ? `http://${process.env.REACT_NATIVE_API_URL}:3000`
-  : `https://podible-web.herokuapp.com`
 
 const logError = (rssFeedUrl: string, exception: string) =>
   fetch(`${apiUrl}/client_rss_feed_errors`, {

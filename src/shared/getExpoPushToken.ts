@@ -18,7 +18,7 @@ const userGivesPushNotificationPermission = async (): Promise<boolean> =>
       },
     })
   ).status === "granted"
-const appHasExpoPushToken = async (): Promise<boolean> =>
+export const appHasExpoPushToken = async (): Promise<boolean> =>
   isDevice && (await appHasPushPermission())
 const userGivesAppExpoPushToken = async (): Promise<boolean> =>
   isDevice && (await userGivesPushNotificationPermission())
