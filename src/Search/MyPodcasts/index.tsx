@@ -1,8 +1,10 @@
 import React, { ReactElement, useMemo } from "react"
 import { SectionList, Text, View } from "react-native"
 import * as Animatable from "react-native-animatable"
+import { SwipeListView } from "react-native-swipe-list-view"
 import MyPodcast from "./MyPodcast"
 import useStyles from "./useStyles"
+import useColorScheme from "../../hooks/useColorScheme"
 
 interface MyPodcastsProps {
   isVisible: boolean
@@ -45,10 +47,12 @@ const MyPodcasts = ({
     [recentlyPlayedPodcastsListSection, subscribedPodcastsListSection],
   )
 
+  const colorScheme = useColorScheme()
   return (
     isVisible && (
       <Animatable.View animation="fadeIn" style={{ flex: 1 }}>
-        <SectionList
+        <SwipeListView
+          useSectionList
           style={styles.list}
           sections={listSections}
           keyExtractor={keyExtractor}
@@ -68,6 +72,26 @@ const MyPodcasts = ({
               onPress={showPodcastEpisodes(podcast.rss_feed_url)}
             />
           )}
+          renderHiddenItem={() => (
+            <View style={{ flex: 1, flexDirection: "row" }}>
+              <View
+                style={{
+                  backgroundColor: colorScheme.background,
+                  width: "10%",
+                }}
+              />
+              <View
+                style={{
+                  backgroundColor: colorScheme.tableHeader,
+                  width: "90%",
+                }}
+              />
+            </View>
+          )}
+          // rightOpenValue={-100}
+          rightActivationValue={-200}
+          onRightActionStatusChange={x => console.log(x)}
+          stopLeftSwipe={0}
         />
       </Animatable.View>
     )

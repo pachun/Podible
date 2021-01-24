@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react"
-import { View, TouchableOpacity, Text } from "react-native"
+import { View, TouchableHighlight, Text } from "react-native"
 import PodibleImage from "../../../PodibleImage"
+import useColorScheme from "../../../hooks/useColorScheme"
 import useStyles from "./useStyles"
 
 interface MyPodcastProps {
@@ -13,8 +14,14 @@ const MyPodcast = ({
   onPress: showPodcastEpisodes,
 }: MyPodcastProps): ReactElement => {
   const styles = useStyles()
+  const colorScheme = useColorScheme()
+
   return (
-    <TouchableOpacity style={styles.container} onPress={showPodcastEpisodes}>
+    <TouchableHighlight
+      underlayColor={colorScheme.background}
+      style={styles.container}
+      onPress={showPodcastEpisodes}
+    >
       <View style={styles.background}>
         <PodibleImage style={styles.image} url={podcast.artwork_url} />
         <View style={styles.podcastInformation}>
@@ -27,7 +34,7 @@ const MyPodcast = ({
           </Text>
         </View>
       </View>
-    </TouchableOpacity>
+    </TouchableHighlight>
   )
 }
 

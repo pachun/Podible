@@ -9,6 +9,7 @@ const useStyles = (): any => {
     return StyleSheet.create({
       container: {
         alignItems: "center",
+        backgroundColor: colorScheme.background,
       },
       background: {
         width: "90%",
