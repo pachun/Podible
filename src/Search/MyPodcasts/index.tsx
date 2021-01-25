@@ -1,11 +1,10 @@
 import React, { ReactElement, useMemo } from "react"
-import { Text, TouchableOpacity, View } from "react-native"
+import { Text, View } from "react-native"
 import * as Animatable from "react-native-animatable"
 import { SwipeListView } from "react-native-swipe-list-view"
-import { Ionicons } from "@expo/vector-icons"
 import MyPodcast from "./MyPodcast"
+import UnsubscribeRowUnderlay from "./UnsubscribeRowUnderlay"
 import useStyles from "./useStyles"
-import useColorScheme from "../../hooks/useColorScheme"
 
 interface MyPodcastsProps {
   isVisible: boolean
@@ -48,11 +47,6 @@ const MyPodcasts = ({
     [recentlyPlayedPodcastsListSection, subscribedPodcastsListSection],
   )
 
-  const unsubscribe = (podcast: Podcast) => {
-    console.log(`unsubscribing from ${podcast.title}`)
-  }
-
-  const colorScheme = useColorScheme()
   return (
     isVisible && (
       <Animatable.View animation="fadeIn" style={{ flex: 1 }}>
@@ -82,22 +76,7 @@ const MyPodcasts = ({
           }}
           renderHiddenItem={({ item }) => {
             const podcast = item as Podcast
-            return (
-              <TouchableOpacity
-                style={{
-                  flex: 1,
-                  flexDirection: "row",
-                  backgroundColor: colorScheme.tableHeader,
-                  width: "100%",
-                  justifyContent: "flex-end",
-                  alignItems: "center",
-                  paddingRight: 30,
-                }}
-                onPress={() => unsubscribe(podcast)}
-              >
-                <Ionicons name="trash-outline" size={30} color="#fff" />
-              </TouchableOpacity>
-            )
+            return <UnsubscribeRowUnderlay podcast={podcast} />
           }}
           rightOpenValue={-100}
           stopLeftSwipe={0.1}
