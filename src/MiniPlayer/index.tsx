@@ -21,10 +21,8 @@ const MiniPlayer = (): ReactElement => {
   const insets = useSafeAreaInsets()
 
   const showNowPlayingModal = () => {
-    const vibrateAfterAnimationIn = () => setTimeout(Haptics.impactAsync, 270)
-
+    Haptics.impactAsync()
     navigation.navigate("Now Playing")
-    vibrateAfterAnimationIn()
   }
 
   const { currentlyPlayingEpisode } = useContext(PodibleContext)

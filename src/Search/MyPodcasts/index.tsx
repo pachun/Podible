@@ -1,6 +1,9 @@
-import React, { ReactElement, useMemo } from "react"
+import React, { ReactElement, useMemo, useContext } from "react"
 import { SectionList, Text, View } from "react-native"
 import * as Animatable from "react-native-animatable"
+import { useSafeArea } from "react-native-safe-area-context"
+import { PodibleContext } from "../../Provider"
+import useDebounce from "../../hooks/useDebounce"
 import MyPodcast from "./MyPodcast"
 import useStyles from "./useStyles"
 
@@ -18,6 +21,7 @@ const MyPodcasts = ({
   onPress: showPodcastEpisodes,
 }: MyPodcastsProps): ReactElement => {
   const styles = useStyles()
+  const insets = useSafeArea()
 
   const keyExtractor = <T,>(_: T, position: number) => position.toString()
 
@@ -44,17 +48,25 @@ const MyPodcasts = ({
     ],
     [recentlyPlayedPodcastsListSection, subscribedPodcastsListSection],
   )
+  const listSectionsDebounced = useDebounce(listSections, 1000)
+
+  const { currentlyPlayingEpisode: isShowingMiniPlayer } = useContext(
+    PodibleContext,
+  )
 
   return (
     isVisible && (
       <Animatable.View animation="fadeIn" style={{ flex: 1 }}>
         <SectionList
           style={styles.list}
-          sections={listSections}
+          sections={listSectionsDebounced}
           keyExtractor={keyExtractor}
           keyboardShouldPersistTaps="always"
-          ListFooterComponent={<View style={{ height: 30 }} />}
-          ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+          ListFooterComponent={
+            isShowingMiniPlayer ? null : (
+              <View style={{ height: insets.bottom }} />
+            )
+          }
           renderSectionHeader={({ section: { title } }) => (
             <View style={styles.headerContainer}>
               <View style={styles.headerBackground}>

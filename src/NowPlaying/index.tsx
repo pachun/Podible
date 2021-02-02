@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect, useContext } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import PlaybackRate_Artwork_Description_Carousel from "./PlaybackRate_Artwork_Description_Carousel"
-import { useSafeArea } from "react-native-safe-area-context"
 import * as Haptics from "expo-haptics"
 import { Entypo } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
@@ -18,9 +17,7 @@ const NowPlaying = (): ReactElement => {
   const colorScheme = useColorScheme()
   const navigation = useNavigation()
   const { currentlyPlayingEpisode } = useContext(PodibleContext)
-  const insets = useSafeArea()
   const goBack = () => navigation.goBack()
-  const hasNotch = insets.bottom > 0
 
   const vibrateAfterAnimationOut = () => setTimeout(Haptics.impactAsync, 200)
 
@@ -32,41 +29,39 @@ const NowPlaying = (): ReactElement => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={goBack}
-        style={[styles.backButton, hasNotch ? { height: 100 } : {}]}
-      >
-        <Entypo
-          name="chevron-small-down"
-          size={60}
-          color={colorScheme.button}
-        />
-      </TouchableOpacity>
-      {hasNotch && <View style={{ height: 20 }} />}
+      <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={goBack} style={styles.headerButtonContainer}>
+          <Entypo
+            name="chevron-small-down"
+            size={60}
+            color={colorScheme.button}
+          />
+        </TouchableOpacity>
+        <View style={styles.episodeAndPodcastTitlesContainer}>
+          <Text numberOfLines={1} style={styles.episodeTitle}>
+            {currentlyPlayingEpisode.title}
+          </Text>
+          <Text numberOfLines={1} style={styles.podcastTitle}>
+            {currentlyPlayingEpisode.podcast[0].title}
+          </Text>
+        </View>
+        <View style={styles.headerButtonContainer} />
+      </View>
+      <View style={{ height: 40 }} />
       <View style={styles.carouselContainer}>
         <PlaybackRate_Artwork_Description_Carousel
           episode={currentlyPlayingEpisode}
         />
       </View>
-
-      <View style={styles.titleAndPublisherContainer}>
-        <Text numberOfLines={2} style={styles.title}>
-          {currentlyPlayingEpisode.title}
-        </Text>
-        {hasNotch && <View style={{ height: 20 }} />}
-        <Text numberOfLines={1} style={styles.publisher}>
-          {currentlyPlayingEpisode.publisher}
-        </Text>
-      </View>
-      {hasNotch && <View style={{ height: 30 }} />}
       <View style={styles.sliderContainer}>
         <TrackPlayerSlider colorScheme={colorScheme} />
       </View>
-      <View style={{ height: 20 }} />
-      <View style={styles.playbackControlsContainer}>
-        <JumpBackwardButton />
-        <PlayPauseButton />
-        <JumpForwardButton />
+      <View style={styles.controlsContainer}>
+        <View style={styles.controlsBackground}>
+          <JumpBackwardButton />
+          <PlayPauseButton />
+          <JumpForwardButton />
+        </View>
       </View>
     </View>
   )

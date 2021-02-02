@@ -1,9 +1,11 @@
 import { useMemo } from "react"
 import { StyleSheet } from "react-native"
+import { useSafeArea } from "react-native-safe-area-context"
 import useColorScheme from "../hooks/useColorScheme"
 
 const useStyles = (): any => {
   const colorScheme = useColorScheme()
+  const insets = useSafeArea()
 
   const styles = useMemo(() => {
     return StyleSheet.create({
@@ -12,44 +14,53 @@ const useStyles = (): any => {
         alignItems: "center",
         backgroundColor: colorScheme.background,
       },
-      backButton: {
+      headerContainer: {
         width: "100%",
+        height: 50,
+        marginTop: insets.top,
+        flexDirection: "row",
+      },
+      headerButtonContainer: {
+        width: 50,
+      },
+      episodeAndPodcastTitlesContainer: {
+        flex: 1,
         justifyContent: "flex-end",
-        alignItems: "center",
-        paddingTop: 10,
+        paddingLeft: 5,
+        paddingRight: 5,
+      },
+      episodeTitle: {
+        color: colorScheme.foreground,
+        fontSize: 16,
+        fontWeight: "600",
+        width: "100%",
+        textAlign: "center",
+      },
+      podcastTitle: {
+        color: colorScheme.podcastTitle,
+        fontWeight: "500",
+        width: "100%",
+        textAlign: "center",
       },
       carouselContainer: {
         width: "90%",
         aspectRatio: 1,
         alignItems: "center",
       },
-      titleAndPublisherContainer: {
-        width: "100%",
-        alignItems: "center",
-      },
-      title: {
-        color: colorScheme.foreground,
-        fontWeight: "bold",
-        fontSize: 24,
-        textAlign: "center",
-        maxWidth: "90%",
-      },
-      publisher: {
-        color: colorScheme.publisherLabel,
-        fontSize: 24,
-        textAlign: "center",
-        maxWidth: "90%",
-      },
       sliderContainer: {
         width: "80%",
       },
-      playbackControlsContainer: {
+      controlsContainer: {
+        flex: 1,
+        width: "70%",
+        justifyContent: "center",
+      },
+      controlsBackground: {
         flexDirection: "row",
-        width: "60%",
         justifyContent: "space-between",
       },
     })
-  }, [colorScheme])
+  }, [colorScheme, insets.top])
 
   return styles
 }

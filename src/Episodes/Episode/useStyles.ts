@@ -11,7 +11,7 @@ const useStyles = (): any => {
         width: "100%",
         alignItems: "center",
         borderTopWidth: 0.5,
-        borderTopColor: colorScheme.episodeListBorder,
+        borderTopColor: colorScheme.tableBorder,
       },
       background: {
         width: "90%",

@@ -9,10 +9,13 @@ const useStyles = (): any => {
     return StyleSheet.create({
       container: {
         alignItems: "center",
+        backgroundColor: colorScheme.background,
       },
       background: {
-        width: "90%",
+        width: "100%",
         flexDirection: "row",
+        borderBottomWidth: 0.25,
+        borderBottomColor: colorScheme.tableBorder,
       },
       podcastInformation: {
         paddingLeft: 20,
@@ -25,15 +28,14 @@ const useStyles = (): any => {
         maxWidth: 250,
       },
       podcastPublisher: {
-        fontSize: 12,
+        fontSize: 14,
         fontWeight: "bold",
         color: colorScheme.publisherLabel,
         maxWidth: 250,
       },
       image: {
-        width: 80,
-        height: 80,
-        borderRadius: 10,
+        width: 100,
+        height: 100,
       },
     })
   }, [colorScheme])

@@ -15,6 +15,7 @@ const useStyles = (): any => {
         alignItems: "center",
         justifyContent: "space-between",
         backgroundColor: colorScheme.background,
+        ...colorScheme.dropShadow,
       },
       openNowPlayingModalButton: {
         width: 60,

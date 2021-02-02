@@ -8,24 +8,25 @@ const useStyles = (): any => {
   const styles = useMemo(() => {
     return StyleSheet.create({
       list: {
+        backgroundColor: colorScheme.differentBackground,
         flex: 1,
       },
       headerContainer: {
-        paddingTop: 20,
         alignItems: "center",
-        backgroundColor: colorScheme.background,
-        paddingBottom: 20,
+        backgroundColor: colorScheme.tableHeaderBackground,
+        paddingTop: 10,
+        paddingBottom: 10,
       },
       headerBackground: {
         width: "90%",
       },
       headerTitle: {
-        color: colorScheme.tableHeader,
+        color: colorScheme.tableHeaderText,
         fontSize: 18,
+        fontWeight: "600",
+        letterSpacing: 1,
         width: "100%",
         textAlign: "center",
-        fontWeight: "800",
-        letterSpacing: 2,
       },
     })
   }, [colorScheme])

@@ -1,25 +1,24 @@
+import { PlatformColor } from "react-native"
+
+// https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/color
+
 const darkMode = {
   keyboardAppearance: "dark",
+  background: "#101010",
+  button: PlatformColor("systemPink"),
+  loud: PlatformColor("systemOrange"),
 
-  foreground: "#fff",
-  background: "#002B36",
+  dropShadow: {
+    shadowColor: "#555",
+    shadowOffset: {
+      width: 0,
+      height: 7,
+    },
+    shadowOpacity: 0.43,
+    shadowRadius: 9.51,
 
-  tableHeader: "#6C71C4",
-
-  publisherLabel: "#a8a8a8",
-  episodeDateAndDurationLabel: "#a8a8a8",
-  searchFieldForeground: "#a8a8a8",
-
-  searchFieldBackground: "#073642",
-  episodeListBorder: "#004F47",
-
-  sliderRemainingColor: "#3a3a3a",
-
-  button: "#299F97",
-
-  timeLabel: "#a8a8a8",
-
-  descriptionLabel: "#bbb",
+    elevation: 15,
+  },
 }
 
 export default darkMode

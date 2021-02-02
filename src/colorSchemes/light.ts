@@ -1,25 +1,22 @@
+import { PlatformColor } from "react-native"
+
 const lightMode = {
   keyboardAppearance: "light",
+  background: "#fff",
+  button: PlatformColor("link"),
+  loud: PlatformColor("systemIndigo"),
 
-  foreground: "#000",
-  background: "#FDF6E3",
+  dropShadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 7,
+    },
+    shadowOpacity: 0.43,
+    shadowRadius: 9.51,
 
-  tableHeader: "#D33682",
-
-  publisherLabel: "#888",
-  episodeDateAndDurationLabel: "#888",
-  searchFieldForeground: "#888",
-
-  searchFieldBackground: "#EEE8D5",
-  episodeListBorder: "#ddd",
-
-  sliderRemainingColor: "#eee",
-
-  button: "#2B8DD2",
-
-  timeLabel: "#888",
-
-  descriptionLabel: "#888",
+    elevation: 15,
+  },
 }
 
 export default lightMode

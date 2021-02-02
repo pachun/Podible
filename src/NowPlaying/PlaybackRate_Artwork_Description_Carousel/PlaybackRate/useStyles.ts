@@ -10,15 +10,15 @@ const useStyles = (): any => {
       container: {
         width: "100%",
         aspectRatio: 1,
-        backgroundColor: colorScheme.searchFieldBackground,
-        borderRadius: 30,
+        backgroundColor: colorScheme.differentBackground,
+        borderRadius: 10,
         padding: 20,
       },
       title: {
         fontSize: 24,
         fontWeight: "600",
         marginBottom: 40,
-        color: colorScheme.tableHeader,
+        color: colorScheme.loud,
         letterSpacing: 1,
       },
       playbackRateLabels: {
@@ -34,7 +34,7 @@ const useStyles = (): any => {
       },
       playbackRateLabel: {
         fontSize: 18,
-        color: colorScheme.tableHeader,
+        color: colorScheme.loud,
       },
     })
   }, [colorScheme])

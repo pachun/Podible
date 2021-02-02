@@ -6,7 +6,6 @@ import React, {
   useEffect,
 } from "react"
 import { View } from "react-native"
-import { useSafeArea } from "react-native-safe-area-context"
 import { useNavigation } from "@react-navigation/native"
 import { PodibleContext } from "../Provider"
 import getPodcastsWithUnfinishedEpisodes from "./getPodcastsWithUnfinishedEpisodes"
@@ -14,6 +13,7 @@ import getSubscribedPodcasts from "./getSubscribedPodcasts"
 import PodcastSearchResults from "./PodcastSearchResults"
 import MyPodcasts from "./MyPodcasts"
 import SearchField from "./SearchField"
+import EmptyStateCoachingMarks from "./EmptyStateCoachingMarks"
 import useDebounce from "../hooks/useDebounce"
 import usePodcastSearchResults from "./usePodcastSearchResults"
 import useStyles from "./useStyles"
@@ -23,7 +23,6 @@ import useNotifications from "../hooks/useNotifications"
 const Search = (): ReactElement => {
   const styles = useStyles()
   const navigation = useNavigation()
-  const insets = useSafeArea()
   const { setCurrentlyPlayingEpisode } = useContext(PodibleContext)
 
   useNotifications({ setCurrentlyPlayingEpisode, navigation })
@@ -82,26 +81,50 @@ const Search = (): ReactElement => {
     [debouncedSearchFieldText, searchFieldText],
   )
 
+  // do not flash empty state when launched
+  type Showing =
+    | "Podcast Search Results"
+    | "My Podcasts"
+    | "Empty State Coaching Marks"
+  const [isFirstRender, setIsFirstRender] = useState(true)
+  const showing: Showing = useMemo(() => {
+    if (isFirstRender) {
+      setIsFirstRender(false)
+      return "My Podcasts"
+    } else if (myPodcastsAreVisible) {
+      return "My Podcasts"
+    } else if (podcastSearchResultsAreVisible) {
+      return "Podcast Search Results"
+    } else {
+      return "Empty State Coaching Marks"
+    }
+  }, [myPodcastsAreVisible, podcastSearchResultsAreVisible, isFirstRender])
+  const showingDebounced = useDebounce(showing, 1)
+
   return (
     <View style={styles.container}>
-      <View style={{ height: insets.top }} />
-      <View style={{ height: 20 }} />
       <View style={styles.searchFieldContainer}>
         <SearchField
           searchFieldText={searchFieldText}
           setSearchFieldText={setSearchFieldText}
+          grabAttention={
+            !podcastSearchResultsAreVisible && !myPodcastsAreVisible
+          }
         />
       </View>
       <PodcastSearchResults
-        isVisible={podcastSearchResultsAreVisible}
+        isVisible={showingDebounced === "Podcast Search Results"}
         podcastSearchResults={podcastSearchResults}
         onPress={showPodcastEpisodes}
       />
       <MyPodcasts
-        isVisible={myPodcastsAreVisible}
+        isVisible={showingDebounced === "My Podcasts"}
         recentlyPlayedPodcasts={podcastsWithUnfinishedEpisodes}
         subscribedPodcasts={subscribedPodcasts}
         onPress={showPodcastEpisodes}
+      />
+      <EmptyStateCoachingMarks
+        isVisible={showingDebounced === "Empty State Coaching Marks"}
       />
     </View>
   )
