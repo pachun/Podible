@@ -7,9 +7,9 @@
 	<key>EXUpdatesEnabled</key>
 	<true/>
 	<key>EXUpdatesLaunchWaitMs</key>
-	<integer>0</integer>
+	<integer>5000</integer>
 	<key>EXUpdatesReleaseChannel</key>
-	<string>default</string>
+	<string>1.7.3</string>
 	<key>EXUpdatesSDKVersion</key>
 	<string>40.0.0</string>
 	<key>EXUpdatesURL</key>

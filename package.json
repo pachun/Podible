@@ -4,7 +4,7 @@
     "android": "react-native run-android",
     "ios": "REACT_NATIVE_API_URL=$(ifconfig | grep 192 | cut -d ' ' -f 2) react-native run-ios",
     "web": "expo start --web",
-    "deploy": "expo publish --target bare --release-channel 1.7.1",
+    "deploy": "expo publish --target bare --release-channel 1.7.3",
     "eject": "expo eject",
     "lint": "eslint '**/*.ts' '**/*.tsx'"
   },
@@ -42,6 +42,7 @@
     "react-native-see-more-inline": "^1.3.0",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-swift": "^1.2.3",
+    "react-native-swipe-list-view": "^3.2.6",
     "react-native-text-size": "^4.0.0-rc.1",
     "react-native-track-player": "^1.2.3",
     "react-native-unimodules": "~0.12.0",
