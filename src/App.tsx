@@ -23,6 +23,9 @@ LogBox.ignoreLogs([
 
   // sending platform colors to react-native-flash dep works, with warning
   "Warning: Failed prop type: Invalid prop `message.backgroundColor` of type `object` supplied to `ForwardRef`, expected `string`.",
+
+  // https://github.com/react-navigation/react-navigation/issues/7839
+  "Sending `onAnimatedValueUpdate` with no listeners registered.",
 ])
 
 // show notification popups when app is foregrounded

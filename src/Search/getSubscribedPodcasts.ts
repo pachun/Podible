@@ -1,9 +1,7 @@
 import Realm from "realm"
-import apiUrl from "../shared/apiUrl"
-import getExpoPushToken, {
-  appHasExpoPushToken,
-} from "../shared/getExpoPushToken"
+import apiUrl, { apiRequestHeaders } from "../shared/apiUrl"
 import realmConfiguration from "../shared/realmConfiguration"
+import getExpoPushToken from "../shared/getExpoPushToken"
 
 const getSubscribedPodcasts = (
   setSubscribedPodcasts: (podcasts: Podcast[]) => void,
@@ -19,31 +17,36 @@ const getSubscribedPodcasts = (
         .filter(podcast => subscribedPodcastIds.includes(podcast.id)),
     )
 
-    if (await appHasExpoPushToken()) {
-      const expoPushToken = await getExpoPushToken()
-      const response = await fetch(
-        `${apiUrl}/subscriptions?expo_push_token=${expoPushToken}`,
-        {
-          headers: { "Content-Type": "application/json" },
-        },
-      )
-      const previouslySubscribedPodcasts = (await response.json()).map(
-        (subscription: Subscription) => subscription.podcast,
-      )
-      const subscribedPodcastsWithoutDuplicates = [
-        ...subscribedPodcasts,
-        ...previouslySubscribedPodcasts,
-      ].reduce(
-        (podcasts: Podcast[], podcast: Podcast) =>
-          podcasts.map(podcast => podcast.id).includes(podcast.id)
-            ? podcasts
-            : [...podcasts, podcast],
-        [],
-      )
-      setSubscribedPodcasts(subscribedPodcastsWithoutDuplicates)
-    } else {
-      setSubscribedPodcasts(subscribedPodcasts)
-    }
+    const response = await fetch(`${apiUrl}/subscriptions`, {
+      headers: await apiRequestHeaders(),
+    })
+    const previouslySubscribedPodcasts = (await response.json()).map(
+      (subscription: Subscription) => subscription.podcast,
+    )
+    const subscribedPodcastsWithoutDuplicates = [
+      ...subscribedPodcasts,
+      ...previouslySubscribedPodcasts,
+    ].reduce(
+      (podcasts: Podcast[], podcast: Podcast) =>
+        podcasts.map(podcast => podcast.id).includes(podcast.id)
+          ? podcasts
+          : [...podcasts, podcast],
+      [],
+    )
+    setSubscribedPodcasts(subscribedPodcastsWithoutDuplicates)
+
+    subscribedPodcastsWithoutDuplicates.forEach(
+      async (subscribedPodcast: Podcast) => {
+        await fetch(`${apiUrl}/subscriptions`, {
+          method: "post",
+          headers: await apiRequestHeaders(),
+          body: JSON.stringify({
+            podcast_id: subscribedPodcast.id,
+            expo_push_token: await getExpoPushToken(),
+          }),
+        })
+      },
+    )
   }
   get()
 }

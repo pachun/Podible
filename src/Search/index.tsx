@@ -52,10 +52,6 @@ const Search = (): ReactElement => {
   }
 
   useEffect(() => {
-    if (searchFieldText === "") recalculateMyPodcasts()
-  }, [searchFieldText])
-
-  useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       recalculateMyPodcasts()
     })

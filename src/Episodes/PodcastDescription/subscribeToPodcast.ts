@@ -1,5 +1,5 @@
 import Realm from "realm"
-import apiUrl from "../../shared/apiUrl"
+import apiUrl, { apiRequestHeaders } from "../../shared/apiUrl"
 import realmConfiguration from "../../shared/realmConfiguration"
 import getExpoPushToken from "../../shared/getExpoPushToken"
 
@@ -16,7 +16,7 @@ const sendNotificationsWhenNewEpisodesComeOut = async (
 ) => {
   fetch(`${apiUrl}/subscriptions`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: await apiRequestHeaders(),
     body: JSON.stringify({
       expo_push_token: expoPushToken,
       podcast_id: podcast.id,
