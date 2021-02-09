@@ -1,6 +1,8 @@
 import { PlatformColor } from "react-native"
 
 const lightMode = {
+  name: "light",
+
   keyboardAppearance: "light",
   background: "#fff",
   button: PlatformColor("link"),

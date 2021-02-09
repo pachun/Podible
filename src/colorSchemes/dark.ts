@@ -3,6 +3,8 @@ import { PlatformColor } from "react-native"
 // https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/color
 
 const darkMode = {
+  name: "dark",
+
   keyboardAppearance: "dark",
   background: "#101010",
   button: PlatformColor("systemPink"),
