@@ -45,10 +45,15 @@ const Search = (): ReactElement => {
   ] = useState<Podcast[]>([])
 
   const [subscribedPodcasts, setSubscribedPodcasts] = useState<Podcast[]>([])
+  const [isRecalculatingMyPodcasts, setIsRecalculatingMyPodcasts] = useState(
+    true,
+  )
 
-  const recalculateMyPodcasts = () => {
+  const recalculateMyPodcasts = async () => {
+    setIsRecalculatingMyPodcasts(true)
     getPodcastsWithUnfinishedEpisodes(setPodcastsWithUnfinishedEpisodes)
-    getSubscribedPodcasts(setSubscribedPodcasts)
+    await getSubscribedPodcasts(setSubscribedPodcasts)
+    setIsRecalculatingMyPodcasts(false)
   }
 
   useEffect(() => {
@@ -77,26 +82,6 @@ const Search = (): ReactElement => {
     [debouncedSearchFieldText, searchFieldText],
   )
 
-  // do not flash empty state when launched
-  type Showing =
-    | "Podcast Search Results"
-    | "My Podcasts"
-    | "Empty State Coaching Marks"
-  const [isFirstRender, setIsFirstRender] = useState(true)
-  const showing: Showing = useMemo(() => {
-    if (isFirstRender) {
-      setIsFirstRender(false)
-      return "My Podcasts"
-    } else if (myPodcastsAreVisible) {
-      return "My Podcasts"
-    } else if (podcastSearchResultsAreVisible) {
-      return "Podcast Search Results"
-    } else {
-      return "Empty State Coaching Marks"
-    }
-  }, [myPodcastsAreVisible, podcastSearchResultsAreVisible, isFirstRender])
-  const showingDebounced = useDebounce(showing, 1)
-
   return (
     <View style={styles.container}>
       <View style={styles.searchFieldContainer}>
@@ -109,18 +94,22 @@ const Search = (): ReactElement => {
         />
       </View>
       <PodcastSearchResults
-        isVisible={showingDebounced === "Podcast Search Results"}
+        isVisible={podcastSearchResultsAreVisible}
         podcastSearchResults={podcastSearchResults}
         onPress={showPodcastEpisodes}
       />
       <MyPodcasts
-        isVisible={showingDebounced === "My Podcasts"}
+        isVisible={myPodcastsAreVisible}
         recentlyPlayedPodcasts={podcastsWithUnfinishedEpisodes}
         subscribedPodcasts={subscribedPodcasts}
         onPress={showPodcastEpisodes}
       />
       <EmptyStateCoachingMarks
-        isVisible={showingDebounced === "Empty State Coaching Marks"}
+        isVisible={
+          !podcastSearchResultsAreVisible &&
+          !myPodcastsAreVisible &&
+          !isRecalculatingMyPodcasts
+        }
       />
     </View>
   )
