@@ -8,7 +8,7 @@ import { PodibleContext } from "../Provider"
 import JumpForwardButton from "./JumpForwardButton"
 import JumpBackwardButton from "./JumpBackwardButton"
 import PlayPauseButton from "./PlayPauseButton"
-import TrackPlayerSlider from "./TrackPlayerSlider"
+import ScrubBar from "./ScrubBar"
 import useColorScheme from "../hooks/useColorScheme"
 import useStyles from "./useStyles"
 
@@ -54,7 +54,7 @@ const NowPlaying = (): ReactElement => {
         />
       </View>
       <View style={styles.sliderContainer}>
-        <TrackPlayerSlider colorScheme={colorScheme} />
+        <ScrubBar />
       </View>
       <View style={styles.controlsContainer}>
         <View style={styles.controlsBackground}>
