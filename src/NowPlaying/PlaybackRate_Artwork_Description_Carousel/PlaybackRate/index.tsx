@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect, useContext } from "react"
+import React, { ReactElement, useState, useContext } from "react"
 import { Text, View } from "react-native"
 import * as Haptics from "expo-haptics"
 import Slider from "@react-native-community/slider"
