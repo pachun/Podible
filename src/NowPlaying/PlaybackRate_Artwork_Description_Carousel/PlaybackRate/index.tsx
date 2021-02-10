@@ -4,6 +4,7 @@ import * as Haptics from "expo-haptics"
 import Slider from "@react-native-community/slider"
 import TrackPlayer from "react-native-track-player"
 import { PodibleContext } from "../../../Provider"
+import usePrevious from "../../../hooks/usePrevious"
 import useStyles from "./useStyles"
 import useColorScheme from "../../../hooks/useColorScheme"
 
@@ -67,11 +68,7 @@ const PlaybackRate = (): ReactElement => {
     existingPlaybackRateLockValue || defaultPlaybackRateLockValue,
   )
 
-  useEffect(() => {
-    Haptics.impactAsync()
-    setPlaybackRate(closestLockValue.playbackRate)
-    TrackPlayer.setRate(closestLockValue.playbackRate)
-  }, [closestLockValue, setPlaybackRate])
+  const lastClosestLockValue = usePrevious(closestLockValue)
 
   return (
     <View style={styles.container}>
@@ -97,7 +94,14 @@ const PlaybackRate = (): ReactElement => {
         minimumValue={0.5}
         maximumValue={3}
         onValueChange={sliderValue => {
-          setClosestLockValue(findClosestLockValue(sliderValue))
+          const currentClosestLockValue = findClosestLockValue(sliderValue)
+          if (lastClosestLockValue !== currentClosestLockValue) {
+            setClosestLockValue(currentClosestLockValue)
+
+            Haptics.impactAsync()
+            setPlaybackRate(closestLockValue.playbackRate)
+            TrackPlayer.setRate(closestLockValue.playbackRate)
+          }
         }}
         onSlidingComplete={() => {
           setDisplayedSliderValue(closestLockValue.sliderValue)
