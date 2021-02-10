@@ -4,9 +4,12 @@ import reducer from "./reducer"
 // @ts-ignore
 import TrackPlayer, { TrackPlayerEvents } from "react-native-track-player"
 import { useTrackPlayerEvents } from "react-native-track-player/lib/hooks"
+import { jumpInterval } from "../shared/trackPlayerHelpers"
 
 const whenPlayedOrPaused = TrackPlayerEvents.PLAYBACK_STATE
 const whenAudioIsInterrupted = TrackPlayerEvents.REMOTE_DUCK
+const whenCarsSteeringWheelsSeekForwardButtonIsPressed = "remote-next"
+const whenCarsSteeringWheelsSeekBackwardButtonIsPressed = "remote-previous"
 
 const wasPlayed = (event: TrackPlayerEvents): boolean =>
   event.type === whenPlayedOrPaused && event.state === "playing"
@@ -22,6 +25,24 @@ const shouldPausePlayback = (event: TrackPlayerEvents): boolean =>
 
 const shouldResumePlayback = (event: TrackPlayerEvents): boolean =>
   event.type === whenAudioIsInterrupted && !event.paused && !event.permanent
+
+const carSteeringWheelsSeekForwardButtonWasPressed = (
+  event: TrackPlayerEvents,
+): boolean => event.type === "remote-next"
+
+const carSteeringWheelsSeekBackwardButtonWasPressed = (
+  event: TrackPlayerEvents,
+): boolean => event.type === "remote-previous"
+
+const seekForward = async () => {
+  const position = await TrackPlayer.getPosition()
+  await TrackPlayer.seekTo(position + jumpInterval)
+}
+
+const seekBackward = async () => {
+  const position = await TrackPlayer.getPosition()
+  await TrackPlayer.seekTo(position - jumpInterval)
+}
 
 const defaultInitialState: PodibleState = {
   playbackState: "unknown",
@@ -50,6 +71,12 @@ const Provider = ({
       TrackPlayer.setRate(playbackRate)
     }
 
+    if (carSteeringWheelsSeekForwardButtonWasPressed(event)) {
+      seekForward()
+    } else if (carSteeringWheelsSeekBackwardButtonWasPressed(event)) {
+      seekBackward()
+    }
+
     if (wasPlayedOrPaused(event)) {
       setPlaybackState(event.state)
     } else if (shouldStopPlayback(event)) {
@@ -61,7 +88,15 @@ const Provider = ({
     }
   }
 
-  useTrackPlayerEvents([whenPlayedOrPaused, whenAudioIsInterrupted], update)
+  useTrackPlayerEvents(
+    [
+      whenPlayedOrPaused,
+      whenAudioIsInterrupted,
+      whenCarsSteeringWheelsSeekForwardButtonIsPressed,
+      whenCarsSteeringWheelsSeekBackwardButtonIsPressed,
+    ],
+    update,
+  )
 
   const value: PodibleContextType = {
     currentlyPlayingEpisode: state.currentlyPlayingEpisode,
