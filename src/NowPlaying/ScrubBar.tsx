@@ -1,5 +1,6 @@
-import React, { ReactElement } from "react"
+import React, { ReactElement, useContext, useMemo } from "react"
 import { Text, View } from "react-native"
+import { PodibleContext } from "../Provider"
 import TrackPlayer from "react-native-track-player"
 import Slider from "@react-native-community/slider"
 import humanReadableDuration from "./humanReadableDuration"
@@ -10,13 +11,31 @@ const ScrubBar = (): ReactElement => {
   const colorScheme = useColorScheme()
   const { position, duration } = useTrackPlayerProgress()
 
+  const { currentlyPlayingEpisode } = useContext(PodibleContext)
+
+  const durationEvenWhileBuffering = useMemo(() => {
+    if (duration === 0) {
+      return currentlyPlayingEpisode.duration
+    } else {
+      return duration
+    }
+  }, [duration, currentlyPlayingEpisode.duration])
+
+  const positionEvenWhileBuffering = useMemo(() => {
+    if (duration === 0) {
+      return currentlyPlayingEpisode.seconds_listened_to
+    } else {
+      return position
+    }
+  }, [duration, position, currentlyPlayingEpisode.seconds_listened_to])
+
   return (
     <>
       <Slider
         style={{ width: "100%", height: 40 }}
-        value={position}
+        value={positionEvenWhileBuffering}
         minimumValue={0}
-        maximumValue={duration}
+        maximumValue={durationEvenWhileBuffering}
         minimumTrackTintColor={colorScheme.button}
         thumbTintColor={colorScheme.button}
         maximumTrackTintColor={colorScheme.sliderRemainingColor}
@@ -30,10 +49,13 @@ const ScrubBar = (): ReactElement => {
         }}
       >
         <Text style={{ color: colorScheme.timeLabel }}>
-          {humanReadableDuration(Math.round(position))}
+          {humanReadableDuration(Math.round(positionEvenWhileBuffering))}
         </Text>
         <Text style={{ color: colorScheme.timeLabel }}>
-          -{humanReadableDuration(Math.round(duration - position))}
+          -
+          {humanReadableDuration(
+            Math.round(durationEvenWhileBuffering - positionEvenWhileBuffering),
+          )}
         </Text>
       </View>
     </>
