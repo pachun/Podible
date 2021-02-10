@@ -15,18 +15,7 @@ import Episodes from "./Episodes"
 import MiniPlayer from "./MiniPlayer"
 import NowPlaying from "./NowPlaying"
 
-import { LogBox } from "react-native"
-
-LogBox.ignoreLogs([
-  // sending platform colors to SeeMore dep works, with warning
-  "Warning: Failed prop type: Invalid prop `linkColor` of type `object` supplied to `SeeMore`, expected `string`.",
-
-  // sending platform colors to react-native-flash dep works, with warning
-  "Warning: Failed prop type: Invalid prop `message.backgroundColor` of type `object` supplied to `ForwardRef`, expected `string`.",
-
-  // https://github.com/react-navigation/react-navigation/issues/7839
-  "Sending `onAnimatedValueUpdate` with no listeners registered.",
-])
+import "./ignoredWarnings"
 
 // show notification popups when app is foregrounded
 // https://docs.expo.io/push-notifications/receiving-notifications/
@@ -43,6 +32,7 @@ const Stack = createStackNavigator<RouteParams>()
 const Tab = createBottomTabNavigator()
 
 const App = (): ReactElement => {
+  // this hook is never called conditionally while the app is running:
   // eslint-disable-next-line
   const isUpdating = __DEV__ ? false : useAppUpdates()
   const isReadyToPlayAudio = useTrackPlayer()
