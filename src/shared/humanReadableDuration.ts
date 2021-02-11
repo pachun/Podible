@@ -6,19 +6,14 @@ const humanReadableDuration = (secondDuration: number): string => {
   const minutes = Math.floor(
     (secondDuration - hours * secondsInAnHour) / secondsInAMinute,
   )
-  const seconds =
-    secondDuration - hours * secondsInAnHour - minutes * secondsInAMinute
+  const seconds = Math.floor(
+    secondDuration - hours * secondsInAnHour - minutes * secondsInAMinute,
+  )
 
-  if (hours > 0) {
-    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
-      2,
-      "0",
-    )}:${String(seconds).padStart(2, "0")}`
-  }
-  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
     2,
     "0",
-  )}`
+  )}:${String(seconds).padStart(2, "0")}`
 }
 
 export default humanReadableDuration

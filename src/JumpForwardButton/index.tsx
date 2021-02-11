@@ -3,10 +3,10 @@ import { TouchableOpacity, View, Text } from "react-native"
 import * as Haptics from "expo-haptics"
 import { AntDesign } from "@expo/vector-icons"
 import TrackPlayer from "react-native-track-player"
-import { jumpInterval } from "../../shared/trackPlayerHelpers"
-import useColorScheme from "../../hooks/useColorScheme"
+import { jumpInterval } from "../shared/trackPlayerHelpers"
+import useColorScheme from "../hooks/useColorScheme"
 
-const JumpBackwardButton = (): ReactElement => {
+const JumpForwardButton = (): ReactElement => {
   const colorScheme = useColorScheme()
 
   return (
@@ -14,16 +14,11 @@ const JumpBackwardButton = (): ReactElement => {
       onPress={async () => {
         Haptics.impactAsync()
         const position = await TrackPlayer.getPosition()
-        await TrackPlayer.seekTo(position - jumpInterval)
+        await TrackPlayer.seekTo(position + jumpInterval)
       }}
     >
       <View>
-        <AntDesign
-          name="reload1"
-          size={40}
-          color={colorScheme.button}
-          style={{ transform: [{ scaleX: -1 }] }}
-        />
+        <AntDesign name="reload1" size={40} color={colorScheme.button} />
         <View
           style={{
             position: "absolute",
@@ -50,4 +45,4 @@ const JumpBackwardButton = (): ReactElement => {
   )
 }
 
-export default JumpBackwardButton
+export default JumpForwardButton

@@ -15,7 +15,7 @@ import useSecondsListenedTo from "./useSecondsListenedTo"
 import useDisplayableEpisodes from "./useDisplayableEpisodes"
 import useStyles from "./useStyles"
 
-type EpisodesProps = {
+interface EpisodesProps {
   route: RouteProp<RouteParams, "Episodes">
 }
 

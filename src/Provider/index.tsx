@@ -1,113 +1,38 @@
-import React, { ReactElement, createContext, useReducer, useState } from "react"
+import React, { ReactElement, createContext, useReducer } from "react"
 import reducer from "./reducer"
+import useAudioEvents from "./useAudioEvents"
 
-// @ts-ignore
-import TrackPlayer, { TrackPlayerEvents } from "react-native-track-player"
-import { useTrackPlayerEvents } from "react-native-track-player/lib/hooks"
-import { jumpInterval } from "../shared/trackPlayerHelpers"
+export const PodibleContext = createContext<PodibleContextType>(undefined)
 
-const whenPlayedOrPaused = TrackPlayerEvents.PLAYBACK_STATE
-const whenAudioIsInterrupted = TrackPlayerEvents.REMOTE_DUCK
-const whenCarsSteeringWheelsSeekForwardButtonIsPressed = "remote-next"
-const whenCarsSteeringWheelsSeekBackwardButtonIsPressed = "remote-previous"
-
-const wasPlayed = (event: TrackPlayerEvents): boolean =>
-  event.type === whenPlayedOrPaused && event.state === "playing"
-
-const wasPlayedOrPaused = (event: TrackPlayerEvents): boolean =>
-  event.type === whenPlayedOrPaused
-
-const shouldStopPlayback = (event: TrackPlayerEvents): boolean =>
-  event.type === whenAudioIsInterrupted && Boolean(event.permanent)
-
-const shouldPausePlayback = (event: TrackPlayerEvents): boolean =>
-  event.type === whenAudioIsInterrupted && Boolean(event.paused)
-
-const shouldResumePlayback = (event: TrackPlayerEvents): boolean =>
-  event.type === whenAudioIsInterrupted && !event.paused && !event.permanent
-
-const carSteeringWheelsSeekForwardButtonWasPressed = (
-  event: TrackPlayerEvents,
-): boolean => event.type === "remote-next"
-
-const carSteeringWheelsSeekBackwardButtonWasPressed = (
-  event: TrackPlayerEvents,
-): boolean => event.type === "remote-previous"
-
-const seekForward = async () => {
-  const position = await TrackPlayer.getPosition()
-  await TrackPlayer.seekTo(position + jumpInterval)
-}
-
-const seekBackward = async () => {
-  const position = await TrackPlayer.getPosition()
-  await TrackPlayer.seekTo(position - jumpInterval)
-}
-
-const defaultInitialState: PodibleState = {
+const initialState: PodibleState = {
   playbackState: "unknown",
   playbackRate: 1.0,
 }
 
-export const PodibleContext = createContext<Partial<PodibleContextType>>({})
-
-const Provider = ({
-  children,
-  initialState,
-}: {
+interface ProviderProps {
   children: React.ReactNode
-  initialState?: PodibleState
-}): ReactElement => {
-  const [state, dispatch] = useReducer(
-    reducer,
-    initialState || defaultInitialState,
-  )
+}
 
-  const [playbackRate, setPlaybackRate] = useState<number>(1.0)
-  const [playbackState, setPlaybackState] = useState<string>("unknown")
+const Provider = ({ children }: ProviderProps): ReactElement => {
+  const [state, dispatch] = useReducer(reducer, initialState)
 
-  const update = (event: TrackPlayerEvents) => {
-    if (wasPlayed(event)) {
-      TrackPlayer.setRate(playbackRate)
-    }
-
-    if (carSteeringWheelsSeekForwardButtonWasPressed(event)) {
-      seekForward()
-    } else if (carSteeringWheelsSeekBackwardButtonWasPressed(event)) {
-      seekBackward()
-    }
-
-    if (wasPlayedOrPaused(event)) {
-      setPlaybackState(event.state)
-    } else if (shouldStopPlayback(event)) {
-      TrackPlayer.stop()
-    } else if (shouldPausePlayback(event)) {
-      TrackPlayer.pause()
-    } else if (shouldResumePlayback(event)) {
-      TrackPlayer.play()
-    }
-  }
-
-  useTrackPlayerEvents(
-    [
-      whenPlayedOrPaused,
-      whenAudioIsInterrupted,
-      whenCarsSteeringWheelsSeekForwardButtonIsPressed,
-      whenCarsSteeringWheelsSeekBackwardButtonIsPressed,
-    ],
-    update,
+  useAudioEvents(state.playbackRate, (value: string) =>
+    dispatch({ type: "SET_PLAYBACK_STATE", value }),
   )
 
   const value: PodibleContextType = {
     currentlyPlayingEpisode: state.currentlyPlayingEpisode,
-    setCurrentlyPlayingEpisode: (currentlyPlayingEpisode: Episode) =>
+    setCurrentlyPlayingEpisode: (value: Episode) =>
       dispatch({
         type: "SET_CURRENTLY_PLAYING_EPISODE",
-        value: currentlyPlayingEpisode,
+        value,
       }),
-    playbackState,
-    playbackRate,
-    setPlaybackRate,
+
+    playbackState: state.playbackState,
+
+    playbackRate: state.playbackRate,
+    setPlaybackRate: (value: number) =>
+      dispatch({ type: "SET_PLAYBACK_RATE", value }),
   }
 
   return (

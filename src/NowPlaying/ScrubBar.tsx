@@ -3,7 +3,7 @@ import { Text, View } from "react-native"
 import { PodibleContext } from "../Provider"
 import TrackPlayer from "react-native-track-player"
 import Slider from "@react-native-community/slider"
-import humanReadableDuration from "./humanReadableDuration"
+import humanReadableDuration from "../shared/humanReadableDuration"
 import useColorScheme from "../hooks/useColorScheme"
 import { useTrackPlayerProgress } from "react-native-track-player/lib/hooks"
 
@@ -49,12 +49,12 @@ const ScrubBar = (): ReactElement => {
         }}
       >
         <Text style={{ color: colorScheme.timeLabel }}>
-          {humanReadableDuration(Math.round(positionEvenWhileBuffering))}
+          {humanReadableDuration(Math.floor(positionEvenWhileBuffering))}
         </Text>
         <Text style={{ color: colorScheme.timeLabel }}>
           -
           {humanReadableDuration(
-            Math.round(durationEvenWhileBuffering - positionEvenWhileBuffering),
+            Math.floor(durationEvenWhileBuffering - positionEvenWhileBuffering),
           )}
         </Text>
       </View>

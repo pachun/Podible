@@ -2,39 +2,53 @@ import React, { ReactElement, useContext } from "react"
 import { ActivityIndicator, TouchableOpacity } from "react-native"
 import * as Haptics from "expo-haptics"
 import { Ionicons } from "@expo/vector-icons"
+import TrackPlayer from "react-native-track-player"
 import { PodibleContext } from "../Provider"
 import useColorScheme from "../hooks/useColorScheme"
-import { play, pause } from "../shared/trackPlayerHelpers"
 
-const PlayPauseButton = (): ReactElement => {
+interface PlayPauseButtonProps {
+  iconSize?: number
+}
+
+const PlayPauseButton = ({
+  iconSize = 50,
+}: PlayPauseButtonProps): ReactElement => {
   const colorScheme = useColorScheme()
 
-  const { currentlyPlayingEpisode, playbackState } = useContext(PodibleContext)
+  const { playbackState } = useContext(PodibleContext)
 
-  const pauseEpisode = async () => {
+  const pauseEpisode = () => {
     Haptics.impactAsync()
-    pause()
+    TrackPlayer.pause()
   }
 
   const playEpisode = () => {
     Haptics.impactAsync()
-    play(currentlyPlayingEpisode)
+    TrackPlayer.play()
   }
 
   return (
     <>
       {(playbackState === "playing" || playbackState === "ready") && (
-        <TouchableOpacity onPress={pauseEpisode} style={{ marginTop: -20 }}>
-          <Ionicons name="ios-pause" size={80} color={colorScheme.button} />
+        <TouchableOpacity onPress={pauseEpisode}>
+          <Ionicons
+            name="ios-pause"
+            size={iconSize}
+            color={colorScheme.button}
+          />
         </TouchableOpacity>
       )}
       {(playbackState === "paused" || playbackState === "idle") && (
-        <TouchableOpacity onPress={playEpisode} style={{ marginTop: -20 }}>
-          <Ionicons name="ios-play" size={80} color={colorScheme.button} />
+        <TouchableOpacity onPress={playEpisode}>
+          <Ionicons
+            name="ios-play"
+            size={iconSize}
+            color={colorScheme.button}
+          />
         </TouchableOpacity>
       )}
       {(playbackState === "buffering" || playbackState === "loading") && (
-        <ActivityIndicator color={colorScheme.button} size="large" />
+        <ActivityIndicator size="large" color={colorScheme.button} />
       )}
     </>
   )

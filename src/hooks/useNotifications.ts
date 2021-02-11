@@ -1,6 +1,5 @@
 import { useEffect } from "react"
 import * as Notifications from "expo-notifications"
-import { play } from "../shared/trackPlayerHelpers"
 
 interface UseNotificationsProps {
   setCurrentlyPlayingEpisode: (episode: Episode) => void
@@ -18,7 +17,6 @@ const useNotifications = ({
           .episode as Episode
         setCurrentlyPlayingEpisode(episode)
         navigation.navigate("Now Playing")
-        play(episode)
       },
     )
     return () => subscription.remove()

@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from "react"
-import humanReadableDuration from "./humanReadableDuration"
+import humanReadableDuration from "../../shared/humanReadableDuration"
 
 interface UseDurationOrTimeRemainingLabelProps {
   displayedEpisode: Episode

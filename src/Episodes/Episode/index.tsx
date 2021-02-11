@@ -1,12 +1,12 @@
 import React, { useContext } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
+import TrackPlayer from "react-native-track-player"
 import he from "he"
 import { PodibleContext } from "../../Provider"
 import shortDate from "./shortDate"
 import useDurationOrTimeRemainingLabel from "./useDurationOrTimeRemainingLabel"
 import useStyles from "./useStyles"
-import { play } from "../../shared/trackPlayerHelpers"
 
 const removeHtml = (s: string) =>
   he.decode(unescape(s.replace(/(<([^>]+)>)/gi, "")))
@@ -29,9 +29,13 @@ const Episode = ({ episode: displayedEpisode }: EpisodeProps) => {
   })
 
   const playEpisode = async () => {
+    const isCurrentTrack =
+      displayedEpisode.audio_url === (await TrackPlayer.getCurrentTrack())
     setCurrentlyPlayingEpisode(displayedEpisode)
-    play(displayedEpisode)
-    navigation.navigate("Now Playing")
+    navigation.navigate("Now Playing", {
+      playImmediately: true,
+      isCurrentTrack,
+    })
   }
 
   return (

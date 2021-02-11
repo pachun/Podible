@@ -1,25 +1,45 @@
 import React, { ReactElement, useEffect, useContext } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
+import { RouteProp } from "@react-navigation/native"
 import PlaybackRate_Artwork_Description_Carousel from "./PlaybackRate_Artwork_Description_Carousel"
 import * as Haptics from "expo-haptics"
 import { Entypo } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 import { PodibleContext } from "../Provider"
-import JumpForwardButton from "./JumpForwardButton"
-import JumpBackwardButton from "./JumpBackwardButton"
-import PlayPauseButton from "./PlayPauseButton"
+import JumpForwardButton from "../JumpForwardButton"
+import JumpBackwardButton from "../JumpBackwardButton"
+import PlayPauseButton from "../PlayPauseButton"
 import ScrubBar from "./ScrubBar"
 import useColorScheme from "../hooks/useColorScheme"
 import useStyles from "./useStyles"
+import usePlayEffect from "./usePlayEffect"
 
-const NowPlaying = (): ReactElement => {
+interface NowPlayingProps {
+  route: RouteProp<RouteParams, "NowPlaying"> | undefined
+}
+
+const NowPlaying = ({ route }: NowPlayingProps): ReactElement => {
   const styles = useStyles()
   const colorScheme = useColorScheme()
   const navigation = useNavigation()
-  const { currentlyPlayingEpisode } = useContext(PodibleContext)
+  const { currentlyPlayingEpisode, setPlaybackRate } = useContext(
+    PodibleContext,
+  )
   const goBack = () => navigation.goBack()
 
   const vibrateAfterAnimationOut = () => setTimeout(Haptics.impactAsync, 200)
+
+  useEffect(() => {
+    if (!route?.params?.isCurrentTrack) {
+      setPlaybackRate(1.0)
+    }
+  }, []) // eslint-disable-line
+
+  usePlayEffect(
+    currentlyPlayingEpisode,
+    route?.params?.playImmediately,
+    route?.params?.isCurrentTrack,
+  )
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("blur", vibrateAfterAnimationOut)
@@ -59,7 +79,7 @@ const NowPlaying = (): ReactElement => {
       <View style={styles.controlsContainer}>
         <View style={styles.controlsBackground}>
           <JumpBackwardButton />
-          <PlayPauseButton />
+          <PlayPauseButton iconSize={70} />
           <JumpForwardButton />
         </View>
       </View>

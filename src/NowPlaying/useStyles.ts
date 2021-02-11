@@ -58,6 +58,7 @@ const useStyles = (): any => {
       controlsBackground: {
         flexDirection: "row",
         justifyContent: "space-between",
+        alignItems: "center",
       },
     })
   }, [colorScheme, insets.top])

@@ -7,6 +7,7 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
+    project: "tsconfig.json",
   },
   env: {
     "react-native/react-native": true,
@@ -22,5 +23,6 @@ module.exports = {
     "react-native/no-single-element-style-arrays": 2,
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
+    "@typescript-eslint/switch-exhaustiveness-check": "error",
   },
 }
