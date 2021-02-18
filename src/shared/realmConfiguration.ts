@@ -16,6 +16,7 @@ const EpisodeSchema = {
   name: "Episode",
   primaryKey: "audio_url",
   properties: {
+    id: "int",
     audio_url: "string",
     title: "string",
     description: "string",

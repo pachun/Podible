@@ -29,7 +29,7 @@ const PlayPauseButton = ({
 
   return (
     <>
-      {(playbackState === "playing" || playbackState === "ready") && (
+      {playbackState === "playing" && (
         <TouchableOpacity onPress={pauseEpisode}>
           <Ionicons
             name="ios-pause"
@@ -38,7 +38,9 @@ const PlayPauseButton = ({
           />
         </TouchableOpacity>
       )}
-      {(playbackState === "paused" || playbackState === "idle") && (
+      {(playbackState === "paused" ||
+        playbackState === "idle" ||
+        playbackState === "ready") && (
         <TouchableOpacity onPress={playEpisode}>
           <Ionicons
             name="ios-play"

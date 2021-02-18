@@ -1,7 +1,6 @@
 import Realm from "realm"
 import apiUrl, { apiRequestHeaders } from "../shared/apiUrl"
 import realmConfiguration from "../shared/realmConfiguration"
-import getExpoPushToken from "../shared/getExpoPushToken"
 
 const getSubscribedPodcasts = async (
   setSubscribedPodcasts: (podcasts: Podcast[]) => void,
@@ -33,19 +32,6 @@ const getSubscribedPodcasts = async (
     [],
   )
   setSubscribedPodcasts(subscribedPodcastsWithoutDuplicates)
-
-  subscribedPodcastsWithoutDuplicates.forEach(
-    async (subscribedPodcast: Podcast) => {
-      await fetch(`${apiUrl}/subscriptions`, {
-        method: "post",
-        headers: await apiRequestHeaders(),
-        body: JSON.stringify({
-          podcast_id: subscribedPodcast.id,
-          expo_push_token: await getExpoPushToken(),
-        }),
-      })
-    },
-  )
 }
 
 export default getSubscribedPodcasts

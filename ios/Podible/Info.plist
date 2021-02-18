@@ -25,6 +25,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>podible</string>
 				<string>com.pachun.Podible</string>
 			</array>
 		</dict>

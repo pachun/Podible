@@ -1,4 +1,5 @@
 interface Episode {
+  id: number
   title: string
   description: string
   published_at: string

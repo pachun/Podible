@@ -19,12 +19,14 @@ import usePodcastSearchResults from "./usePodcastSearchResults"
 import useStyles from "./useStyles"
 
 import useNotifications from "../hooks/useNotifications"
+import useShareLinks from "../hooks/useShareLinks"
 
 const Search = (): ReactElement => {
   const styles = useStyles()
   const navigation = useNavigation()
   const { setCurrentlyPlayingEpisode } = useContext(PodibleContext)
 
+  useShareLinks(navigation, setCurrentlyPlayingEpisode)
   useNotifications({ setCurrentlyPlayingEpisode, navigation })
 
   const [searchFieldText, setSearchFieldText] = useState<string>("")

@@ -22,6 +22,8 @@ const useStyles = (): any => {
       },
       headerButtonContainer: {
         width: 50,
+        justifyContent: "center",
+        alignItems: "center",
       },
       episodeAndPodcastTitlesContainer: {
         flex: 1,

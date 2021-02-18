@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useContext } from "react"
-import { Text, TouchableOpacity, View } from "react-native"
+import { Share, Text, TouchableOpacity, View } from "react-native"
 import { RouteProp } from "@react-navigation/native"
 import PlaybackRate_Artwork_Description_Carousel from "./PlaybackRate_Artwork_Description_Carousel"
 import * as Haptics from "expo-haptics"
@@ -11,8 +11,9 @@ import JumpBackwardButton from "../JumpBackwardButton"
 import PlayPauseButton from "../PlayPauseButton"
 import ScrubBar from "./ScrubBar"
 import useColorScheme from "../hooks/useColorScheme"
-import useStyles from "./useStyles"
 import usePlayEffect from "./usePlayEffect"
+import apiUrl from "../shared/apiUrl"
+import useStyles from "./useStyles"
 
 interface NowPlayingProps {
   route: RouteProp<RouteParams, "NowPlaying"> | undefined
@@ -28,6 +29,12 @@ const NowPlaying = ({ route }: NowPlayingProps): ReactElement => {
   const goBack = () => navigation.goBack()
 
   const vibrateAfterAnimationOut = () => setTimeout(Haptics.impactAsync, 200)
+
+  const share = async () => {
+    await Share.share({
+      url: `${apiUrl}/share?episode_id=${currentlyPlayingEpisode.id}`,
+    })
+  }
 
   useEffect(() => {
     if (!route?.params?.isCurrentTrack) {
@@ -53,7 +60,7 @@ const NowPlaying = ({ route }: NowPlayingProps): ReactElement => {
         <TouchableOpacity onPress={goBack} style={styles.headerButtonContainer}>
           <Entypo
             name="chevron-small-down"
-            size={60}
+            size={50}
             color={colorScheme.button}
           />
         </TouchableOpacity>
@@ -65,7 +72,13 @@ const NowPlaying = ({ route }: NowPlayingProps): ReactElement => {
             {currentlyPlayingEpisode.podcast[0].title}
           </Text>
         </View>
-        <View style={styles.headerButtonContainer} />
+        <TouchableOpacity onPress={share} style={styles.headerButtonContainer}>
+          <Entypo
+            name="share-alternative"
+            size={26}
+            color={colorScheme.button}
+          />
+        </TouchableOpacity>
       </View>
       <View style={{ height: 40 }} />
       <View style={styles.carouselContainer}>

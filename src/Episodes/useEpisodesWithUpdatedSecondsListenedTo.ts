@@ -6,6 +6,7 @@ const updating = (
 ) => (episode: Episode): Episode => {
   return episode.audio_url === currentlyPlayingEpisode.audio_url
     ? {
+        id: episode.id,
         title: episode.title,
         description: episode.description,
         published_at: episode.published_at,
