@@ -9,7 +9,7 @@
 	<key>EXUpdatesLaunchWaitMs</key>
 	<integer>5000</integer>
 	<key>EXUpdatesReleaseChannel</key>
-	<string>1.7.3</string>
+	<string>1.7.4</string>
 	<key>EXUpdatesSDKVersion</key>
 	<string>40.0.0</string>
 	<key>EXUpdatesURL</key>

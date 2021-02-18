@@ -4,7 +4,7 @@
     "android": "react-native run-android",
     "ios": "REACT_NATIVE_API_URL=$(ifconfig | grep 192 | cut -d ' ' -f 2) react-native run-ios",
     "web": "expo start --web",
-    "deploy": "expo publish --target bare --release-channel 1.7.3",
+    "deploy": "expo publish --target bare --release-channel 1.7.4",
     "eject": "expo eject",
     "lint": "eslint '**/*.ts' '**/*.tsx'"
   },
