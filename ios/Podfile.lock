@@ -374,7 +374,7 @@ PODS:
     - React
   - RNCMaskedView (0.1.10):
     - React
-  - RNDeviceInfo (7.0.2):
+  - RNDeviceInfo (8.0.1):
     - React-Core
   - RNFastImage (8.3.4):
     - React-Core
@@ -735,7 +735,7 @@ SPEC CHECKSUMS:
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   RealmJS: e925a71988ad779eb1b452b77000e2d747dcfab8
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
-  RNDeviceInfo: e1d82a27d0c1ea6278e3b141784dc38e51fc90f4
+  RNDeviceInfo: 921a809eaf9de79645a24de1c6ca90db6cb91786
   RNFastImage: d4870d58f5936111c56218dbd7fcfc18e65b58ff
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNReanimated: e03f7425cb7a38dcf1b644d680d1bfc91c3337ad
@@ -761,4 +761,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 8dc5ec1bcec903cc107a0bf51012a43c5f84ad7c
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1
