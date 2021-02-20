@@ -2,7 +2,7 @@ import { AsyncStorage } from "react-native"
 
 const apiUrl = __DEV__
   ? `http://${process.env.REACT_NATIVE_API_URL}:3000`
-  : `https://podible-web.herokuapp.com`
+  : `https://podible.app`
 
 const getApiToken = async (): Promise<string> => {
   const maybeApiToken = await AsyncStorage.getItem("api token")
