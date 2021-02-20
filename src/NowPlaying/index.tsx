@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useContext } from "react"
+import React, { ReactElement, useState, useEffect, useContext } from "react"
 import { Share, Text, TouchableOpacity, View } from "react-native"
 import { RouteProp } from "@react-navigation/native"
 import PlaybackRate_Artwork_Description_Carousel from "./PlaybackRate_Artwork_Description_Carousel"
@@ -54,6 +54,7 @@ const NowPlaying = ({ route }: NowPlayingProps): ReactElement => {
     return unsubscribe
   }, [navigation])
 
+  const [scrubValue, setScrubValue] = useState<number | undefined>()
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -87,12 +88,15 @@ const NowPlaying = ({ route }: NowPlayingProps): ReactElement => {
         />
       </View>
       <View style={styles.sliderContainer}>
-        <ScrubBar />
+        <ScrubBar scrubValue={scrubValue} setScrubValue={setScrubValue} />
       </View>
       <View style={styles.controlsContainer}>
         <View style={styles.controlsBackground}>
           <JumpBackwardButton />
-          <PlayPauseButton iconSize={70} />
+          <PlayPauseButton
+            iconSize={70}
+            onPlay={() => setScrubValue(undefined)}
+          />
           <JumpForwardButton />
         </View>
       </View>

@@ -7,7 +7,15 @@ import humanReadableDuration from "../shared/humanReadableDuration"
 import useColorScheme from "../hooks/useColorScheme"
 import { useTrackPlayerProgress } from "react-native-track-player/lib/hooks"
 
-const ScrubBar = (): ReactElement => {
+interface ScrubBarProps {
+  scrubValue: number | undefined
+  setScrubValue: (scrubValue: number | undefined) => void
+}
+
+const ScrubBar = ({
+  scrubValue,
+  setScrubValue,
+}: ScrubBarProps): ReactElement => {
   const colorScheme = useColorScheme()
   const { position, duration } = useTrackPlayerProgress()
 
@@ -29,17 +37,26 @@ const ScrubBar = (): ReactElement => {
     }
   }, [duration, position, currentlyPlayingEpisode.seconds_listened_to])
 
+  const adjustedPosition = useMemo(
+    () => (scrubValue ? scrubValue : positionEvenWhileBuffering),
+    [scrubValue, positionEvenWhileBuffering],
+  )
+
   return (
     <>
       <Slider
         style={{ width: "100%", height: 40 }}
-        value={positionEvenWhileBuffering}
+        value={adjustedPosition}
         minimumValue={0}
         maximumValue={durationEvenWhileBuffering}
         minimumTrackTintColor={colorScheme.button}
         thumbTintColor={colorScheme.button}
         maximumTrackTintColor={colorScheme.sliderRemainingColor}
-        onSlidingComplete={newValue => TrackPlayer.seekTo(newValue)}
+        onValueChange={newValue => setScrubValue(newValue)}
+        onSlidingComplete={newValue => {
+          TrackPlayer.seekTo(newValue)
+          setTimeout(() => setScrubValue(undefined), 1000)
+        }}
       />
       <View
         style={{
@@ -49,12 +66,12 @@ const ScrubBar = (): ReactElement => {
         }}
       >
         <Text style={{ color: colorScheme.timeLabel }}>
-          {humanReadableDuration(Math.floor(positionEvenWhileBuffering))}
+          {humanReadableDuration(Math.floor(adjustedPosition))}
         </Text>
         <Text style={{ color: colorScheme.timeLabel }}>
           -
           {humanReadableDuration(
-            Math.floor(durationEvenWhileBuffering - positionEvenWhileBuffering),
+            Math.floor(durationEvenWhileBuffering - adjustedPosition),
           )}
         </Text>
       </View>

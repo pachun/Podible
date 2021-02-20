@@ -8,10 +8,12 @@ import useColorScheme from "../hooks/useColorScheme"
 
 interface PlayPauseButtonProps {
   iconSize?: number
+  onPlay?: () => void
 }
 
 const PlayPauseButton = ({
   iconSize = 50,
+  onPlay = () => {},
 }: PlayPauseButtonProps): ReactElement => {
   const colorScheme = useColorScheme()
 
@@ -25,6 +27,7 @@ const PlayPauseButton = ({
   const playEpisode = () => {
     Haptics.impactAsync()
     TrackPlayer.play()
+    onPlay()
   }
 
   return (
