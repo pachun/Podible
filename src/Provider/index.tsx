@@ -7,6 +7,7 @@ export const PodibleContext = createContext<PodibleContextType>(undefined)
 const initialState: PodibleState = {
   playbackState: "unknown",
   playbackRate: 1.0,
+  seekAfterNextPlayEvent: false,
 }
 
 interface ProviderProps {
@@ -16,11 +17,7 @@ interface ProviderProps {
 const Provider = ({ children }: ProviderProps): ReactElement => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  useAudioEvents(state.playbackRate, (value: string) =>
-    dispatch({ type: "SET_PLAYBACK_STATE", value }),
-  )
-
-  const value: PodibleContextType = {
+  const podibleContext: PodibleContextType = {
     currentlyPlayingEpisode: state.currentlyPlayingEpisode,
     setCurrentlyPlayingEpisode: (value: Episode) =>
       dispatch({
@@ -29,14 +26,24 @@ const Provider = ({ children }: ProviderProps): ReactElement => {
       }),
 
     playbackState: state.playbackState,
+    setPlaybackState: (value: string) =>
+      dispatch({ type: "SET_PLAYBACK_STATE", value }),
 
     playbackRate: state.playbackRate,
     setPlaybackRate: (value: number) =>
       dispatch({ type: "SET_PLAYBACK_RATE", value }),
+
+    seekAfterNextPlayEvent: state.seekAfterNextPlayEvent,
+    setSeekAfterNextPlayEvent: (value: SeekAfterNextPlayEvent) =>
+      dispatch({ type: "SET_SEEK_AFTER_NEXT_PLAY_EVENT", value }),
   }
 
+  useAudioEvents(podibleContext)
+
   return (
-    <PodibleContext.Provider value={value}>{children}</PodibleContext.Provider>
+    <PodibleContext.Provider value={podibleContext}>
+      {children}
+    </PodibleContext.Provider>
   )
 }
 

@@ -1,0 +1,13 @@
+diff --git a/node_modules/react-native-track-player/ios/RNTrackPlayer/Models/Track.swift b/node_modules/react-native-track-player/ios/RNTrackPlayer/Models/Track.swift
+index 6732080..e7601c3 100644
+--- a/node_modules/react-native-track-player/ios/RNTrackPlayer/Models/Track.swift
++++ b/node_modules/react-native-track-player/ios/RNTrackPlayer/Models/Track.swift
+@@ -79,7 +79,7 @@ class Track: NSObject, AudioItem, TimePitching, AssetOptionsProviding {
+     // MARK: - AudioItem Protocol
+     
+     func getSourceUrl() -> String {
+-        return url.value.absoluteString
++        return url.isLocal ? url.value.path : url.value.absoluteString
+     }
+     
+     func getArtist() -> String? {

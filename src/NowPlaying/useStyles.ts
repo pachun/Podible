@@ -13,6 +13,7 @@ const useStyles = (): any => {
         flex: 1,
         alignItems: "center",
         backgroundColor: colorScheme.background,
+        paddingBottom: insets.bottom,
       },
       headerContainer: {
         width: "100%",
@@ -52,18 +53,28 @@ const useStyles = (): any => {
       sliderContainer: {
         width: "80%",
       },
-      controlsContainer: {
+      playbackControlsContainer: {
         flex: 1,
         width: "70%",
         justifyContent: "center",
       },
-      controlsBackground: {
+      playbackControlsBackground: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
       },
+      alternateControlsContainer: {
+        flex: 1,
+        justifyContent: "flex-end",
+        width: "70%",
+        alignItems: "center",
+      },
+      alternativeControlsBackground: {
+        height: 30,
+        justifyContent: "center",
+      },
     })
-  }, [colorScheme, insets.top])
+  }, [colorScheme, insets.top, insets.bottom])
 
   return styles
 }

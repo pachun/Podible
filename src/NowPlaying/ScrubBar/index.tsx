@@ -1,10 +1,10 @@
 import React, { ReactElement, useContext, useMemo } from "react"
 import { Text, View } from "react-native"
-import { PodibleContext } from "../Provider"
+import { PodibleContext } from "../../Provider"
 import TrackPlayer from "react-native-track-player"
 import Slider from "@react-native-community/slider"
-import humanReadableDuration from "../shared/humanReadableDuration"
-import useColorScheme from "../hooks/useColorScheme"
+import humanReadableDuration from "../../shared/humanReadableDuration"
+import useColorScheme from "../../hooks/useColorScheme"
 import { useTrackPlayerProgress } from "react-native-track-player/lib/hooks"
 
 interface ScrubBarProps {

@@ -13,7 +13,13 @@ interface SetPlaybackRateAction {
   value: number
 }
 
+interface SetSeekAfterNextPlayEventAction {
+  type: "SET_SEEK_AFTER_NEXT_PLAY_EVENT"
+  value: SeekAfterNextPlayEvent
+}
+
 type PodibleAction =
   | SetCurrentlyPlayingEpisodeAction
   | SetPlaybackStateAction
   | SetPlaybackRateAction
+  | SetSeekAfterNextPlayEventAction

@@ -10,8 +10,9 @@ import JumpForwardButton from "../JumpForwardButton"
 import JumpBackwardButton from "../JumpBackwardButton"
 import PlayPauseButton from "../PlayPauseButton"
 import ScrubBar from "./ScrubBar"
+import DownloadButton from "./DownloadButton"
 import useColorScheme from "../hooks/useColorScheme"
-import usePlayEffect from "./usePlayEffect"
+import { playEpisode } from "../shared/trackPlayerHelpers"
 import apiUrl from "../shared/apiUrl"
 import useStyles from "./useStyles"
 
@@ -23,7 +24,7 @@ const NowPlaying = ({ route }: NowPlayingProps): ReactElement => {
   const styles = useStyles()
   const colorScheme = useColorScheme()
   const navigation = useNavigation()
-  const { currentlyPlayingEpisode, setPlaybackRate } = useContext(
+  const { currentlyPlayingEpisode, setSeekAfterNextPlayEvent } = useContext(
     PodibleContext,
   )
   const goBack = () => navigation.goBack()
@@ -37,16 +38,10 @@ const NowPlaying = ({ route }: NowPlayingProps): ReactElement => {
   }
 
   useEffect(() => {
-    if (!route?.params?.isCurrentTrack) {
-      setPlaybackRate(1.0)
+    if (route?.params?.playImmediately) {
+      playEpisode(currentlyPlayingEpisode, setSeekAfterNextPlayEvent)
     }
   }, []) // eslint-disable-line
-
-  usePlayEffect(
-    currentlyPlayingEpisode,
-    route?.params?.playImmediately,
-    route?.params?.isCurrentTrack,
-  )
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("blur", vibrateAfterAnimationOut)
@@ -90,14 +85,19 @@ const NowPlaying = ({ route }: NowPlayingProps): ReactElement => {
       <View style={styles.sliderContainer}>
         <ScrubBar scrubValue={scrubValue} setScrubValue={setScrubValue} />
       </View>
-      <View style={styles.controlsContainer}>
-        <View style={styles.controlsBackground}>
+      <View style={styles.playbackControlsContainer}>
+        <View style={styles.playbackControlsBackground}>
           <JumpBackwardButton />
           <PlayPauseButton
             iconSize={70}
             onPlay={() => setScrubValue(undefined)}
           />
           <JumpForwardButton />
+        </View>
+      </View>
+      <View style={styles.alternativeControlsContainer}>
+        <View style={styles.alternativeControlsBackground}>
+          <DownloadButton />
         </View>
       </View>
     </View>

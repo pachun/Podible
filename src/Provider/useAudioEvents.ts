@@ -40,10 +40,63 @@ const seekBackward = async () => {
   await TrackPlayer.seekTo(position - jumpInterval)
 }
 
-const useAudioEvents = (
-  playbackRate: number,
-  setPlaybackState: (playbackState: string) => void,
-): void => {
+const resetPlaybackRateWhenNewTracksArePlayed = (
+  event: TrackPlayerEvent,
+  podibleContext: PodibleContextType,
+) => {
+  if (wasPlayed(event)) {
+    setTimeout(() => TrackPlayer.setRate(podibleContext.playbackRate), 200)
+  }
+}
+
+const respondToButtonsPressedOnCarSteeringWheels = (
+  event: TrackPlayerEvent,
+) => {
+  if (carSteeringWheelsSeekForwardButtonWasPressed(event)) {
+    seekForward()
+  } else if (carSteeringWheelsSeekBackwardButtonWasPressed(event)) {
+    seekBackward()
+  }
+}
+
+const seekToLastListenProgressWhenPlayed = (
+  event: TrackPlayerEvent,
+  podibleContext: PodibleContextType,
+) => {
+  if (wasPlayed(event) && podibleContext.seekAfterNextPlayEvent) {
+    const { seekTo, preSeekVolume } = podibleContext.seekAfterNextPlayEvent
+    podibleContext.setSeekAfterNextPlayEvent(false)
+    TrackPlayer.seekTo(seekTo)
+    TrackPlayer.play()
+    setTimeout(() => {
+      TrackPlayer.setVolume(preSeekVolume)
+    }, 500)
+  }
+}
+
+const pauseForAudioInterruptionsLikeTurnByTurnNavigation = (
+  event: TrackPlayerEvent,
+) => {
+  if (shouldStopPlayback(event)) {
+    TrackPlayer.stop()
+  } else if (shouldPausePlayback(event)) {
+    TrackPlayer.pause()
+  } else if (shouldResumePlayback(event)) {
+    TrackPlayer.play()
+  }
+}
+
+const updatePlaybackState = (
+  event: TrackPlayerEvent,
+  podibleContext: PodibleContextType,
+) => {
+  if (wasPlayedOrPaused(event)) {
+    const playbackState = event.state
+    podibleContext.setPlaybackState(playbackState)
+  }
+}
+
+const useAudioEvents = (podibleContext: PodibleContextType): void => {
   useTrackPlayerEvents(
     [
       whenPlayedOrPaused,
@@ -52,26 +105,11 @@ const useAudioEvents = (
       whenCarsSteeringWheelsSeekBackwardButtonIsPressed,
     ],
     (event: TrackPlayerEvent) => {
-      if (wasPlayed(event)) {
-        TrackPlayer.setRate(playbackRate)
-      }
-
-      if (carSteeringWheelsSeekForwardButtonWasPressed(event)) {
-        seekForward()
-      } else if (carSteeringWheelsSeekBackwardButtonWasPressed(event)) {
-        seekBackward()
-      }
-
-      if (wasPlayedOrPaused(event)) {
-        const playbackState = event.state
-        setPlaybackState(playbackState)
-      } else if (shouldStopPlayback(event)) {
-        TrackPlayer.stop()
-      } else if (shouldPausePlayback(event)) {
-        TrackPlayer.pause()
-      } else if (shouldResumePlayback(event)) {
-        TrackPlayer.play()
-      }
+      updatePlaybackState(event, podibleContext)
+      seekToLastListenProgressWhenPlayed(event, podibleContext)
+      respondToButtonsPressedOnCarSteeringWheels(event)
+      resetPlaybackRateWhenNewTracksArePlayed(event, podibleContext)
+      pauseForAudioInterruptionsLikeTurnByTurnNavigation(event)
     },
   )
 }

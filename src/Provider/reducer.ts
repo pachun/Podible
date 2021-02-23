@@ -6,8 +6,8 @@ const reducer = (state: PodibleState, action: PodibleAction): PodibleState => {
       return { ...state, playbackState: action.value }
     case "SET_PLAYBACK_RATE":
       return { ...state, playbackRate: action.value }
-    default:
-      return state
+    case "SET_SEEK_AFTER_NEXT_PLAY_EVENT":
+      return { ...state, seekAfterNextPlayEvent: action.value }
   }
 }
 
