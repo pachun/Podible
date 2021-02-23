@@ -17,4 +17,4 @@ const EpisodeArtwork = ({ episode }: EpisodeArtworkProps): ReactElement => {
   )
 }
 
-export default EpisodeArtwork
+export default React.memo(EpisodeArtwork)

@@ -98,4 +98,4 @@ const PodcastDescription = ({
   )
 }
 
-export default PodcastDescription
+export default React.memo(PodcastDescription)

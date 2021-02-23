@@ -63,4 +63,4 @@ const MiniPlayer = (): ReactElement => {
   ) : null
 }
 
-export default MiniPlayer
+export default React.memo(MiniPlayer)

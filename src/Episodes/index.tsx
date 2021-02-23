@@ -81,4 +81,4 @@ const Episodes = ({ route }: EpisodesProps): ReactElement => {
   )
 }
 
-export default Episodes
+export default React.memo(Episodes)

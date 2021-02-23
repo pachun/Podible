@@ -31,4 +31,4 @@ const MyPodcast = ({
   )
 }
 
-export default MyPodcast
+export default React.memo(MyPodcast)

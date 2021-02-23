@@ -22,4 +22,4 @@ const EpisodeDescription = ({
   )
 }
 
-export default EpisodeDescription
+export default React.memo(EpisodeDescription)

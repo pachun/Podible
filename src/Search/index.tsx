@@ -117,4 +117,4 @@ const Search = (): ReactElement => {
   )
 }
 
-export default Search
+export default React.memo(Search)

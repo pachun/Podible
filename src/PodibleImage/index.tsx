@@ -3,27 +3,9 @@ import { View, Image } from "react-native"
 import FastImage from "react-native-fast-image"
 import useColorScheme from "../hooks/useColorScheme"
 
-interface PodibleImageProps {
-  url: string
-  style?: any
-}
-
-const PodibleImage = ({ url, style = {} }: PodibleImageProps): ReactElement => {
+const PlaceholderImage = ({ style }: { style?: any }) => {
   const colorScheme = useColorScheme()
-  const [isLoaded, setIsLoaded] = useState(false)
-
-  const TrueImage = useMemo(
-    () => (
-      <FastImage
-        style={style}
-        source={{ uri: url }}
-        onLoad={() => setIsLoaded(true)}
-      />
-    ),
-    [style, url],
-  )
-
-  const PlaceholderImage = () => (
+  return (
     <View
       style={{
         ...style,
@@ -42,13 +24,35 @@ const PodibleImage = ({ url, style = {} }: PodibleImageProps): ReactElement => {
       />
     </View>
   )
+}
+
+const MemoizedPlaceholderImage = React.memo(PlaceholderImage)
+
+interface PodibleImageProps {
+  url: string
+  style?: any
+}
+
+const PodibleImage = ({ url, style = {} }: PodibleImageProps): ReactElement => {
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  const TrueImage = useMemo(
+    () => (
+      <FastImage
+        style={style}
+        source={{ uri: url }}
+        onLoad={() => setIsLoaded(true)}
+      />
+    ),
+    [style, url],
+  )
 
   return (
     <View style={style}>
       {TrueImage}
-      {!isLoaded && PlaceholderImage()}
+      {!isLoaded && <MemoizedPlaceholderImage style={style} />}
     </View>
   )
 }
 
-export default PodibleImage
+export default React.memo(PodibleImage)

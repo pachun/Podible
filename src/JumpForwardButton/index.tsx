@@ -45,4 +45,4 @@ const JumpForwardButton = (): ReactElement => {
   )
 }
 
-export default JumpForwardButton
+export default React.memo(JumpForwardButton)

@@ -104,4 +104,4 @@ const NowPlaying = ({ route }: NowPlayingProps): ReactElement => {
   )
 }
 
-export default NowPlaying
+export default React.memo(NowPlaying)

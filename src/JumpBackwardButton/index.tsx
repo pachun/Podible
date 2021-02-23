@@ -50,4 +50,4 @@ const JumpBackwardButton = (): ReactElement => {
   )
 }
 
-export default JumpBackwardButton
+export default React.memo(JumpBackwardButton)

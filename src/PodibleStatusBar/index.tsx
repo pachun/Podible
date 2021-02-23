@@ -9,4 +9,4 @@ const PodibleStatusBar = (): ReactElement => {
   return <StatusBar style={statusBarStyle} />
 }
 
-export default PodibleStatusBar
+export default React.memo(PodibleStatusBar)

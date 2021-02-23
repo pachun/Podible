@@ -34,4 +34,4 @@ const PodcastSearchResult = ({
   )
 }
 
-export default PodcastSearchResult
+export default React.memo(PodcastSearchResult)

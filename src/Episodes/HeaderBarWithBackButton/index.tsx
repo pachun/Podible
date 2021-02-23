@@ -12,6 +12,7 @@ const HeaderBarWithBackButton = ({
   goBack,
 }: HeaderBarWithBackButtonProps): ReactElement => {
   const colorScheme = useColorScheme()
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => goBack()}>
@@ -21,4 +22,4 @@ const HeaderBarWithBackButton = ({
   )
 }
 
-export default HeaderBarWithBackButton
+export default React.memo(HeaderBarWithBackButton)

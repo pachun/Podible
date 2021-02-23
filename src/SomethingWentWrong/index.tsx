@@ -32,4 +32,4 @@ const SomethingWentWrong = (): ReactElement | null => {
   ) : null
 }
 
-export default SomethingWentWrong
+export default React.memo(SomethingWentWrong)

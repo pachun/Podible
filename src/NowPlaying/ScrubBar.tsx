@@ -79,4 +79,4 @@ const ScrubBar = ({
   )
 }
 
-export default ScrubBar
+export default React.memo(ScrubBar)

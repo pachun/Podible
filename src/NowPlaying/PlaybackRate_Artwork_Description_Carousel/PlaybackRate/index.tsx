@@ -111,4 +111,4 @@ const PlaybackRate = (): ReactElement => {
   )
 }
 
-export default PlaybackRate
+export default React.memo(PlaybackRate)

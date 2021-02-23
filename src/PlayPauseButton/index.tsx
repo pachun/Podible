@@ -121,4 +121,4 @@ const PlayPauseButton = ({
   )
 }
 
-export default PlayPauseButton
+export default React.memo(PlayPauseButton)

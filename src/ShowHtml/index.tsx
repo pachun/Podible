@@ -22,4 +22,4 @@ const ShowHtml = ({ html }: ShowHtmlProps): ReactElement => {
   )
 }
 
-export default ShowHtml
+export default React.memo(ShowHtml)

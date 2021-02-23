@@ -33,4 +33,4 @@ const EmptyStateCoachingMarks = ({
   )
 }
 
-export default EmptyStateCoachingMarks
+export default React.memo(EmptyStateCoachingMarks)

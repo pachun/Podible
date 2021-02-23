@@ -38,4 +38,4 @@ const Loading = (): ReactElement => {
   )
 }
 
-export default Loading
+export default React.memo(Loading)

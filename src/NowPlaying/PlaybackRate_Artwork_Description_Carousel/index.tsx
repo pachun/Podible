@@ -52,4 +52,4 @@ const PlaybackRate_Artwork_Description_Carousel = ({
   )
 }
 
-export default PlaybackRate_Artwork_Description_Carousel
+export default React.memo(PlaybackRate_Artwork_Description_Carousel)
