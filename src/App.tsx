@@ -1,5 +1,4 @@
 import React, { ReactElement } from "react"
-import { AppearanceProvider } from "react-native-appearance"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
@@ -79,7 +78,7 @@ const App = (): ReactElement => {
   )
 
   return isReadyToPlayAudio && !isUpdating ? (
-    <AppearanceProvider>
+    <>
       <PodibleStatusBar />
       <Provider>
         <NavigationContainer>
@@ -87,7 +86,7 @@ const App = (): ReactElement => {
         </NavigationContainer>
         <FlashMessage position="top" />
       </Provider>
-    </AppearanceProvider>
+    </>
   ) : (
     <Loading />
   )

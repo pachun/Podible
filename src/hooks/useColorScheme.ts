@@ -1,15 +1,15 @@
-import * as RNAppearance from "react-native-appearance"
+import { useColorScheme } from "react-native"
 import colorSchemes from "../colorSchemes"
 
-const useColorScheme = (): any => {
-  const operatingSystemReportedColorScheme = RNAppearance.useColorScheme()
+const useColorScheme2 = (): any => {
+  const operatingSystemReportedColorScheme = useColorScheme()
 
   const colorSchemeName =
-    operatingSystemReportedColorScheme === "no-preference"
+    operatingSystemReportedColorScheme === null
       ? "default"
       : operatingSystemReportedColorScheme
 
   return colorSchemes[colorSchemeName]
 }
 
-export default useColorScheme
+export default useColorScheme2
