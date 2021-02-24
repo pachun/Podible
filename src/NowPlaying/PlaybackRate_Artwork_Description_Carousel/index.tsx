@@ -10,46 +10,50 @@ interface Props {
   episode: Episode
 }
 
-const PlaybackRate_Artwork_Description_Carousel = ({
-  episode,
-}: Props): ReactElement => {
-  const firstItemIndex = 1
+const PlaybackRate_Artwork_Description_Carousel = React.forwardRef(
+  (
+    { episode }: Props,
+    ref: React.RefObject<Carousel<NowPlayingCarouselTypes>>,
+  ): ReactElement => {
+    const firstItemIndex = 1
 
-  const data: NowPlayingCarouselTypes[] = [
-    {
-      type: "playback rate",
-    },
-    {
-      type: "episode artwork",
-      episode: episode,
-    },
-    {
-      type: "episode description",
-      episode: episode,
-    },
-  ]
+    const data: NowPlayingCarouselTypes[] = [
+      {
+        type: "playback rate",
+      },
+      {
+        type: "episode artwork",
+        episode: episode,
+      },
+      {
+        type: "episode description",
+        episode: episode,
+      },
+    ]
 
-  const renderItem = (item: NowPlayingCarouselTypes): ReactElement => {
-    switch (item.type) {
-      case "playback rate":
-        return <PlaybackRate />
-      case "episode artwork":
-        return <EpisodeArtwork episode={item.episode} />
-      case "episode description":
-        return <EpisodeDescription episode={item.episode} />
+    const renderItem = (item: NowPlayingCarouselTypes): ReactElement => {
+      switch (item.type) {
+        case "playback rate":
+          return <PlaybackRate />
+        case "episode artwork":
+          return <EpisodeArtwork episode={item.episode} />
+        case "episode description":
+          return <EpisodeDescription episode={item.episode} />
+      }
     }
-  }
 
-  return (
-    <Carousel
-      data={data}
-      renderItem={({ item }: any) => renderItem(item)}
-      sliderWidth={Dimensions.get("window").width}
-      itemWidth={Dimensions.get("window").width * 0.8}
-      firstItem={firstItemIndex}
-      onBeforeSnapToItem={() => Haptics.impactAsync()}
-    />
-  )
-}
+    return (
+      <Carousel
+        ref={ref}
+        data={data}
+        renderItem={({ item }: any) => renderItem(item)}
+        sliderWidth={Dimensions.get("window").width}
+        itemWidth={Dimensions.get("window").width * 0.8}
+        firstItem={firstItemIndex}
+        onBeforeSnapToItem={() => Haptics.impactAsync()}
+      />
+    )
+  },
+)
 
-export default React.memo(PlaybackRate_Artwork_Description_Carousel)
+export default PlaybackRate_Artwork_Description_Carousel

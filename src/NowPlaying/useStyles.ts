@@ -66,12 +66,14 @@ const useStyles = (): any => {
       alternateControlsContainer: {
         flex: 1,
         justifyContent: "flex-end",
-        width: "70%",
         alignItems: "center",
       },
       alternativeControlsBackground: {
         height: 30,
-        justifyContent: "center",
+        width: 200,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
       },
     })
   }, [colorScheme, insets.top, insets.bottom])

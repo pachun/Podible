@@ -3,7 +3,7 @@ import { Share, Text, TouchableOpacity, View } from "react-native"
 import { RouteProp } from "@react-navigation/native"
 import PlaybackRate_Artwork_Description_Carousel from "./PlaybackRate_Artwork_Description_Carousel"
 import * as Haptics from "expo-haptics"
-import { Entypo } from "@expo/vector-icons"
+import { FontAwesome5, Entypo } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 import { PodibleContext } from "../Provider"
 import JumpForwardButton from "../JumpForwardButton"
@@ -49,6 +49,8 @@ const NowPlaying = ({ route }: NowPlayingProps): ReactElement => {
     return unsubscribe
   }, [navigation])
 
+  const carouselRef = React.useRef()
+
   const [scrubValue, setScrubValue] = useState<number | undefined>()
   return (
     <View style={styles.container}>
@@ -79,6 +81,7 @@ const NowPlaying = ({ route }: NowPlayingProps): ReactElement => {
       <View style={{ height: 40 }} />
       <View style={styles.carouselContainer}>
         <PlaybackRate_Artwork_Description_Carousel
+          ref={carouselRef}
           episode={currentlyPlayingEpisode}
         />
       </View>
@@ -97,7 +100,37 @@ const NowPlaying = ({ route }: NowPlayingProps): ReactElement => {
       </View>
       <View style={styles.alternativeControlsContainer}>
         <View style={styles.alternativeControlsBackground}>
+          <TouchableOpacity
+            hitSlop={{ left: 20, right: 20, top: 10 }}
+            onPress={() => {
+              if (carouselRef.current) {
+                // @ts-ignore
+                carouselRef.current.snapToItem(0)
+              }
+            }}
+          >
+            <FontAwesome5
+              name="sliders-h"
+              size={20}
+              color={colorScheme.button}
+            />
+          </TouchableOpacity>
           <DownloadButton />
+          <TouchableOpacity
+            hitSlop={{ left: 20, right: 20, top: 10 }}
+            onPress={() => {
+              if (carouselRef.current) {
+                // @ts-ignore
+                carouselRef.current.snapToItem(2)
+              }
+            }}
+          >
+            <Entypo
+              name="info-with-circle"
+              size={20}
+              color={colorScheme.button}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     </View>
