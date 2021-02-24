@@ -1,4 +1,4 @@
 interface Subscription {
   id: number
-  podcast: Podcast
+  podcast_id: number
 }

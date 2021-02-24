@@ -52,7 +52,7 @@ const getPodcastsWithUnfinishedEpisodes = async (
   })
 
   const subscribedPodcastIds = Array.from(
-    realm.objects<SubscribedPodcast>("SubscribedPodcast"),
+    realm.objects<Subscription>("Subscription"),
   ).map(subscribedPodcast => subscribedPodcast.podcast_id)
 
   const podcastsWithUnfinishedEpisodes = unfinishedEpisodes

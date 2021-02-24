@@ -26,7 +26,7 @@ const setCachedPodcast = async (
   })
   const cachedPodcast = realm.objectForPrimaryKey<Podcast>(
     "Podcast",
-    podcastFromRssFeed.rss_feed_url,
+    podcastFromRssFeed.id,
   )
   return cachedPodcast
 }

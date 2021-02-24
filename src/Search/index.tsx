@@ -105,6 +105,7 @@ const Search = (): ReactElement => {
         recentlyPlayedPodcasts={podcastsWithUnfinishedEpisodes}
         subscribedPodcasts={subscribedPodcasts}
         onPress={showPodcastEpisodes}
+        recalculateMyPodcasts={recalculateMyPodcasts}
       />
       <EmptyStateCoachingMarks
         isVisible={

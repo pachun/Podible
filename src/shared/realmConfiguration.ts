@@ -1,6 +1,6 @@
 const PodcastSchema = {
   name: "Podcast",
-  primaryKey: "rss_feed_url",
+  primaryKey: "id",
   properties: {
     id: "int",
     title: "string",
@@ -34,16 +34,17 @@ const EpisodeSchema = {
   },
 }
 
-const SubscribedPodcastSchema = {
-  name: "SubscribedPodcast",
-  primaryKey: "podcast_id",
+const SubscriptionSchema = {
+  name: "Subscription",
+  primaryKey: "id",
   properties: {
+    id: "int",
     podcast_id: "int",
   },
 }
 
 const realmConfiguration = {
-  schema: [PodcastSchema, EpisodeSchema, SubscribedPodcastSchema],
+  schema: [PodcastSchema, EpisodeSchema, SubscriptionSchema],
   deleteRealmIfMigrationNeeded: true,
 }
 

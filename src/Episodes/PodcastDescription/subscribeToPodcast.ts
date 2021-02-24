@@ -3,18 +3,20 @@ import apiUrl, { apiRequestHeaders } from "../../shared/apiUrl"
 import realmConfiguration from "../../shared/realmConfiguration"
 import getExpoPushToken from "../../shared/getExpoPushToken"
 
-const subscribeToPodcastInRealm = async (podcast: Podcast): Promise<void> => {
+const subscribeToPodcastInRealm = async (
+  subscription: Subscription,
+): Promise<void> => {
   const realm = await Realm.open(realmConfiguration)
   realm.write(() => {
-    realm.create("SubscribedPodcast", { podcast_id: podcast.id })
+    realm.create("Subscription", subscription)
   })
 }
 
 const sendNotificationsWhenNewEpisodesComeOut = async (
   podcast: Podcast,
   expoPushToken: string,
-) => {
-  fetch(`${apiUrl}/subscriptions`, {
+): Promise<Subscription> => {
+  const request = await fetch(`${apiUrl}/subscriptions`, {
     method: "POST",
     headers: await apiRequestHeaders(),
     body: JSON.stringify({
@@ -22,13 +24,17 @@ const sendNotificationsWhenNewEpisodesComeOut = async (
       podcast_id: podcast.id,
     }),
   })
+  return await request.json()
 }
 
 const subscribeToPodcast = async (podcast: Podcast): Promise<void> => {
-  await subscribeToPodcastInRealm(podcast)
   const expoPushToken = await getExpoPushToken()
   if (expoPushToken) {
-    await sendNotificationsWhenNewEpisodesComeOut(podcast, expoPushToken)
+    const subscription = await sendNotificationsWhenNewEpisodesComeOut(
+      podcast,
+      expoPushToken,
+    )
+    await subscribeToPodcastInRealm(subscription)
   }
 }
 
