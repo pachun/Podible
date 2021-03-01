@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react"
-import * as Amplitude from "expo-analytics-amplitude"
 import useAppLifecycle from "./useAppLifecycle"
 import * as Updates from "expo-updates"
 
@@ -14,7 +13,7 @@ const useAppUpdates = (): boolean => {
         await Updates.reloadAsync()
       }
     } catch (reason) {
-      Amplitude.logEventWithProperties("App Update Failed", { reason })
+      // log an error with sentry
     }
     setIsUpdating(false)
   }, [])

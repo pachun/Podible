@@ -4,18 +4,15 @@ import "react-native-gesture-handler"
 // https://docs.expo.io/bare/installing-updates/
 import "expo-asset"
 
-// crash reporting - bugsnag
-import Bugsnag from "@bugsnag/react-native"
+// sentry crash reporting
+// https://docs.expo.io/guides/using-sentry/
 
-!__DEV__ && Bugsnag.start()
+import * as Sentry from "sentry-expo"
 
-// analytics - amplitude
-import * as Amplitude from "expo-analytics-amplitude"
-import { getUniqueId } from "react-native-device-info"
-
-!__DEV__ && Amplitude.initialize("ab310e06f8d7c2d92e87baaba125bcfa")
-!__DEV__ && Amplitude.setUserId(getUniqueId())
-!__DEV__ && Amplitude.logEvent("Launched Podible")
+Sentry.init({
+  dsn:
+    "https://26f0359c21ca483985c9bc168161f67a@o538660.ingest.sentry.io/5657023",
+})
 
 // --
 

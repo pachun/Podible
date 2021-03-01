@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.pachun.Podible"
@@ -25,6 +23,18 @@
     },
     "android": {
       "package": "com.pachun.Podible"
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "nick-pachulski",
+            "project": "podible",
+            "authToken": "b598c4fb1ff343b2b3777cc95ecf01c646b406b4738145b0bb28cff2bf9ae4d4"
+          }
+        }
+      ]
     }
   }
 }

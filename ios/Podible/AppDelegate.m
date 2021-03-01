@@ -1,7 +1,6 @@
 #import "AppDelegate.h"
 
 #import <React/RCTLinkingManager.h>
-#import <Bugsnag/Bugsnag.h>
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
@@ -59,8 +58,6 @@ static void InitializeFlipper(UIApplication *application) {
   #endif
 
   [super application:application didFinishLaunchingWithOptions:launchOptions];
-
-  [Bugsnag start];
 
   return YES;
 }

@@ -83,3 +83,6 @@ web-build/
 
 coverage
 dump.rdb
+
+# sentry source maps
+.tmp/sentry
