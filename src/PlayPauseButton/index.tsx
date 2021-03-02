@@ -48,7 +48,8 @@ const PlayPauseButton = ({
       )}
       {(playbackState === "paused" ||
         playbackState === "idle" ||
-        playbackState === "ready") && (
+        playbackState === "ready" ||
+        playbackState === "unknown") && (
         <TouchableOpacity onPress={play}>
           <Ionicons
             name="ios-play"
