@@ -8,6 +8,9 @@ import useColorScheme from "../../hooks/useColorScheme"
 import { playEpisode } from "../../shared/trackPlayerHelpers"
 import usePositionAndDuration from "../../hooks/usePositionAndDuration"
 
+const MILLISECONDS_IT_TAKES_TO_SEEK = 1000
+const MILLISECONDS_IT_TAKES_TO_SEEK_AND_PLAY = 2000
+
 interface ScrubBarProps {
   scrubValue: number | undefined
   setScrubValue: (scrubValue: number | undefined) => void
@@ -30,6 +33,27 @@ const ScrubBar = ({
     scrubValue,
   )
 
+  const elapsedTimeLabel = React.useMemo(() => {
+    return humanReadableDuration(Math.floor(position))
+  }, [position])
+
+  const remainingTimeLabel = React.useMemo(() => {
+    return `-${humanReadableDuration(Math.floor(duration - position))}`
+  }, [duration, position])
+
+  const onSeek = (newValue: number) => {
+    if (playbackState === "playing") {
+      TrackPlayer.seekTo(newValue)
+      setTimeout(() => setScrubValue(undefined), MILLISECONDS_IT_TAKES_TO_SEEK)
+    } else {
+      playEpisode(currentlyPlayingEpisode, setSeekAfterNextPlayEvent, newValue)
+      setTimeout(
+        () => setScrubValue(undefined),
+        MILLISECONDS_IT_TAKES_TO_SEEK_AND_PLAY,
+      )
+    }
+  }
+
   return (
     <>
       <Slider
@@ -41,18 +65,7 @@ const ScrubBar = ({
         thumbTintColor={colorScheme.button}
         maximumTrackTintColor={colorScheme.sliderRemainingColor}
         onValueChange={newValue => setScrubValue(newValue)}
-        onSlidingComplete={newValue => {
-          if (playbackState === "playing") {
-            TrackPlayer.seekTo(newValue)
-          } else {
-            playEpisode(
-              currentlyPlayingEpisode,
-              setSeekAfterNextPlayEvent,
-              newValue,
-            )
-          }
-          setTimeout(() => setScrubValue(undefined), 1500)
-        }}
+        onSlidingComplete={onSeek}
       />
       <View
         style={{
@@ -61,11 +74,9 @@ const ScrubBar = ({
           justifyContent: "space-between",
         }}
       >
+        <Text style={{ color: colorScheme.timeLabel }}>{elapsedTimeLabel}</Text>
         <Text style={{ color: colorScheme.timeLabel }}>
-          {humanReadableDuration(Math.floor(position))}
-        </Text>
-        <Text style={{ color: colorScheme.timeLabel }}>
-          -{humanReadableDuration(Math.floor(duration - position))}
+          {remainingTimeLabel}
         </Text>
       </View>
     </>
