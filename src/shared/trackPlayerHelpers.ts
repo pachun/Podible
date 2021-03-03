@@ -29,9 +29,22 @@ export const playEpisode = async (
   setSeekAfterNextPlayEvent: (
     seekAfterNextPlayEvent: SeekAfterNextPlayEvent,
   ) => void,
+  seekPosition?: number,
 ): Promise<void> => {
   if (episode) {
-    if (await trackPlayerIsAlreadyPlayingEpisode(episode)) {
+    const alreadyPlayingEpisode = await trackPlayerIsAlreadyPlayingEpisode(
+      episode,
+    )
+    const wasScrubbed = Boolean(seekPosition)
+    if (alreadyPlayingEpisode && !wasScrubbed) {
+      await TrackPlayer.play()
+    } else if (alreadyPlayingEpisode && wasScrubbed) {
+      const preSeekVolume = await TrackPlayer.getVolume()
+      setSeekAfterNextPlayEvent({
+        seekTo: seekPosition,
+        preSeekVolume,
+      })
+      await TrackPlayer.setVolume(0)
       await TrackPlayer.play()
     } else if (episode.seconds_listened_to === 0) {
       await TrackPlayer.stop()

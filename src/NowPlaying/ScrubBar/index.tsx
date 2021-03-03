@@ -6,6 +6,7 @@ import Slider from "@react-native-community/slider"
 import humanReadableDuration from "../../shared/humanReadableDuration"
 import useColorScheme from "../../hooks/useColorScheme"
 import { useTrackPlayerProgress } from "react-native-track-player/lib/hooks"
+import { playEpisode } from "../../shared/trackPlayerHelpers"
 
 interface ScrubBarProps {
   scrubValue: number | undefined
@@ -19,7 +20,11 @@ const ScrubBar = ({
   const colorScheme = useColorScheme()
   const { position, duration } = useTrackPlayerProgress()
 
-  const { currentlyPlayingEpisode } = useContext(PodibleContext)
+  const {
+    currentlyPlayingEpisode,
+    playbackState,
+    setSeekAfterNextPlayEvent,
+  } = useContext(PodibleContext)
 
   const durationEvenWhileBuffering = useMemo(() => {
     if (duration === 0) {
@@ -54,8 +59,16 @@ const ScrubBar = ({
         maximumTrackTintColor={colorScheme.sliderRemainingColor}
         onValueChange={newValue => setScrubValue(newValue)}
         onSlidingComplete={newValue => {
-          TrackPlayer.seekTo(newValue)
-          setTimeout(() => setScrubValue(undefined), 1000)
+          if (playbackState === "playing") {
+            TrackPlayer.seekTo(newValue)
+          } else {
+            playEpisode(
+              currentlyPlayingEpisode,
+              setSeekAfterNextPlayEvent,
+              newValue,
+            )
+          }
+          setTimeout(() => setScrubValue(undefined), 1500)
         }}
       />
       <View

@@ -8,11 +8,13 @@ import saveListeningProgressInRealm from "./saveListeningProgressInRealm"
 const everySecond = 1000
 
 interface UseSecondsListenedToProps {
+  playbackState: string
   currentlyPlayingEpisode: Episode
   setSecondsListenedTo: (secondsListenedTo: number) => void
 }
 
 const useSecondsListenedTo = ({
+  playbackState,
   currentlyPlayingEpisode,
   setSecondsListenedTo,
 }: UseSecondsListenedToProps): void => {
@@ -39,8 +41,10 @@ const useSecondsListenedTo = ({
   }, [position, currentlyPlayingEpisode, setSecondsListenedTo])
 
   useEffect(() => {
-    updateSecondsListenedTo()
-  }, [updateSecondsListenedTo])
+    if (playbackState === "playing") {
+      updateSecondsListenedTo()
+    }
+  }, [updateSecondsListenedTo, playbackState])
 }
 
 export default useSecondsListenedTo

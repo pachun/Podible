@@ -45,6 +45,7 @@ const Episodes = ({ route }: EpisodesProps): ReactElement => {
   )
 
   useSecondsListenedTo({
+    playbackState,
     currentlyPlayingEpisode,
     setSecondsListenedTo,
   })
