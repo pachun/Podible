@@ -30,6 +30,14 @@ const ScrubBar = ({
     scrubValue,
   )
 
+  const elapsedTimeLabel = React.useMemo(() => {
+    return humanReadableDuration(Math.floor(position))
+  }, [position])
+
+  const remainingTimeLabel = React.useMemo(() => {
+    return `-${humanReadableDuration(Math.floor(duration - position))}`
+  }, [duration, position])
+
   return (
     <>
       <Slider
@@ -44,14 +52,15 @@ const ScrubBar = ({
         onSlidingComplete={newValue => {
           if (playbackState === "playing") {
             TrackPlayer.seekTo(newValue)
+            setTimeout(() => setScrubValue(undefined), 1000)
           } else {
             playEpisode(
               currentlyPlayingEpisode,
               setSeekAfterNextPlayEvent,
               newValue,
             )
+            setTimeout(() => setScrubValue(undefined), 2000)
           }
-          setTimeout(() => setScrubValue(undefined), 1500)
         }}
       />
       <View
@@ -61,11 +70,9 @@ const ScrubBar = ({
           justifyContent: "space-between",
         }}
       >
+        <Text style={{ color: colorScheme.timeLabel }}>{elapsedTimeLabel}</Text>
         <Text style={{ color: colorScheme.timeLabel }}>
-          {humanReadableDuration(Math.floor(position))}
-        </Text>
-        <Text style={{ color: colorScheme.timeLabel }}>
-          -{humanReadableDuration(Math.floor(duration - position))}
+          {remainingTimeLabel}
         </Text>
       </View>
     </>
