@@ -1,12 +1,12 @@
-import React, { ReactElement, useContext, useMemo } from "react"
+import React, { ReactElement, useContext } from "react"
 import { Text, View } from "react-native"
 import { PodibleContext } from "../../Provider"
 import TrackPlayer from "react-native-track-player"
 import Slider from "@react-native-community/slider"
 import humanReadableDuration from "../../shared/humanReadableDuration"
 import useColorScheme from "../../hooks/useColorScheme"
-import { useTrackPlayerProgress } from "react-native-track-player/lib/hooks"
 import { playEpisode } from "../../shared/trackPlayerHelpers"
+import usePositionAndDuration from "../../hooks/usePositionAndDuration"
 
 interface ScrubBarProps {
   scrubValue: number | undefined
@@ -18,7 +18,6 @@ const ScrubBar = ({
   setScrubValue,
 }: ScrubBarProps): ReactElement => {
   const colorScheme = useColorScheme()
-  const { position, duration } = useTrackPlayerProgress()
 
   const {
     currentlyPlayingEpisode,
@@ -26,34 +25,18 @@ const ScrubBar = ({
     setSeekAfterNextPlayEvent,
   } = useContext(PodibleContext)
 
-  const durationEvenWhileBuffering = useMemo(() => {
-    if (duration === 0) {
-      return currentlyPlayingEpisode.duration
-    } else {
-      return duration
-    }
-  }, [duration, currentlyPlayingEpisode.duration])
-
-  const positionEvenWhileBuffering = useMemo(() => {
-    if (duration === 0) {
-      return currentlyPlayingEpisode.seconds_listened_to
-    } else {
-      return position
-    }
-  }, [duration, position, currentlyPlayingEpisode.seconds_listened_to])
-
-  const adjustedPosition = useMemo(
-    () => (scrubValue ? scrubValue : positionEvenWhileBuffering),
-    [scrubValue, positionEvenWhileBuffering],
+  const { position, duration } = usePositionAndDuration(
+    currentlyPlayingEpisode,
+    scrubValue,
   )
 
   return (
     <>
       <Slider
         style={{ width: "100%", height: 40 }}
-        value={adjustedPosition}
+        value={position}
         minimumValue={0}
-        maximumValue={durationEvenWhileBuffering}
+        maximumValue={duration}
         minimumTrackTintColor={colorScheme.button}
         thumbTintColor={colorScheme.button}
         maximumTrackTintColor={colorScheme.sliderRemainingColor}
@@ -79,13 +62,10 @@ const ScrubBar = ({
         }}
       >
         <Text style={{ color: colorScheme.timeLabel }}>
-          {humanReadableDuration(Math.floor(adjustedPosition))}
+          {humanReadableDuration(Math.floor(position))}
         </Text>
         <Text style={{ color: colorScheme.timeLabel }}>
-          -
-          {humanReadableDuration(
-            Math.floor(durationEvenWhileBuffering - adjustedPosition),
-          )}
+          -{humanReadableDuration(Math.floor(duration - position))}
         </Text>
       </View>
     </>
