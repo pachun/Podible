@@ -4,8 +4,8 @@ import { jumpInterval } from "../shared/trackPlayerHelpers"
 
 const whenPlayedOrPaused = TrackPlayerEvents.PLAYBACK_STATE
 const whenAudioIsInterrupted = TrackPlayerEvents.REMOTE_DUCK
-const whenCarsSteeringWheelsSeekForwardButtonIsPressed = "remote-next"
-const whenCarsSteeringWheelsSeekBackwardButtonIsPressed = "remote-previous"
+const whenCarSteeringWheelsSeekForwardButtonIsPressed = "remote-next"
+const whenCarSteeringWheelsSeekBackwardButtonIsPressed = "remote-previous"
 
 const wasPlayed = (event: TrackPlayerEvent): boolean =>
   event.type === whenPlayedOrPaused && event.state === "playing"
@@ -101,8 +101,8 @@ const useAudioEvents = (podibleContext: PodibleContextType): void => {
     [
       whenPlayedOrPaused,
       whenAudioIsInterrupted,
-      whenCarsSteeringWheelsSeekForwardButtonIsPressed,
-      whenCarsSteeringWheelsSeekBackwardButtonIsPressed,
+      whenCarSteeringWheelsSeekForwardButtonIsPressed,
+      whenCarSteeringWheelsSeekBackwardButtonIsPressed,
     ],
     (event: TrackPlayerEvent) => {
       updatePlaybackState(event, podibleContext)
