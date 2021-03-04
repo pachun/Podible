@@ -9,6 +9,7 @@ interface Episode {
   publisher: string
   seconds_listened_to: number
   download_location?: string
+  has_finished: boolean
 
   // realm always returns a list.
   // there should only ever be 1.

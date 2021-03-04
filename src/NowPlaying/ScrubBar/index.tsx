@@ -8,6 +8,9 @@ import useColorScheme from "../../hooks/useColorScheme"
 import { playEpisode } from "../../shared/trackPlayerHelpers"
 import usePositionAndDuration from "../../hooks/usePositionAndDuration"
 
+const MILLISECONDS_IT_TAKES_TO_SEEK = 1000
+const MILLISECONDS_IT_TAKES_TO_SEEK_AND_PLAY = 2000
+
 interface ScrubBarProps {
   scrubValue: number | undefined
   setScrubValue: (scrubValue: number | undefined) => void
@@ -38,6 +41,19 @@ const ScrubBar = ({
     return `-${humanReadableDuration(Math.floor(duration - position))}`
   }, [duration, position])
 
+  const onSeek = (newValue: number) => {
+    if (playbackState === "playing") {
+      TrackPlayer.seekTo(newValue)
+      setTimeout(() => setScrubValue(undefined), MILLISECONDS_IT_TAKES_TO_SEEK)
+    } else {
+      playEpisode(currentlyPlayingEpisode, setSeekAfterNextPlayEvent, newValue)
+      setTimeout(
+        () => setScrubValue(undefined),
+        MILLISECONDS_IT_TAKES_TO_SEEK_AND_PLAY,
+      )
+    }
+  }
+
   return (
     <>
       <Slider
@@ -49,19 +65,7 @@ const ScrubBar = ({
         thumbTintColor={colorScheme.button}
         maximumTrackTintColor={colorScheme.sliderRemainingColor}
         onValueChange={newValue => setScrubValue(newValue)}
-        onSlidingComplete={newValue => {
-          if (playbackState === "playing") {
-            TrackPlayer.seekTo(newValue)
-            setTimeout(() => setScrubValue(undefined), 1000)
-          } else {
-            playEpisode(
-              currentlyPlayingEpisode,
-              setSeekAfterNextPlayEvent,
-              newValue,
-            )
-            setTimeout(() => setScrubValue(undefined), 2000)
-          }
-        }}
+        onSlidingComplete={onSeek}
       />
       <View
         style={{

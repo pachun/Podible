@@ -25,6 +25,7 @@ const EpisodeSchema = {
     artwork_url: "string",
     publisher: "string",
     seconds_listened_to: { type: "int", default: 0 },
+    has_finished: { type: "bool", default: false },
     download_location: "string?",
     podcast: {
       type: "linkingObjects",
