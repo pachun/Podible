@@ -24,6 +24,8 @@ const PlayPauseButton = ({
     setSeekAfterNextPlayEvent,
   } = useContext(PodibleContext)
 
+  const { name: playbackStateName } = playbackState
+
   const pauseEpisode = () => {
     Haptics.impactAsync()
     TrackPlayer.pause()
@@ -35,34 +37,31 @@ const PlayPauseButton = ({
     playEpisode(currentlyPlayingEpisode, setSeekAfterNextPlayEvent)
   }
 
-  return (
-    <>
-      {playbackState === "playing" && (
-        <TouchableOpacity onPress={pauseEpisode}>
-          <Ionicons
-            name="ios-pause"
-            size={iconSize}
-            color={colorScheme.button}
-          />
-        </TouchableOpacity>
-      )}
-      {(playbackState === "paused" ||
-        playbackState === "idle" ||
-        playbackState === "ready" ||
-        playbackState === "unknown") && (
-        <TouchableOpacity onPress={play}>
-          <Ionicons
-            name="ios-play"
-            size={iconSize}
-            color={colorScheme.button}
-          />
-        </TouchableOpacity>
-      )}
-      {(playbackState === "buffering" || playbackState === "loading") && (
-        <ActivityIndicator size="large" color={colorScheme.button} />
-      )}
-    </>
-  )
+  const isPlaying = playbackStateName === "playing"
+
+  const pausedPlaybackStateNames = ["paused", "idle", "ready", "unknown"]
+  const isPaused = pausedPlaybackStateNames.includes(playbackStateName)
+
+  const loadingPlaybackStateNames = ["buffering", "loading"]
+  const isLoading = loadingPlaybackStateNames.includes(playbackStateName)
+
+  if (isPlaying) {
+    return (
+      <TouchableOpacity onPress={pauseEpisode}>
+        <Ionicons name="ios-pause" size={iconSize} color={colorScheme.button} />
+      </TouchableOpacity>
+    )
+  } else if (isPaused) {
+    return (
+      <TouchableOpacity onPress={play}>
+        <Ionicons name="ios-play" size={iconSize} color={colorScheme.button} />
+      </TouchableOpacity>
+    )
+  } else if (isLoading) {
+    return <ActivityIndicator size="large" color={colorScheme.button} />
+  } else {
+    return null
+  }
 }
 
 export default React.memo(PlayPauseButton)

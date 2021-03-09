@@ -5,7 +5,7 @@ import useAudioEvents from "./useAudioEvents"
 export const PodibleContext = createContext<PodibleContextType>(undefined)
 
 const initialState: PodibleState = {
-  playbackState: "unknown",
+  playbackState: { name: "unknown" },
   playbackRate: 1.0,
   seekAfterNextPlayEvent: false,
 }
