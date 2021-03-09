@@ -16,6 +16,7 @@ const updating = (
         publisher: episode.publisher,
         seconds_listened_to: secondsListenedTo,
         podcast: episode.podcast,
+        has_finished: episode.has_finished,
       }
     : episode
 }
