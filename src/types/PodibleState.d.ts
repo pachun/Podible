@@ -1,6 +1,6 @@
 interface PodibleState {
   currentlyPlayingEpisode?: Episode
-  playbackState: string
+  playbackState: PlaybackState
   playbackRate: number
   seekAfterNextPlayEvent: SeekAfterNextPlayEvent
 }

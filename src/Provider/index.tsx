@@ -26,7 +26,7 @@ const Provider = ({ children }: ProviderProps): ReactElement => {
       }),
 
     playbackState: state.playbackState,
-    setPlaybackState: (value: string) =>
+    setPlaybackState: (value: PlaybackState) =>
       dispatch({ type: "SET_PLAYBACK_STATE", value }),
 
     playbackRate: state.playbackRate,

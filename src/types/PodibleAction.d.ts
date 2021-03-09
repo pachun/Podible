@@ -5,7 +5,7 @@ interface SetCurrentlyPlayingEpisodeAction {
 
 interface SetPlaybackStateAction {
   type: "SET_PLAYBACK_STATE"
-  value: string
+  value: PlaybackState
 }
 
 interface SetPlaybackRateAction {
