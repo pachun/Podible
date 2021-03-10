@@ -54,9 +54,8 @@ const MyPodcasts = ({
   )
   const listSectionsDebounced = useDebounce(listSections, 1000)
 
-  const { currentlyPlayingEpisode: isShowingMiniPlayer } = useContext(
-    PodibleContext,
-  )
+  const { playbackState } = useContext(PodibleContext)
+  const isShowingMiniPlayer = ["playing", "paused"].includes(playbackState.name)
 
   return (
     isVisible && (

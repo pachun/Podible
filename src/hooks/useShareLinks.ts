@@ -3,7 +3,9 @@ import { Linking } from "react-native"
 import TrackPlayer from "react-native-track-player"
 import { trackPlayerTrackFromEpisode } from "../shared/trackPlayerHelpers"
 import apiUrl from "../shared/apiUrl"
+import Realm from "realm"
 import realmConfiguration from "../shared/realmConfiguration"
+import openReceivedEpisode from "../shared/openReceivedEpisode"
 
 interface Link {
   url: string
@@ -43,8 +45,8 @@ const sharedEpisodeOrExistingEpisode = async (sharedEpisode: Episode) => {
 }
 
 const useShareLinks = (
+  setPlaybackState: (playbackState: PlaybackState) => void,
   navigation: any, // eslint-disable-line
-  setCurrentlyPlayingEpisode: (episode: Episode) => void,
 ): void => {
   const openSharedEpisode = useCallback(
     async (linkUrl: string) => {
@@ -52,15 +54,10 @@ const useShareLinks = (
         const sharedEpisode = await (
           await fetch(`${apiUrl}/episodes/${episodeId(linkUrl)}.json`)
         ).json()
-        const episode = await sharedEpisodeOrExistingEpisode(sharedEpisode)
-        setCurrentlyPlayingEpisode(episode)
-        await TrackPlayer.stop()
-        await TrackPlayer.add([trackPlayerTrackFromEpisode(episode)])
-        await TrackPlayer.skip(episode.audio_url)
-        navigation.navigate("Now Playing")
+        openReceivedEpisode(sharedEpisode, setPlaybackState, navigation)
       }
     },
-    [navigation, setCurrentlyPlayingEpisode],
+    [navigation, setPlaybackState],
   )
 
   const [appWasOpenedWithLink, setAppWasOpenedWithLink] = useState(false)

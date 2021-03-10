@@ -5,7 +5,8 @@ import useAudioEvents from "./useAudioEvents"
 export const PodibleContext = createContext<PodibleContextType>(undefined)
 
 const initialState: PodibleState = {
-  playbackState: { name: "unknown" },
+  trackPlayerState: "unstarted",
+  playbackState: { name: "unstarted" },
   playbackRate: 1.0,
   seekAfterNextPlayEvent: false,
 }
@@ -18,12 +19,9 @@ const Provider = ({ children }: ProviderProps): ReactElement => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const podibleContext: PodibleContextType = {
-    currentlyPlayingEpisode: state.currentlyPlayingEpisode,
-    setCurrentlyPlayingEpisode: (value: Episode) =>
-      dispatch({
-        type: "SET_CURRENTLY_PLAYING_EPISODE",
-        value,
-      }),
+    trackPlayerState: state.trackPlayerState,
+    setTrackPlayerState: (value: TrackPlayerState) =>
+      dispatch({ type: "SET_TRACK_PLAYER_STATE", value }),
 
     playbackState: state.playbackState,
     setPlaybackState: (value: PlaybackState) =>

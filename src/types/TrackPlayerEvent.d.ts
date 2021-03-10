@@ -5,9 +5,9 @@ interface TrackPlayerEvent {
     | "paused"
     | "idle"
     | "ready"
-    | "unknown"
     | "buffering"
     | "loading"
+    | "unstarted"
   permanent?: string
   paused?: string
 }

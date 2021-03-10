@@ -1,15 +1,11 @@
 interface PodibleContextType {
-  currentlyPlayingEpisode?: Episode
-  setCurrentlyPlayingEpisode: (currentlyPlayingEpisode: Episode) => void
-
+  trackPlayerState: TrackPlayerState
   playbackState: PlaybackState
-  setPlaybackState: (playbackState: PlaybackState) => void
-
   playbackRate: number
-  setPlaybackRate: (playbackRate: number) => void
-
   seekAfterNextPlayEvent: SeekAfterNextPlayEvent
-  setSeekAfterNextPlayEvent: (
-    seekAfterNextPlayEvent: SeekAfterNextPlayEvent,
-  ) => void
+
+  setTrackPlayerState: (value: TrackPlayerState) => void
+  setPlaybackState: (value: PlaybackState) => void
+  setPlaybackRate: (value: number) => void
+  setSeekAfterNextPlayEvent: (value: SeekAfterNextPlayEvent) => void
 }

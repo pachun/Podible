@@ -24,10 +24,11 @@ import useShareLinks from "../hooks/useShareLinks"
 const Search = (): ReactElement => {
   const styles = useStyles()
   const navigation = useNavigation()
-  const { setCurrentlyPlayingEpisode } = useContext(PodibleContext)
+  const { setPlaybackState } = useContext(PodibleContext)
 
-  useShareLinks(navigation, setCurrentlyPlayingEpisode)
-  useNotifications({ setCurrentlyPlayingEpisode, navigation })
+  // move these into the provider (requires navigation access there)
+  useShareLinks(setPlaybackState, navigation)
+  useNotifications(setPlaybackState, navigation)
 
   const [searchFieldText, setSearchFieldText] = useState<string>("")
   const debouncedSearchFieldText = useDebounce(searchFieldText, 500)

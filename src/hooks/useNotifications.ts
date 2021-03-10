@@ -1,26 +1,21 @@
 import { useEffect } from "react"
 import * as Notifications from "expo-notifications"
+import openReceivedEpisode from "../shared/openReceivedEpisode"
 
-interface UseNotificationsProps {
-  setCurrentlyPlayingEpisode: (episode: Episode) => void
-  navigation: any
-}
-
-const useNotifications = ({
-  setCurrentlyPlayingEpisode,
-  navigation,
-}: UseNotificationsProps): void => {
+const useNotifications = (
+  setPlaybackState: (playbackState: PlaybackState) => void,
+  navigation: any, // eslint-disable-line
+): void => {
   useEffect(() => {
     const subscription = Notifications.addNotificationResponseReceivedListener(
       response => {
         const episode: Episode = response.notification.request.content.data
           .episode as Episode
-        setCurrentlyPlayingEpisode(episode)
-        navigation.navigate("Now Playing")
+        openReceivedEpisode(episode, setPlaybackState, navigation)
       },
     )
     return () => subscription.remove()
-  }, [navigation, setCurrentlyPlayingEpisode])
+  }, [navigation, setPlaybackState])
 }
 
 export default useNotifications

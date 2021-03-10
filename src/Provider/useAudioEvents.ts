@@ -1,3 +1,4 @@
+import React from "react"
 import TrackPlayer, { TrackPlayerEvents } from "react-native-track-player"
 import { useTrackPlayerEvents } from "react-native-track-player/lib/hooks"
 import { jumpInterval } from "../shared/trackPlayerHelpers"
@@ -94,6 +95,8 @@ const updateTracksFinishedState = async (
   podibleContext: PodibleContextType,
 ) => {
   if (wasPaused(event)) {
+    // start changing this to use context
+
     const duration = await TrackPlayer.getDuration()
     const secondsRemaining =
       duration - podibleContext.currentlyPlayingEpisode.seconds_listened_to
@@ -110,14 +113,22 @@ const updateTracksFinishedState = async (
   }
 }
 
-const updatePlaybackState = (
+const updateContextState = async (
   event: TrackPlayerEvent,
   podibleContext: PodibleContextType,
 ) => {
   if (wasPlayedOrPaused(event)) {
-    const playbackStateName = event.state
+    const trackPlayerState = event.state as "playing" | "paused"
+    podibleContext.setTrackPlayerState(trackPlayerState)
+
+    const playbackState = podibleContext.playbackState as
+      | PlayingPlaybackState
+      | PausedPlaybackState
     podibleContext.setPlaybackState({
-      name: playbackStateName,
+      name: trackPlayerState,
+      episodesAudioUrl: playbackState.episodesAudioUrl,
+      secondsListenedTo: playbackState.secondsListenedTo,
+      secondDuration: playbackState.secondDuration,
     })
   }
 }
@@ -131,7 +142,7 @@ const useAudioEvents = (podibleContext: PodibleContextType): void => {
       whenCarSteeringWheelsSeekBackwardButtonIsPressed,
     ],
     (event: TrackPlayerEvent) => {
-      updatePlaybackState(event, podibleContext)
+      updateContextState(event, podibleContext)
       seekToLastListenProgressWhenPlayed(event, podibleContext)
       respondToButtonsPressedOnCarSteeringWheel(event)
       resetPlaybackRateWhenNewTracksArePlayed(event, podibleContext)
@@ -139,6 +150,10 @@ const useAudioEvents = (podibleContext: PodibleContextType): void => {
       updateTracksFinishedState(event, podibleContext)
     },
   )
+
+  React.useEffect(() => {
+    console.log(podibleContext.playbackState)
+  }, [podibleContext.playbackState])
 }
 
 export default useAudioEvents
