@@ -42,7 +42,7 @@ const ScrubBar = ({
   }, [duration, position])
 
   const onSeek = (newValue: number) => {
-    if (playbackState === "playing") {
+    if (playbackState.name === "playing") {
       TrackPlayer.seekTo(newValue)
       setTimeout(() => setScrubValue(undefined), MILLISECONDS_IT_TAKES_TO_SEEK)
     } else {

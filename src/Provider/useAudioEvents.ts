@@ -115,8 +115,10 @@ const updatePlaybackState = (
   podibleContext: PodibleContextType,
 ) => {
   if (wasPlayedOrPaused(event)) {
-    const playbackState = event.state
-    podibleContext.setPlaybackState(playbackState)
+    const playbackStateName = event.state
+    podibleContext.setPlaybackState({
+      name: playbackStateName,
+    })
   }
 }
 
