@@ -7,17 +7,21 @@ import saveListeningProgressInRealm from "./saveListeningProgressInRealm"
 
 const everySecond = 1000
 
-interface UseSecondsListenedToProps {
-  playbackState: string
-  currentlyPlayingEpisode: Episode
-  setSecondsListenedTo: (secondsListenedTo: number) => void
-}
+// only runs when:
+// the episodes screen is present
+// & track player is playing
+// & track player's track matches context's episode
+// & seconds listened to > 0 (to wait for scrubbing & playback start to finish)
+//
+// sets secondsListened to in Episodes/index.tsx local state
+// updates the episode's seconds_listened_to in realm
 
-const useSecondsListenedTo = ({
-  playbackState,
-  currentlyPlayingEpisode,
-  setSecondsListenedTo,
-}: UseSecondsListenedToProps): void => {
+// Move all this into a hook in Provider
+const useSecondsListenedTo = (
+  playbackState: PlaybackState,
+  currentlyPlayingEpisode: Episode,
+  setSecondsListenedTo: (secondsListenedTo: number) => void,
+): void => {
   const { position } = useTrackPlayerProgress(everySecond)
 
   const updateSecondsListenedTo = useCallback(async () => {
@@ -41,10 +45,10 @@ const useSecondsListenedTo = ({
   }, [position, currentlyPlayingEpisode, setSecondsListenedTo])
 
   useEffect(() => {
-    if (playbackState === "playing") {
+    if (playbackState.name === "playing") {
       updateSecondsListenedTo()
     }
-  }, [updateSecondsListenedTo, playbackState])
+  }, [updateSecondsListenedTo, playbackState.name])
 }
 
 export default useSecondsListenedTo

@@ -7,19 +7,12 @@ const sortNewestEpisodesFirst = (episodes: Episode[]): Episode[] =>
     parseISO(e1.published_at) > parseISO(e2.published_at) ? -1 : 1,
   )
 
-interface UseEpisodesProps {
-  podcast: Podcast
-  currentlyPlayingEpisode: Episode
-  secondsListenedTo: number
-  playbackState: string
-}
-
-const useDisplayableEpisodes = ({
-  podcast,
-  currentlyPlayingEpisode,
-  secondsListenedTo,
-  playbackState,
-}: UseEpisodesProps): Episode[] => {
+const useSortedEpisodes = (
+  podcast: Podcast,
+  currentlyPlayingEpisode: Episode,
+  secondsListenedTo: number,
+  playbackState: PlaybackState,
+): Episode[] => {
   const podcastEpisodesExist = useMemo(() => podcast && podcast.episodes, [
     podcast,
   ])
@@ -41,7 +34,7 @@ const useDisplayableEpisodes = ({
   })
 
   const episodes = useMemo(() => {
-    if (podcastEpisodesExist && playbackState === "playing") {
+    if (podcastEpisodesExist && playbackState.name === "playing") {
       return episodesWithUpdatedSecondsListenedTo
     } else if (podcastEpisodesExist) {
       return newestEpisodesFirst
@@ -57,4 +50,4 @@ const useDisplayableEpisodes = ({
   return episodes
 }
 
-export default useDisplayableEpisodes
+export default useSortedEpisodes

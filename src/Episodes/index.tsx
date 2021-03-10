@@ -12,7 +12,7 @@ import SomethingWentWrong from "../SomethingWentWrong"
 import Episode from "./Episode"
 import usePodcastFromRssFeed from "./usePodcastFromRssFeed"
 import useSecondsListenedTo from "./useSecondsListenedTo"
-import useDisplayableEpisodes from "./useDisplayableEpisodes"
+import useSortedEpisodes from "./useSortedEpisodes"
 import useStyles from "./useStyles"
 
 interface EpisodesProps {
@@ -44,18 +44,18 @@ const Episodes = ({ route }: EpisodesProps): ReactElement => {
     currentlyPlayingEpisode ? currentlyPlayingEpisode.seconds_listened_to : 0,
   )
 
-  useSecondsListenedTo({
+  useSecondsListenedTo(
     playbackState,
     currentlyPlayingEpisode,
     setSecondsListenedTo,
-  })
+  )
 
-  const episodes = useDisplayableEpisodes({
+  const episodes = useSortedEpisodes(
     podcast,
     currentlyPlayingEpisode,
     secondsListenedTo,
     playbackState,
-  })
+  )
 
   const keyExtractor = <T,>(_: T, position: number) => position.toString()
 
