@@ -1,6 +1,4 @@
 import TrackPlayer from "react-native-track-player"
-import Realm from "realm"
-import realmConfiguration from "./realmConfiguration"
 
 interface Track {
   id: string
@@ -38,20 +36,7 @@ export const playEpisode = async (
       episode,
     )
     const wasScrubbed = Boolean(seekPosition)
-    if (episode.has_finished === true) {
-      const realm = await Realm.open(realmConfiguration)
-      const realmEpisode = realm.objectForPrimaryKey<Episode>(
-        "Episode",
-        episode.audio_url,
-      )
-      realm.write(() => {
-        realmEpisode.has_finished = true
-      })
-      await TrackPlayer.stop()
-      await TrackPlayer.add([trackPlayerTrackFromEpisode(episode)])
-      await TrackPlayer.skip(episode.audio_url)
-      await TrackPlayer.play()
-    } else if (alreadyPlayingEpisode && !wasScrubbed) {
+    if (alreadyPlayingEpisode && !wasScrubbed) {
       await TrackPlayer.play()
     } else if (alreadyPlayingEpisode && wasScrubbed) {
       const preSeekVolume = await TrackPlayer.getVolume()

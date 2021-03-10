@@ -2,8 +2,6 @@ import React from "react"
 import TrackPlayer, { TrackPlayerEvents } from "react-native-track-player"
 import { useTrackPlayerEvents } from "react-native-track-player/lib/hooks"
 import { jumpInterval } from "../shared/trackPlayerHelpers"
-import Realm from "realm"
-import realmConfiguration from "../shared/realmConfiguration"
 
 const whenPlayedOrPaused = TrackPlayerEvents.PLAYBACK_STATE
 const whenAudioIsInterrupted = TrackPlayerEvents.REMOTE_DUCK
@@ -12,9 +10,6 @@ const whenCarSteeringWheelsSeekBackwardButtonIsPressed = "remote-previous"
 
 const wasPlayed = (event: TrackPlayerEvent): boolean =>
   event.type === whenPlayedOrPaused && event.state === "playing"
-
-const wasPaused = (event: TrackPlayerEvent): boolean =>
-  event.type === whenPlayedOrPaused && event.state === "paused"
 
 const wasPlayedOrPaused = (event: TrackPlayerEvent): boolean =>
   event.type === whenPlayedOrPaused
@@ -90,29 +85,6 @@ const pauseForAudioInterruptionsLikeTurnByTurnNavigation = (
   }
 }
 
-const updateTracksFinishedState = async (
-  event: TrackPlayerEvent,
-  podibleContext: PodibleContextType,
-) => {
-  if (wasPaused(event)) {
-    // start changing this to use context
-
-    const duration = await TrackPlayer.getDuration()
-    const secondsRemaining =
-      duration - podibleContext.currentlyPlayingEpisode.seconds_listened_to
-    if (secondsRemaining <= 2) {
-      const realm = await Realm.open(realmConfiguration)
-      const episode = realm.objectForPrimaryKey<Episode>(
-        "Episode",
-        podibleContext.currentlyPlayingEpisode.audio_url,
-      )
-      realm.write(() => {
-        episode.has_finished = true
-      })
-    }
-  }
-}
-
 const updateContextState = async (
   event: TrackPlayerEvent,
   podibleContext: PodibleContextType,
@@ -147,7 +119,6 @@ const useAudioEvents = (podibleContext: PodibleContextType): void => {
       respondToButtonsPressedOnCarSteeringWheel(event)
       resetPlaybackRateWhenNewTracksArePlayed(event, podibleContext)
       pauseForAudioInterruptionsLikeTurnByTurnNavigation(event)
-      updateTracksFinishedState(event, podibleContext)
     },
   )
 

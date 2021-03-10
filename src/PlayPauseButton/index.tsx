@@ -4,7 +4,7 @@ import * as Haptics from "expo-haptics"
 import { Ionicons } from "@expo/vector-icons"
 import TrackPlayer from "react-native-track-player"
 import { PodibleContext } from "../Provider"
-import { playEpisode } from "../shared/trackPlayerHelpers"
+// import { playEpisode } from "../shared/trackPlayerHelpers"
 import useColorScheme from "../hooks/useColorScheme"
 
 interface PlayPauseButtonProps {
@@ -19,9 +19,9 @@ const PlayPauseButton = ({
   const colorScheme = useColorScheme()
 
   const {
-    currentlyPlayingEpisode,
+    // currentlyPlayingEpisode,
     playbackState,
-    setSeekAfterNextPlayEvent,
+    // setSeekAfterNextPlayEvent,
   } = useContext(PodibleContext)
 
   const { name: playbackStateName } = playbackState
@@ -34,7 +34,7 @@ const PlayPauseButton = ({
   const play = async () => {
     Haptics.impactAsync()
     onPlay()
-    playEpisode(currentlyPlayingEpisode, setSeekAfterNextPlayEvent)
+    // playEpisode(currentlyPlayingEpisode, setSeekAfterNextPlayEvent)
   }
 
   const isPlaying = playbackStateName === "playing"
