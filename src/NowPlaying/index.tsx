@@ -12,7 +12,10 @@ import PlayPauseButton from "../PlayPauseButton"
 import ScrubBar from "./ScrubBar"
 import DownloadButton from "./DownloadButton"
 import useColorScheme from "../hooks/useColorScheme"
-import { playEpisode } from "../shared/trackPlayerHelpers"
+import {
+  playEpisode,
+  episodeFromPlaybackState,
+} from "../shared/trackPlayerHelpers"
 import apiUrl from "../shared/apiUrl"
 import useStyles from "./useStyles"
 
@@ -24,12 +27,22 @@ const NowPlaying = ({ route }: NowPlayingProps): ReactElement => {
   const styles = useStyles()
   const colorScheme = useColorScheme()
   const navigation = useNavigation()
-  const { currentlyPlayingEpisode, setSeekAfterNextPlayEvent } = useContext(
+  const { playbackState, setSeekAfterNextPlayEvent } = useContext(
     PodibleContext,
   )
   const goBack = () => navigation.goBack()
 
   const vibrateAfterAnimationOut = () => setTimeout(Haptics.impactAsync, 200)
+
+  const [currentlyPlayingEpisode, setCurrentlyPlayingEpisode] = React.useState<
+    Episode
+  >()
+
+  React.useEffect(() => {
+    episodeFromPlaybackState(playbackState).then(episode =>
+      setCurrentlyPlayingEpisode(episode),
+    )
+  }, [playbackState])
 
   const share = async () => {
     await Share.share({

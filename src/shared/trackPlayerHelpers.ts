@@ -1,4 +1,6 @@
 import TrackPlayer from "react-native-track-player"
+import Realm from "realm"
+import realmConfiguration from "./realmConfiguration"
 
 interface Track {
   id: string
@@ -17,6 +19,18 @@ export const trackPlayerTrackFromEpisode = (episode: Episode): Track => ({
     ? episode.download_location
     : episode.audio_url,
 })
+
+export const episodeFromPlaybackState = async (
+  playbackState: PlaybackState,
+): Promise<Episode | undefined> => {
+  if (playbackState.name === "playing" || playbackState.name === "paused") {
+    const audioUrl = playbackState.episodesAudioUrl
+    const realm = await Realm.open(realmConfiguration)
+    const episode = realm.objectForPrimaryKey<Episode>("Episode", audioUrl)
+    return episode
+  }
+  return undefined
+}
 
 const trackPlayerIsAlreadyPlayingEpisode = async (
   episode: Episode,

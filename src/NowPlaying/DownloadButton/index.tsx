@@ -11,6 +11,7 @@ const DownloadButton = (): React.ReactElement => {
   const colorScheme = useColorScheme()
 
   const { currentlyPlayingEpisode } = React.useContext(PodibleContext)
+  // const currentlyPlayingEpisode = useCurrentlyPlayingEpisode(PodibleContext)
 
   const [downloadStarted, setDownloadStarted] = React.useState(false)
   const [downloadProgress, setDownloadProgress] = React.useState(0)

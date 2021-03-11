@@ -5,8 +5,8 @@ import TrackPlayer from "react-native-track-player"
 import Slider from "@react-native-community/slider"
 import humanReadableDuration from "../../shared/humanReadableDuration"
 import useColorScheme from "../../hooks/useColorScheme"
-import { playEpisode } from "../../shared/trackPlayerHelpers"
-import usePositionAndDuration from "../../hooks/usePositionAndDuration"
+// import { playEpisode } from "../../shared/trackPlayerHelpers"
+// import usePositionAndDuration from "../../hooks/usePositionAndDuration"
 
 const MILLISECONDS_IT_TAKES_TO_SEEK = 1000
 const MILLISECONDS_IT_TAKES_TO_SEEK_AND_PLAY = 2000
@@ -23,15 +23,18 @@ const ScrubBar = ({
   const colorScheme = useColorScheme()
 
   const {
-    currentlyPlayingEpisode,
+    // currentlyPlayingEpisode,
     playbackState,
-    setSeekAfterNextPlayEvent,
+    // setSeekAfterNextPlayEvent,
   } = useContext(PodibleContext)
 
-  const { position, duration } = usePositionAndDuration(
-    currentlyPlayingEpisode,
-    scrubValue,
-  )
+  // const { position, duration } = usePositionAndDuration(
+  //   // currentlyPlayingEpisode,
+  //   scrubValue,
+  // )
+  const position = 0
+  const duration = 0
+  scrubValue + 5
 
   const elapsedTimeLabel = React.useMemo(() => {
     return humanReadableDuration(Math.floor(position))
@@ -46,7 +49,7 @@ const ScrubBar = ({
       TrackPlayer.seekTo(newValue)
       setTimeout(() => setScrubValue(undefined), MILLISECONDS_IT_TAKES_TO_SEEK)
     } else {
-      playEpisode(currentlyPlayingEpisode, setSeekAfterNextPlayEvent, newValue)
+      // playEpisode(currentlyPlayingEpisode, setSeekAfterNextPlayEvent, newValue)
       setTimeout(
         () => setScrubValue(undefined),
         MILLISECONDS_IT_TAKES_TO_SEEK_AND_PLAY,
